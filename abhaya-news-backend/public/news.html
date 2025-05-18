@@ -1,0 +1,248 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ABHAYA News</title>
+</head>
+
+<body>
+    <h1>Latest News</h1>
+    <div id="news-container">Loading...</div>
+
+    <script>
+        fetch('/api/news')
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('news-container');
+                container.innerHTML = ''; // Clear loading message
+                data.news.forEach(item => {
+                    const div = document.createElement('div');
+                    div.innerHTML = `
+            <h2>${item.title.replace(/"/g, '')}</h2>
+            <p>${item.body.replace(/"/g, '')}</p>
+            <p><strong>Category:</strong> ${item.category.replace(/"/g, '')}</p>
+            ${item.imageUrl ? `<img src="${item.imageUrl}" width="300"/>` : ''}
+            <hr/>
+          `;
+                    container.appendChild(div);
+                });
+            });
+    </script>
+</body>
+
+</html> 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ABHAYA News</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: 20px auto; }
+    .news-item { border-bottom: 1px solid #ccc; padding: 10px 0; }
+    .news-item img { max-width: 100%; height: auto; display: block; margin-bottom: 10px; }
+    .pagination { margin-top: 20px; }
+    button { padding: 6px 12px; margin-right: 10px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <h1>Latest News</h1>
+  <div id="news-container"></div>
+
+  <div class="pagination">
+    <button id="prevBtn">Previous</button>
+    <button id="nextBtn">Next</button>
+    <span id="pageInfo"></span>
+  </div>
+
+  <script>
+    const newsContainer = document.getElementById('news-container');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const pageInfo = document.getElementById('pageInfo');
+
+    let currentPage = 1;
+    const limit = 5; // how many news per page
+
+    async function fetchNews(page) {
+      const res = await fetch(`/api/news?page=${page}&limit=${limit}`);
+      const data = await res.json();
+
+      // Clear container
+      newsContainer.innerHTML = '';
+
+      if (data.news.length === 0) {
+        newsContainer.innerHTML = '<p>No news found.</p>';
+        pageInfo.textContent = '';
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+      }
+
+      // Render news items
+      data.news.forEach(item => {
+        const newsDiv = document.createElement('div');
+        newsDiv.classList.add('news-item');
+
+        let imgHtml = '';
+        if (item.imageUrl) {
+          imgHtml = `<img src="${item.imageUrl}" alt="News Image" />`;
+        }
+
+        newsDiv.innerHTML = `
+          <h2>${item.title}</h2>
+          ${imgHtml}
+          <p>${item.body}</p>
+          <small>Category: ${item.category || 'General'}</small>
+        `;
+        newsContainer.appendChild(newsDiv);
+      });
+
+      // Update pagination info and buttons
+      currentPage = data.currentPage;
+      const totalPages = data.totalPages;
+
+      pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentPage > 1) {
+        fetchNews(currentPage - 1);
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      fetchNews(currentPage + 1);
+    });
+
+    // Initial fetch
+    fetchNews(currentPage);
+  </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ABHAYA News</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 20px auto;
+        }
+
+        .news-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+
+        .news-item img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .pagination {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 6px 12px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Latest News</h1>
+    <div id="news-container"></div>
+
+    <div class="pagination">
+        <button id="prevBtn">Previous</button>
+        <button id="nextBtn">Next</button>
+        <span id="pageInfo"></span>
+    </div>
+
+    <script>
+        const newsContainer = document.getElementById('news-container');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pageInfo = document.getElementById('pageInfo');
+
+        let currentPage = 1;
+        const limit = 10; // Show 10 news items per page
+
+        async function fetchNews(page) {
+            try {
+                const res = await fetch(`/api/news?page=${page}&limit=${limit}`);
+                const data = await res.json();
+
+                newsContainer.innerHTML = '';
+
+                if (!data.news || data.news.length === 0) {
+                    newsContainer.innerHTML = '<p>No news found.</p>';
+                    pageInfo.textContent = '';
+                    prevBtn.disabled = true;
+                    nextBtn.disabled = true;
+                    return;
+                }
+
+                data.news.forEach(item => {
+                    const newsDiv = document.createElement('div');
+                    newsDiv.classList.add('news-item');
+
+                    let imgHtml = '';
+                    if (item.imageUrl) {
+                        imgHtml = `<img src="${item.imageUrl}" alt="News Image" />`;
+                    }
+
+                    newsDiv.innerHTML = `
+            <h2>${item.title}</h2>
+            ${imgHtml}
+            <p>${item.body}</p>
+            <small>Category: ${item.category || 'General'}</small>
+          `;
+                    newsContainer.appendChild(newsDiv);
+                });
+
+                currentPage = data.currentPage;
+                const totalPages = data.totalPages;
+
+                pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+                prevBtn.disabled = currentPage === 1;
+                nextBtn.disabled = currentPage === totalPages;
+
+            } catch (err) {
+                newsContainer.innerHTML = `<p>Error fetching news: ${err.message}</p>`;
+                pageInfo.textContent = '';
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+            }
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) fetchNews(currentPage - 1);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            fetchNews(currentPage + 1);
+        });
+
+        fetchNews(currentPage);
+    </script>
+</body>
+
+</html>
