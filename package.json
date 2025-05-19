@@ -1,0 +1,14 @@
+{
+  "name": "abhaya-news",
+  "version": "1.0.0",
+  "description": "Abhaya News Application",
+  "main": "start-app.js",
+  "scripts": {
+    "start": "node start-app.js",
+    "install-all": "cd abhaya-news-backend && npm install && cd ../abhaya-news-frontend && npm install",
+    "start-backend": "cd abhaya-news-backend && npm start",
+    "start-frontend": "cd abhaya-news-frontend && npm start"
+  },
+  "author": "",
+  "license": "ISC"
+}

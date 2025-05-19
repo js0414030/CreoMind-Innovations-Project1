@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhaya News - Politics</title>
+    <meta name="description" content="Stay updated with the latest political news, government policies, and international relations.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="slider.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>ABHAYA NEWS</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="politics.html" class="active">Politics</a></li>
+                    <li><a href="technology.html">Technology</a></li>
+                    <li><a href="sports.html">Sports</a></li>
+                    <li><a href="entertainment.html">Entertainment</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button id="loginBtn">Admin Login</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Politics Banner -->
+        <section class="banner-slider">
+            <div class="slider-container">
+                <div class="slider">
+                    <div class="slide active">
+                        <div class="slide-content">
+                            <h2>Breaking: New Legislation Aims to Reform Education System</h2>
+                            <p>Lawmakers propose comprehensive changes to improve educational outcomes nationwide.</p>
+                            <a href="#" class="read-more-btn">Read More</a>
+                        </div>
+                        <img src="https://source.unsplash.com/random/1200x600/?politics" alt="Politics News">
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <h2>International Relations: New Trade Agreement Signed</h2>
+                            <p>Major economies finalize deal expected to boost global trade and economic cooperation.</p>
+                            <a href="#" class="read-more-btn">Read More</a>
+                        </div>
+                        <img src="https://source.unsplash.com/random/1200x600/?government" alt="Government News">
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <h2>Election Update: Polls Show Tight Race in Key Districts</h2>
+                            <p>Latest polling data reveals close competition in battleground regions ahead of upcoming elections.</p>
+                            <a href="#" class="read-more-btn">Read More</a>
+                        </div>
+                        <img src="https://source.unsplash.com/random/1200x600/?election" alt="Election News">
+                    </div>
+                </div>
+                <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                <div class="slider-dots">
+                    <span class="dot active" data-index="0"></span>
+                    <span class="dot" data-index="1"></span>
+                    <span class="dot" data-index="2"></span>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <!-- Trending Politics News -->
+            <section class="trending-section">
+                <h2 class="section-title"><i class="fas fa-fire"></i> Trending in Politics</h2>
+                <div class="trending-grid">
+                    <div class="trending-card">
+                        <div class="trending-image">
+                            <span class="trending-badge">1</span>
+                            <img src="https://source.unsplash.com/random/300x200/?parliament" alt="Parliament News">
+                        </div>
+                        <div class="trending-content">
+                            <span class="news-category">Legislation</span>
+                            <h3>Parliament Passes Landmark Infrastructure Bill</h3>
+                            <p>The bill allocates record funding for nationwide infrastructure improvements over the next decade.</p>
+                        </div>
+                    </div>
+                    <div class="trending-card">
+                        <div class="trending-image">
+                            <span class="trending-badge">2</span>
+                            <img src="https://source.unsplash.com/random/300x200/?diplomacy" alt="Diplomacy News">
+                        </div>
+                        <div class="trending-content">
+                            <span class="news-category">International</span>
+                            <h3>Leaders Summit Addresses Global Security Concerns</h3>
+                            <p>World leaders gather to discuss coordinated response to emerging security challenges.</p>
+                        </div>
+                    </div>
+                    <div class="trending-card">
+                        <div class="trending-image">
+                            <span class="trending-badge">3</span>
+                            <img src="https://source.unsplash.com/random/300x200/?policy" alt="Policy News">
+                        </div>
+                        <div class="trending-content">
+                            <span class="news-category">Policy</span>
+                            <h3>New Economic Policy Aims to Boost Small Businesses</h3>
+                            <p>Government announces comprehensive plan to support small and medium enterprises post-pandemic.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Latest Politics News -->
+            <section class="latest-news-section">
+                <h2 class="section-title"><i class="fas fa-newspaper"></i> Latest Politics News</h2>
+                <div class="news-grid">
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?congress" alt="Congress News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Legislation</span>
+                            <h3>Congress Debates Healthcare Reform Package</h3>
+                            <p>Lawmakers consider sweeping changes to healthcare system amid growing public concerns.</p>
+                            <span class="news-date">May 19, 2025</span>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?election" alt="Election News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Elections</span>
+                            <h3>Campaign Finance Reform Bill Introduced</h3>
+                            <p>New legislation aims to increase transparency in political campaign funding.</p>
+                            <span class="news-date">May 18, 2025</span>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?government" alt="Government News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Government</span>
+                            <h3>Cabinet Reshuffle Announced Following Minister's Resignation</h3>
+                            <p>Prime Minister appoints new ministers in key positions after unexpected departure.</p>
+                            <span class="news-date">May 18, 2025</span>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?diplomacy" alt="Diplomacy News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">International</span>
+                            <h3>Diplomatic Breakthrough in Regional Peace Talks</h3>
+                            <p>Nations reach preliminary agreement after months of negotiations.</p>
+                            <span class="news-date">May 17, 2025</span>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?policy" alt="Policy News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Policy</span>
+                            <h3>Environmental Policy Overhaul Announced</h3>
+                            <p>Government unveils ambitious climate action plan with new emissions targets.</p>
+                            <span class="news-date">May 17, 2025</span>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?politics" alt="Politics News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Politics</span>
+                            <h3>Opposition Parties Form Coalition Ahead of Elections</h3>
+                            <p>Strategic alliance aims to present unified challenge to incumbent government.</p>
+                            <span class="news-date">May 16, 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Newsletter Subscription -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Subscribe to Our Politics Newsletter</h2>
+                <p>Stay updated with the latest political news and analysis delivered to your inbox.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>ABHAYA NEWS</h2>
+                    <p>Your trusted source for the latest news and information.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-categories">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="politics.html">Politics</a></li>
+                        <li><a href="technology.html">Technology</a></li>
+                        <li><a href="sports.html">Sports</a></li>
+                        <li><a href="entertainment.html">Entertainment</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Abhaya News. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="slider.js"></script>
+    <script src="category.js"></script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhaya News - Entertainment</title>
+    <meta name="description" content="Get the latest entertainment news, celebrity updates, movie reviews, and cultural trends from around the world.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="slider.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>ABHAYA NEWS</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="politics.html">Politics</a></li>
+                    <li><a href="technology.html">Technology</a></li>
+                    <li><a href="sports.html">Sports</a></li>
+                    <li><a href="entertainment.html" class="active">Entertainment</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button id="loginBtn">Admin Login</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Entertainment Banner -->
+        <section class="banner-slider">
+            <div class="slider-container">
+                <div class="slider">
+                    <div class="slide active">
+                        <div class="slide-content">
+                            <h2>Blockbuster Movie Breaks Opening Weekend Box Office Records</h2>
+                            <p>The highly anticipated sequel exceeds expectations with massive global ticket sales.</p>
+                            <a href="#" class="read-more-btn">Read More</a>
+                        </div>
+                        <img src="https://source.unsplash.com/random/1200x600/?movie" alt="Movie Premiere">
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <h2>Music Festival Announces Star-Studded Lineup for Summer Event</h2>
+                            <p>Top artists from around the world set to perform at the season's most anticipated music gathering.</p>
+                            <a href="#" class="read-more-btn">Read More</a>
+                        </div>
+                        <img src="https://source.unsplash.com/random/1200x600/?concert" alt="Music Festival">
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <h2>Streaming Platform's New Series Becomes Global Phenomenon</h2>
+                            <p>Critics and audiences praise groundbreaking show that's captivating viewers worldwide.</p>
+                            <a href="#" class="read-more-btn">Read More</a>
+                        </div>
+                        <img src="https://source.unsplash.com/random/1200x600/?television" alt="TV Series">
+                    </div>
+                </div>
+                <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                <div class="slider-dots">
+                    <span class="dot active" data-index="0"></span>
+                    <span class="dot" data-index="1"></span>
+                    <span class="dot" data-index="2"></span>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <!-- Trending Entertainment News -->
+            <section class="trending-section">
+                <h2 class="section-title"><i class="fas fa-fire"></i> Trending in Entertainment</h2>
+                <div class="trending-grid">
+                    <div class="trending-card">
+                        <div class="trending-image">
+                            <span class="trending-badge">1</span>
+                            <img src="https://source.unsplash.com/random/300x200/?celebrity" alt="Celebrity News">
+                        </div>
+                        <div class="trending-content">
+                            <span class="news-category">Celebrity</span>
+                            <h3>A-List Actor Announces Surprise Career Change</h3>
+                            <p>Fans shocked as beloved star reveals plans to step away from acting to pursue new passion.</p>
+                        </div>
+                    </div>
+                    <div class="trending-card">
+                        <div class="trending-image">
+                            <span class="trending-badge">2</span>
+                            <img src="https://source.unsplash.com/random/300x200/?awards" alt="Awards News">
+                        </div>
+                        <div class="trending-content">
+                            <span class="news-category">Awards</span>
+                            <h3>Film Awards Ceremony Makes History with Diverse Winners</h3>
+                            <p>Groundbreaking night celebrates unprecedented representation across all major categories.</p>
+                        </div>
+                    </div>
+                    <div class="trending-card">
+                        <div class="trending-image">
+                            <span class="trending-badge">3</span>
+                            <img src="https://source.unsplash.com/random/300x200/?music" alt="Music News">
+                        </div>
+                        <div class="trending-content">
+                            <span class="news-category">Music</span>
+                            <h3>Legendary Band Announces Reunion Tour After Decade-Long Hiatus</h3>
+                            <p>Fans rejoice as iconic group confirms worldwide tour dates starting next spring.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Latest Entertainment News -->
+            <section class="latest-news-section">
+                <h2 class="section-title"><i class="fas fa-film"></i> Latest Entertainment News</h2>
+                <div class="news-grid">
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?movie-set" alt="Movie News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Movies</span>
+                            <h3>Highly Anticipated Sci-Fi Sequel Begins Production</h3>
+                            <p>Director shares first behind-the-scenes images from the set of the long-awaited follow-up.</p>
+                            <span class="news-date">May 19, 2025</span>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?tv-show" alt="TV News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Television</span>
+                            <h3>Hit Drama Series Confirms Final Season Release Date</h3>
+                            <p>Creators promise satisfying conclusion to the award-winning show's epic storyline.</p>
+                            <span class="news-date">May 18, 2025</span>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?album" alt="Music News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Music</span>
+                            <h3>Chart-Topping Artist Drops Surprise Album Overnight</h3>
+                            <p>Fans and critics scramble to digest unexpected release featuring high-profile collaborations.</p>
+                            <span class="news-date">May 18, 2025</span>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?broadway" alt="Theater News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Theater</span>
+                            <h3>Broadway Sensation Announces International Tour</h3>
+                            <p>Award-winning production set to visit 20 countries over the next two years.</p>
+                            <span class="news-date">May 17, 2025</span>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?gaming" alt="Gaming News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Gaming</span>
+                            <h3>Anticipated Video Game Sequel Reveals Gameplay Footage</h3>
+                            <p>Developers showcase stunning visuals and innovative features in extended preview.</p>
+                            <span class="news-date">May 17, 2025</span>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?book" alt="Literary News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Books</span>
+                            <h3>Bestselling Author Announces Adaptation of Popular Novel Series</h3>
+                            <p>Beloved book franchise to be developed as major streaming platform exclusive.</p>
+                            <span class="news-date">May 16, 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Celebrity Spotlight Section -->
+            <section class="category-highlights">
+                <div class="category-header">
+                    <h2 class="section-title"><i class="fas fa-star"></i> Celebrity Spotlight</h2>
+                </div>
+                <div class="category-cards">
+                    <div class="category-card">
+                        <img src="https://source.unsplash.com/random/400x250/?actor" alt="Actor Profile">
+                        <div class="category-card-content">
+                            <h3>Rising Star's Journey from Unknown to Leading Roles</h3>
+                            <p>The inspiring story behind Hollywood's newest sensation and their breakthrough performance.</p>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <img src="https://source.unsplash.com/random/400x250/?musician" alt="Musician Profile">
+                        <div class="category-card-content">
+                            <h3>Music Icon Reflects on Three Decades in the Industry</h3>
+                            <p>Exclusive interview covers career highlights, creative process, and plans for the future.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Newsletter Subscription -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Subscribe to Our Entertainment Newsletter</h2>
+                <p>Stay updated with the latest celebrity news, reviews, and entertainment trends delivered to your inbox.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>ABHAYA NEWS</h2>
+                    <p>Your trusted source for the latest news and information.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-categories">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="politics.html">Politics</a></li>
+                        <li><a href="technology.html">Technology</a></li>
+                        <li><a href="sports.html">Sports</a></li>
+                        <li><a href="entertainment.html">Entertainment</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Abhaya News. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="slider.js"></script>
+    <script src="category.js"></script>
+</body>
+</html>
