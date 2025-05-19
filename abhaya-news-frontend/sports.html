@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhaya News - Sports</title>
+    <meta name="description" content="Get the latest sports news, match results, player updates, and in-depth analysis from around the world.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="slider.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>ABHAYA NEWS</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="politics.html">Politics</a></li>
+                    <li><a href="technology.html">Technology</a></li>
+                    <li><a href="sports.html" class="active">Sports</a></li>
+                    <li><a href="entertainment.html">Entertainment</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button id="loginBtn">Admin Login</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Sports Banner -->
+        <section class="banner-slider">
+            <div class="slider-container">
+                <div class="slider">
+                    <div class="slide active">
+                        <div class="slide-content">
+                            <h2>National Team Advances to World Cup Semi-Finals</h2>
+                            <p>Historic victory secures spot in semi-finals for the first time in two decades.</p>
+                            <a href="#" class="read-more-btn">Read More</a>
+                        </div>
+                        <img src="https://source.unsplash.com/random/1200x600/?soccer" alt="Soccer Match">
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <h2>Championship Finals Set New Viewership Records</h2>
+                            <p>The thrilling final match attracted unprecedented global audience, breaking all previous records.</p>
+                            <a href="#" class="read-more-btn">Read More</a>
+                        </div>
+                        <img src="https://source.unsplash.com/random/1200x600/?basketball" alt="Basketball Championship">
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <h2>Olympic Committee Announces Host City for 2036 Games</h2>
+                            <p>After intense competition between candidate cities, the prestigious event finds its future home.</p>
+                            <a href="#" class="read-more-btn">Read More</a>
+                        </div>
+                        <img src="https://source.unsplash.com/random/1200x600/?olympics" alt="Olympic Games">
+                    </div>
+                </div>
+                <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                <div class="slider-dots">
+                    <span class="dot active" data-index="0"></span>
+                    <span class="dot" data-index="1"></span>
+                    <span class="dot" data-index="2"></span>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <!-- Trending Sports News -->
+            <section class="trending-section">
+                <h2 class="section-title"><i class="fas fa-fire"></i> Trending in Sports</h2>
+                <div class="trending-grid">
+                    <div class="trending-card">
+                        <div class="trending-image">
+                            <span class="trending-badge">1</span>
+                            <img src="https://source.unsplash.com/random/300x200/?football" alt="Football News">
+                        </div>
+                        <div class="trending-content">
+                            <span class="news-category">Football</span>
+                            <h3>Star Player Signs Record-Breaking Contract with Top Club</h3>
+                            <p>The transfer deal sets new financial benchmarks in the world of professional football.</p>
+                        </div>
+                    </div>
+                    <div class="trending-card">
+                        <div class="trending-image">
+                            <span class="trending-badge">2</span>
+                            <img src="https://source.unsplash.com/random/300x200/?tennis" alt="Tennis News">
+                        </div>
+                        <div class="trending-content">
+                            <span class="news-category">Tennis</span>
+                            <h3>Underdog Stuns Champion in Grand Slam Final</h3>
+                            <p>Unexpected victory marks one of the biggest upsets in recent tennis history.</p>
+                        </div>
+                    </div>
+                    <div class="trending-card">
+                        <div class="trending-image">
+                            <span class="trending-badge">3</span>
+                            <img src="https://source.unsplash.com/random/300x200/?cricket" alt="Cricket News">
+                        </div>
+                        <div class="trending-content">
+                            <span class="news-category">Cricket</span>
+                            <h3>Record-Breaking Performance in International Test Match</h3>
+                            <p>Player's extraordinary innings rewrites the record books in historic match.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Latest Sports News -->
+            <section class="latest-news-section">
+                <h2 class="section-title"><i class="fas fa-running"></i> Latest Sports News</h2>
+                <div class="news-grid">
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?basketball" alt="Basketball News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Basketball</span>
+                            <h3>League Announces Expansion with Two New Franchises</h3>
+                            <p>Professional basketball set to grow with addition of teams in major markets.</p>
+                            <span class="news-date">May 19, 2025</span>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?formula1" alt="Formula 1 News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Motorsport</span>
+                            <h3>Formula 1 Introduces New Sustainability Regulations</h3>
+                            <p>Racing series commits to carbon neutrality with sweeping technical changes.</p>
+                            <span class="news-date">May 18, 2025</span>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?golf" alt="Golf News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Golf</span>
+                            <h3>Major Championship Returns to Historic Venue</h3>
+                            <p>Prestigious tournament set to revisit legendary course after two-decade absence.</p>
+                            <span class="news-date">May 18, 2025</span>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?swimming" alt="Swimming News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Swimming</span>
+                            <h3>World Record Shattered at International Championship</h3>
+                            <p>Young swimmer breaks decade-old record with stunning performance.</p>
+                            <span class="news-date">May 17, 2025</span>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?athletics" alt="Athletics News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Athletics</span>
+                            <h3>Sprinter Makes Comeback After Career-Threatening Injury</h3>
+                            <p>Inspirational return to competition following two years of rehabilitation.</p>
+                            <span class="news-date">May 17, 2025</span>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://source.unsplash.com/random/300x200/?rugby" alt="Rugby News">
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Rugby</span>
+                            <h3>International Tournament Expands with New Participating Nations</h3>
+                            <p>Growing global interest leads to inclusion of emerging rugby nations.</p>
+                            <span class="news-date">May 16, 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sports Analysis Section -->
+            <section class="category-highlights">
+                <div class="category-header">
+                    <h2 class="section-title"><i class="fas fa-chart-line"></i> Sports Analysis</h2>
+                </div>
+                <div class="category-cards">
+                    <div class="category-card">
+                        <img src="https://source.unsplash.com/random/400x250/?sports-analysis" alt="Sports Analysis">
+                        <div class="category-card-content">
+                            <h3>The Evolution of Modern Football Tactics</h3>
+                            <p>In-depth analysis of how tactical approaches have transformed the beautiful game over the past decade.</p>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <img src="https://source.unsplash.com/random/400x250/?sports-technology" alt="Sports Technology">
+                        <div class="category-card-content">
+                            <h3>How Technology is Revolutionizing Sports Performance</h3>
+                            <p>From wearable tech to advanced analytics, examining the tools changing how athletes train and compete.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Newsletter Subscription -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Subscribe to Our Sports Newsletter</h2>
+                <p>Stay updated with the latest scores, highlights, and sports analysis delivered to your inbox.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>ABHAYA NEWS</h2>
+                    <p>Your trusted source for the latest news and information.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-categories">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="politics.html">Politics</a></li>
+                        <li><a href="technology.html">Technology</a></li>
+                        <li><a href="sports.html">Sports</a></li>
+                        <li><a href="entertainment.html">Entertainment</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Abhaya News. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="slider.js"></script>
+    <script src="category.js"></script>
+</body>
+</html>

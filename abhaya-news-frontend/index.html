@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhaya News</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="slider.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>ABHAYA NEWS</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="politics.html">Politics</a></li>
+                    <li><a href="technology.html">Technology</a></li>
+                    <li><a href="sports.html">Sports</a></li>
+                    <li><a href="entertainment.html">Entertainment</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button id="loginBtn">Admin Login</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Banner Slider Section -->
+        <section class="banner-slider">
+            <div class="slider-container">
+                <div class="slider">
+                    <div class="slide active">
+                        <div class="slide-content">
+                            <h2>Breaking News: Global Summit Addresses Climate Change</h2>
+                            <p>World leaders gather to discuss urgent climate action plans and sustainable development goals.</p>
+                            <a href="#" class="read-more-btn">Read More</a>
+                        </div>
+                        <img src="https://source.unsplash.com/random/1200x600/?climate" alt="Climate Summit">
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <h2>Tech Giants Unveil Revolutionary AI Technology</h2>
+                            <p>New artificial intelligence breakthroughs promise to transform healthcare and education sectors.</p>
+                            <a href="#" class="read-more-btn">Read More</a>
+                        </div>
+                        <img src="https://source.unsplash.com/random/1200x600/?technology" alt="AI Technology">
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <h2>Sports: Championship Finals Set New Viewership Records</h2>
+                            <p>The thrilling final match attracted unprecedented global audience, breaking all previous records.</p>
+                            <a href="#" class="read-more-btn">Read More</a>
+                        </div>
+                        <img src="https://source.unsplash.com/random/1200x600/?sports" alt="Sports Championship">
+                    </div>
+                </div>
+                <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                <div class="slider-dots">
+                    <span class="dot active" data-index="0"></span>
+                    <span class="dot" data-index="1"></span>
+                    <span class="dot" data-index="2"></span>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <!-- Trending Section -->
+            <section class="trending-section">
+                <h2 class="section-title"><i class="fas fa-fire"></i> Trending Now</h2>
+                <div class="trending-grid">
+                    <div class="trending-card">
+                        <div class="trending-image">
+                            <span class="trending-badge">1</span>
+                            <img src="https://source.unsplash.com/random/300x200/?business" alt="Business News">
+                        </div>
+                        <div class="trending-content">
+                            <span class="news-category">Business</span>
+                            <h3>Global Markets Reach All-Time High Despite Economic Concerns</h3>
+                            <p>Investors remain optimistic as major indices continue to climb despite inflation worries.</p>
+                        </div>
+                    </div>
+                    <div class="trending-card">
+                        <div class="trending-image">
+                            <span class="trending-badge">2</span>
+                            <img src="https://source.unsplash.com/random/300x200/?health" alt="Health News">
+                        </div>
+                        <div class="trending-content">
+                            <span class="news-category">Health</span>
+                            <h3>New Study Reveals Breakthrough in Cancer Treatment Research</h3>
+                            <p>Scientists discover promising approach that could revolutionize how we treat certain cancers.</p>
+                        </div>
+                    </div>
+                    <div class="trending-card">
+                        <div class="trending-image">
+                            <span class="trending-badge">3</span>
+                            <img src="https://source.unsplash.com/random/300x200/?entertainment" alt="Entertainment News">
+                        </div>
+                        <div class="trending-content">
+                            <span class="news-category">Entertainment</span>
+                            <h3>Blockbuster Movie Breaks Opening Weekend Box Office Records</h3>
+                            <p>The highly anticipated sequel exceeds expectations with massive global ticket sales.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Latest News Section -->
+            <section class="latest-news-section">
+                <h2 class="section-title"><i class="fas fa-newspaper"></i> Latest News</h2>
+                <div class="news-grid">
+                    <!-- News articles will be loaded here -->
+                    <div class="loading">Loading news...</div>
+                </div>
+
+                <div class="pagination">
+                    <button id="prevPage" disabled>Previous</button>
+                    <span id="currentPage">Page 1</span>
+                    <button id="nextPage">Next</button>
+                </div>
+            </section>
+
+            <!-- Category Highlights -->
+            <section class="category-highlights">
+                <div class="category-row">
+                    <div class="category-header">
+                        <h2 class="section-title"><i class="fas fa-landmark"></i> Politics</h2>
+                        <a href="politics.html" class="view-all">View All</a>
+                    </div>
+                    <div class="category-cards">
+                        <div class="category-card">
+                            <img src="https://source.unsplash.com/random/400x250/?politics" alt="Politics News">
+                            <div class="category-card-content">
+                                <h3>New Legislation Aims to Reform Education System</h3>
+                                <p>Lawmakers propose comprehensive changes to improve educational outcomes nationwide.</p>
+                            </div>
+                        </div>
+                        <div class="category-card">
+                            <img src="https://source.unsplash.com/random/400x250/?government" alt="Government News">
+                            <div class="category-card-content">
+                                <h3>International Relations: New Trade Agreement Signed</h3>
+                                <p>Major economies finalize deal expected to boost global trade and economic cooperation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-row">
+                    <div class="category-header">
+                        <h2 class="section-title"><i class="fas fa-microchip"></i> Technology</h2>
+                        <a href="technology.html" class="view-all">View All</a>
+                    </div>
+                    <div class="category-cards">
+                        <div class="category-card">
+                            <img src="https://source.unsplash.com/random/400x250/?tech" alt="Tech News">
+                            <div class="category-card-content">
+                                <h3>Next-Generation Smartphones Set to Transform Mobile Computing</h3>
+                                <p>Upcoming devices feature groundbreaking technology that could change how we use phones.</p>
+                            </div>
+                        </div>
+                        <div class="category-card">
+                            <img src="https://source.unsplash.com/random/400x250/?cybersecurity" alt="Cybersecurity News">
+                            <div class="category-card-content">
+                                <h3>Cybersecurity Experts Warn of Sophisticated New Threats</h3>
+                                <p>Organizations urged to strengthen defenses against increasingly complex cyber attacks.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Admin Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- News Detail Modal -->
+    <div id="newsDetailModal" class="modal">
+        <div class="modal-content news-detail">
+            <span class="close">&times;</span>
+            <div id="newsDetailContent">
+                <!-- News detail will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Subscription -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Stay updated with the latest news and exclusive content delivered to your inbox.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>ABHAYA NEWS</h2>
+                    <p>Your trusted source for the latest news and information.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-categories">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="politics.html">Politics</a></li>
+                        <li><a href="technology.html">Technology</a></li>
+                        <li><a href="sports.html">Sports</a></li>
+                        <li><a href="entertainment.html">Entertainment</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Abhaya News. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="slider.js"></script>
+    <script src="app.js"></script>
+    <script src="category.js"></script>
+    <script>
+        // Make category cards in the home page clickable and navigate to category pages
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryCards = document.querySelectorAll('.category-card');
+            categoryCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // Find which category section this card belongs to
+                    const categorySection = card.closest('.category-row');
+                    const categoryHeader = categorySection.querySelector('.category-header');
+                    const viewAllLink = categoryHeader.querySelector('.view-all');
+
+                    // Navigate to the category page
+                    if (viewAllLink && viewAllLink.href) {
+                        window.location.href = viewAllLink.href;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
