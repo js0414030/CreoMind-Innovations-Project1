@@ -12,29 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log('Current category page:', currentCategory);
 
-    // DOM Elements
-    const loginBtn = document.getElementById('loginBtn');
-    const token = localStorage.getItem('token');
-
-    // Check if user is logged in
-    if (token) {
-        loginBtn.textContent = 'Logout';
-    }
-
-    // Login Button Functionality
-    loginBtn.addEventListener('click', () => {
-        if (token) {
-            // Logout
-            localStorage.removeItem('token');
-            loginBtn.textContent = 'Admin Login';
-            alert('Logged out successfully');
-            // Reload the page to update UI
-            window.location.reload();
-        } else {
-            // Redirect to home page for login
-            window.location.href = 'index.html';
-        }
-    });
+    // Login button is now handled by components.js
 
     // Make trending cards clickable
     const trendingCards = document.querySelectorAll('.trending-card');
