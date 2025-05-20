@@ -1,4 +1,6 @@
 /* Base Styles */
+@import url('colors.css');
+
 * {
     margin: 0;
     padding: 0;
@@ -8,8 +10,8 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f5f5f5;
+    color: var(--neutral-dark);
+    background-color: rgba(241, 196, 15, 0.1); /* Vibrant Yellow with low opacity */
 }
 
 .container {
@@ -29,24 +31,39 @@ ul {
 
 /* Header Styles */
 header {
-    background-color: #fff;
+    background-color: var(--neutral-light); /* Off-White */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 100;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
+    padding: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 60px;
+    margin-right: 10px;
 }
 
 .logo h1 {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 700;
-    color: #e63946;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
 }
 
 nav ul {
@@ -61,25 +78,30 @@ nav ul li a {
     padding: 8px 12px;
     border-radius: 4px;
     transition: all 0.3s ease;
+    color: var(--primary-color); /* Deep Blue */
+    font-weight: 500;
 }
 
 nav ul li a:hover, nav ul li a.active {
-    background-color: #e63946;
-    color: #fff;
+    background: var(--gradient-primary); /* Red-Blue Gradient */
+    color: var(--white);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .auth-buttons button {
-    background-color: #e63946;
-    color: #fff;
+    background: var(--gradient-primary);
+    color: var(--white);
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .auth-buttons button:hover {
-    background-color: #c1121f;
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Main Content Styles */
@@ -99,15 +121,16 @@ main {
 }
 
 .news-card {
-    background-color: #fff;
+    background-color: var(--neutral-light); /* Off-White */
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
     height: 100%;
     display: flex;
     flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .news-card:hover {
@@ -139,21 +162,23 @@ main {
 
 .news-category {
     display: inline-block;
-    background-color: #e63946;
-    color: #fff;
+    background-color: var(--accent-yellow);
+    color: var(--neutral-dark);
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 12px;
     margin-bottom: 10px;
+    font-weight: 600;
 }
 
 .news-content h3 {
     margin-bottom: 10px;
     font-size: 18px;
+    color: var(--primary-color); /* Deep Blue */
 }
 
 .news-content p {
-    color: #666;
+    color: var(--neutral-dark); /* Charcoal Black */
     margin-bottom: 15px;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -184,21 +209,23 @@ main {
 }
 
 .pagination button {
-    background-color: #e63946;
-    color: #fff;
+    background: var(--gradient-primary);
+    color: var(--white);
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .pagination button:hover:not([disabled]) {
-    background-color: #c1121f;
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .pagination button[disabled] {
-    background-color: #ccc;
+    background: #ccc;
     cursor: not-allowed;
 }
 
@@ -220,7 +247,7 @@ main {
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: var(--neutral-light); /* Off-White */
     margin: 10% auto;
     padding: 30px;
     border-radius: 8px;
@@ -228,6 +255,7 @@ main {
     max-width: 500px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .modal-content.news-detail {
@@ -244,7 +272,7 @@ main {
 }
 
 .close:hover {
-    color: #e63946;
+    color: var(--secondary-color);
 }
 
 .form-group {
@@ -259,24 +287,34 @@ main {
 
 .form-group input {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
+    padding: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 4px;
+    background-color: var(--white);
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--accent-teal);
+    box-shadow: 0 0 0 2px rgba(42, 157, 143, 0.2);
 }
 
 form button {
-    background-color: #e63946;
-    color: #fff;
+    background: var(--gradient-primary);
+    color: var(--white);
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
     width: 100%;
 }
 
 form button:hover {
-    background-color: #c1121f;
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* News Detail Styles */
@@ -320,15 +358,15 @@ form button:hover {
     font-size: 24px;
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #e63946;
-    color: #333;
+    border-bottom: 2px solid var(--accent-teal);
+    color: var(--neutral-dark);
     display: flex;
     align-items: center;
 }
 
 .section-title i {
     margin-right: 10px;
-    color: #e63946;
+    color: var(--accent-purple);
 }
 
 /* Responsive Styles */
@@ -336,25 +374,33 @@ form button:hover {
     header .container {
         flex-direction: column;
     }
-    
+
+    .logo img {
+        height: 50px;
+    }
+
+    .logo h1 {
+        font-size: 24px;
+    }
+
     nav ul {
         margin-top: 15px;
         flex-wrap: wrap;
         justify-content: center;
     }
-    
+
     nav ul li {
         margin: 5px;
     }
-    
+
     .auth-buttons {
         margin-top: 15px;
     }
-    
+
     .news-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .modal-content {
         width: 95%;
         margin: 20% auto;

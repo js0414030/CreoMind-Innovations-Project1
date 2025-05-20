@@ -1,4 +1,5 @@
 /* Banner Slider Styles */
+@import url('colors.css');
 .banner-slider {
     margin-bottom: 40px;
     overflow: hidden;
@@ -63,17 +64,19 @@
 
 .read-more-btn {
     display: inline-block;
-    background-color: #e63946;
-    color: #fff;
+    background: var(--gradient-primary);
+    color: var(--white);
     padding: 10px 20px;
     border-radius: 4px;
     text-decoration: none;
     font-weight: 600;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .read-more-btn:hover {
-    background-color: #c1121f;
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .slider-btn {
@@ -123,11 +126,12 @@
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .dot.active {
-    background-color: #fff;
+    background-color: var(--accent-teal);
+    transform: scale(1.2);
 }
 
 /* Trending Section Styles */
@@ -139,15 +143,26 @@
     font-size: 24px;
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #e63946;
-    color: #333;
+    border-bottom: 2px solid var(--accent-teal);
+    color: var(--primary-color); /* Deep Blue */
     display: flex;
     align-items: center;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background-color: var(--accent-purple);
 }
 
 .section-title i {
     margin-right: 10px;
-    color: #e63946;
+    color: var(--accent-teal);
 }
 
 .trending-grid {
@@ -157,14 +172,15 @@
 }
 
 .trending-card {
-    background-color: #fff;
+    background-color: var(--neutral-light); /* Off-White */
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
     display: flex;
     flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .trending-card:hover {
@@ -181,8 +197,8 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    background-color: #e63946;
-    color: #fff;
+    background-color: var(--accent-yellow);
+    color: var(--neutral-dark);
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -192,6 +208,7 @@
     font-weight: 700;
     font-size: 16px;
     z-index: 1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .trending-image img {
@@ -215,10 +232,11 @@
 .trending-content h3 {
     margin-bottom: 10px;
     font-size: 18px;
+    color: var(--primary-color); /* Deep Blue */
 }
 
 .trending-content p {
-    color: #666;
+    color: var(--neutral-dark); /* Charcoal Black */
     margin-bottom: 15px;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -243,14 +261,17 @@
 }
 
 .view-all {
-    color: #e63946;
+    color: var(--accent-purple); /* Purple Tint */
     font-weight: 600;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    padding: 5px 10px;
+    border-radius: 4px;
 }
 
 .view-all:hover {
-    color: #c1121f;
-    text-decoration: underline;
+    background-color: var(--accent-purple);
+    color: var(--white);
+    text-decoration: none;
 }
 
 .category-cards {
@@ -260,12 +281,13 @@
 }
 
 .category-card {
-    background-color: #fff;
+    background-color: var(--neutral-light); /* Off-White */
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .category-card:hover {
@@ -290,16 +312,17 @@
 .category-card-content h3 {
     margin-bottom: 10px;
     font-size: 18px;
+    color: var(--primary-color); /* Deep Blue */
 }
 
 .category-card-content p {
-    color: #666;
+    color: var(--neutral-dark); /* Charcoal Black */
 }
 
 /* Newsletter Styles */
 .newsletter {
-    background-color: #1d3557;
-    color: #fff;
+    background: var(--gradient-primary);
+    color: var(--white);
     padding: 60px 0;
     margin-top: 40px;
 }
@@ -335,25 +358,27 @@
 }
 
 .newsletter-form button {
-    background-color: #e63946;
-    color: #fff;
+    background-color: var(--accent-yellow);
+    color: var(--neutral-dark);
     border: none;
     padding: 0 25px;
     border-radius: 0 4px 4px 0;
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .newsletter-form button:hover {
-    background-color: #c1121f;
+    background-color: var(--accent-teal);
+    color: var(--white);
+    transform: translateX(2px);
 }
 
 /* Enhanced Footer Styles */
 footer {
-    background-color: #333;
-    color: #fff;
+    background-color: var(--primary-color); /* Deep Blue */
+    color: var(--white);
     padding: 60px 0 20px;
 }
 
@@ -364,10 +389,22 @@ footer {
     margin-bottom: 30px;
 }
 
+.footer-logo .logo {
+    margin-bottom: 15px;
+}
+
+.footer-logo .logo img {
+    height: 50px;
+    margin-right: 10px;
+}
+
 .footer-logo h2 {
     font-size: 24px;
-    margin-bottom: 15px;
-    color: #fff;
+    background: linear-gradient(to right, var(--accent-yellow), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
 }
 
 .footer-logo p {
@@ -379,7 +416,7 @@ footer {
 .footer-social h3 {
     font-size: 18px;
     margin-bottom: 15px;
-    color: #fff;
+    color: var(--white);
 }
 
 .footer-links ul,
@@ -400,7 +437,7 @@ footer {
 
 .footer-links ul li a:hover,
 .footer-categories ul li a:hover {
-    color: #fff;
+    color: var(--white);
     text-decoration: underline;
 }
 
@@ -417,12 +454,14 @@ footer {
     height: 40px;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
-    color: #fff;
+    color: var(--white);
     transition: background-color 0.3s ease;
 }
 
 .social-icons a:hover {
-    background-color: #e63946;
+    background-color: var(--accent-teal); /* Teal Green */
+    transform: translateY(-3px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
 }
 
 .footer-bottom {
@@ -437,31 +476,39 @@ footer {
     .slide-content h2 {
         font-size: 24px;
     }
-    
+
     .slide-content p {
         font-size: 16px;
     }
-    
+
     .slider {
         height: 400px;
     }
-    
+
     .category-cards {
         grid-template-columns: 1fr;
     }
-    
+
     .newsletter-form {
         flex-direction: column;
     }
-    
+
     .newsletter-form input {
         border-radius: 4px;
         margin-bottom: 10px;
     }
-    
+
     .newsletter-form button {
         border-radius: 4px;
         padding: 12px;
+    }
+
+    .footer-logo .logo {
+        justify-content: center;
+    }
+
+    .footer-logo .logo img {
+        height: 40px;
     }
 }
 
@@ -469,21 +516,21 @@ footer {
     .slider {
         height: 300px;
     }
-    
+
     .slider-btn {
         width: 40px;
         height: 40px;
         font-size: 16px;
     }
-    
+
     .slide-content {
         padding: 20px;
     }
-    
+
     .slide-content h2 {
         font-size: 20px;
     }
-    
+
     .slide-content p {
         font-size: 14px;
     }
