@@ -1,0 +1,14 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment variables
+.env
+
+# Uploads folder
+uploads/
+
+# Editor folders
+.vscode/
+.DS_Store
