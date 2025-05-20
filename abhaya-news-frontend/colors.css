@@ -1,0 +1,37 @@
+/*
+ * Color scheme based on the Abhaya News brand identity
+ * These variables can be used throughout the site for consistent branding
+ */
+
+:root {
+    /* Primary colors (Brand Identity) */
+    --primary-color: #1D3557;       /* Deep Blue - matches the mic head and parts of the text */
+    --primary-dark: #142638;        /* Darker blue for hover states */
+    --primary-light: #2B4A7A;       /* Lighter blue for accents */
+
+    /* Secondary colors */
+    --secondary-color: #E63946;     /* Sunset Red - represents the bold red in "అభయ" */
+    --secondary-dark: #C62B38;      /* Darker red for hover states */
+    --secondary-light: #F05A67;     /* Lighter red for accents */
+
+    /* Accent colors */
+    --accent-yellow: #F1C40F;       /* Vibrant Yellow - inspired by the background */
+    --accent-teal: #2A9D8F;         /* Teal Green - for freshness in highlights or icons */
+    --accent-purple: #6C5CE7;       /* Purple Tint - reflects the purple gradient tone */
+
+    /* Neutral colors */
+    --neutral-dark: #2C2C2C;        /* Charcoal Black - for headers/text */
+    --neutral-medium: #666666;      /* Medium gray for secondary text */
+    --neutral-light: #F9F9F9;       /* Off-White - for background instead of plain white */
+
+    /* Additional colors */
+    --white: #ffffff;               /* White for backgrounds and text */
+    --black: #000000;               /* Black for text and borders */
+    --success: #28a745;             /* Green for success messages */
+    --warning: #ffc107;             /* Yellow for warnings */
+    --danger: #dc3545;              /* Red for errors */
+    --info: #17a2b8;                /* Teal for information */
+
+    /* Gradient Mix */
+    --gradient-primary: linear-gradient(to right, #E63946, #1D3557); /* For buttons or headers */
+}
