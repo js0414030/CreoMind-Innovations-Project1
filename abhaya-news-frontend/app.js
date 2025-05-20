@@ -49,23 +49,7 @@ nextPageBtn.addEventListener('click', () => {
     }
 });
 
-// Login Modal
-loginBtn.addEventListener('click', () => {
-    if (token) {
-        // Logout
-        localStorage.removeItem('token');
-        token = null;
-        loginBtn.textContent = 'Admin Login';
-        alert('Logged out successfully');
-    } else {
-        // Show login modal
-        loginModal.style.display = 'block';
-    }
-});
-
-closeLoginModal.addEventListener('click', () => {
-    loginModal.style.display = 'none';
-});
+// Login button is now handled by components.js
 
 // Close News Detail Modal
 closeNewsDetailModal.addEventListener('click', () => {
@@ -74,46 +58,12 @@ closeNewsDetailModal.addEventListener('click', () => {
 
 // Close modals when clicking outside
 window.addEventListener('click', (e) => {
-    if (e.target === loginModal) {
-        loginModal.style.display = 'none';
-    }
     if (e.target === newsDetailModal) {
         newsDetailModal.style.display = 'none';
     }
 });
 
-// Login Form Submission
-loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/admin/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            token = data.token;
-            localStorage.setItem('token', token);
-            loginBtn.textContent = 'Logout';
-            loginModal.style.display = 'none';
-            alert('Logged in successfully');
-        } else {
-            alert(data.message || 'Login failed');
-        }
-    } catch (error) {
-        console.error('Login error:', error);
-        alert('An error occurred during login');
-    }
-});
+// Login form submission is now handled by components.js
 
 // Fetch News from API
 async function fetchNews() {
