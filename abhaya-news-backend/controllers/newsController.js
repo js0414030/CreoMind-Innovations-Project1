@@ -3,20 +3,20 @@ const path = require('path');
 
 // POST /api/news/upload
 const uploadNews = async (req, res) => {
-    const { title, body, category } = req.body;
-    // Multer stores file info in req.file
-    const imageUrl = req.file
-      ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
-      : null;
+  const { title, body, category,imageUrl } = req.body;
 
-    try {
-        const news = new News({ title, body, category, imageUrl });
-        await news.save();
-        res.status(201).json({ message: "News uploaded", news });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+  
+  try {
+    const imageUrl = req.file ? req.file.path : null; // Cloudinary returns full URL in req.file.path
+    const news = new News({ title, body, category, imageUrl });
+    await news.save();
+    res.status(201).json({ message: "News uploaded", news });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+  
 };
+
 
 
 // PUT /api/news/:id
@@ -27,14 +27,12 @@ const updateNews = async (req, res) => {
     const news = await News.findById(req.params.id);
     if (!news) return res.status(404).json({ message: 'News not found' });
 
-    // Update text fields
     news.title = title || news.title;
     news.body = body || news.body;
     news.category = category || news.category;
 
-    // If new image uploaded, update image URL
     if (req.file) {
-      news.imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+      news.imageUrl = req.file.path; // Cloudinary full image URL
     }
 
     const updatedNews = await news.save();
@@ -44,6 +42,7 @@ const updateNews = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 
 
