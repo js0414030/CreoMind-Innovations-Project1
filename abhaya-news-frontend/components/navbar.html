@@ -3,16 +3,48 @@
         <img src="assests/logo.jpg" alt="Abhaya News Logo">
         <h1>ABHAYA NEWS</h1>
     </div>
-    <nav>
-        <ul>
-            <li><a href="index.html" id="nav-home">Home</a></li>
-            <li><a href="politics.html" id="nav-politics">Politics</a></li>
-            <li><a href="technology.html" id="nav-technology">Technology</a></li>
-            <li><a href="sports.html" id="nav-sports">Sports</a></li>
-            <li><a href="entertainment.html" id="nav-entertainment">Entertainment</a></li>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </button>
+
+    <nav class="navbar-nav" id="navbarNav">
+        <ul class="nav-main">
+            <li><a href="index.html" id="nav-home">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Home</span>
+            </a></li>
+            <li><a href="politics.html" id="nav-politics">
+                <span class="nav-icon">🏛️</span>
+                <span class="nav-text">Politics</span>
+            </a></li>
+            <li><a href="technology.html" id="nav-technology">
+                <span class="nav-icon">💻</span>
+                <span class="nav-text">Technology</span>
+            </a></li>
+            <li><a href="sports.html" id="nav-sports">
+                <span class="nav-icon">⚽</span>
+                <span class="nav-text">Sports</span>
+            </a></li>
+            <li><a href="entertainment.html" id="nav-entertainment">
+                <span class="nav-icon">🎬</span>
+                <span class="nav-text">Entertainment</span>
+            </a></li>
         </ul>
+
+        <!-- Mobile Auth Button -->
+        <div class="mobile-auth-section">
+            <button id="mobileLoginBtn" class="mobile-auth-btn">Admin Login</button>
+        </div>
     </nav>
+
     <div class="auth-buttons">
         <button id="loginBtn">Admin Login</button>
     </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 </div>
