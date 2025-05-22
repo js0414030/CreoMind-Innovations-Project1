@@ -73,10 +73,24 @@ function setupLoginButton() {
                         const password = document.getElementById('password').value;
 
                         try {
-                            // Simulate successful login (in a real app, this would call an API)
-                            // For demo purposes, we'll accept any email/password
-                            const token = 'demo-token-' + Date.now();
-                            localStorage.setItem('token', token);
+                            // Call the actual backend API for login
+                            const response = await fetch('/api/admin/login', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ email, password })
+                            });
+
+                            if (!response.ok) {
+                                const data = await response.json();
+                                throw new Error(data.message || `HTTP error! Status: ${response.status}`);
+                            }
+
+                            const data = await response.json();
+
+                            // Store the real JWT token from the backend
+                            localStorage.setItem('token', data.token);
                             loginBtn.textContent = 'Logout';
                             loginModal.style.display = 'none';
                             alert('Logged in successfully');
@@ -85,7 +99,7 @@ function setupLoginButton() {
                             window.location.href = 'admin.html';
                         } catch (error) {
                             console.error('Login error:', error);
-                            alert('An error occurred during login');
+                            alert(`Login failed: ${error.message}`);
                         }
                     });
                 }
