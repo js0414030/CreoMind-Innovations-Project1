@@ -26,7 +26,7 @@ router.get('/', getAllNews);
 router.get('/:id', getNewsById);
 
 // Protected route
-router.post('/upload', protect, uploadNews);
+// router.post('/upload', protect, uploadNews);
 // DELETE route
 router.delete('/:id', protect, deleteNews);
 
