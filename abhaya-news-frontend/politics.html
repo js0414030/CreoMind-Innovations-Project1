@@ -99,72 +99,14 @@
             <section class="latest-news-section">
                 <h2 class="section-title"><i class="fas fa-newspaper"></i> Latest Politics News</h2>
                 <div class="news-grid">
-                    <div class="news-card">
-                        <div class="news-image">
-                            <img src="https://source.unsplash.com/random/300x200/?congress" alt="Congress News">
-                        </div>
-                        <div class="news-content">
-                            <span class="news-category">Legislation</span>
-                            <h3>Congress Debates Healthcare Reform Package</h3>
-                            <p>Lawmakers consider sweeping changes to healthcare system amid growing public concerns.</p>
-                            <span class="news-date">May 19, 2025</span>
-                        </div>
-                    </div>
-                    <div class="news-card">
-                        <div class="news-image">
-                            <img src="https://source.unsplash.com/random/300x200/?election" alt="Election News">
-                        </div>
-                        <div class="news-content">
-                            <span class="news-category">Elections</span>
-                            <h3>Campaign Finance Reform Bill Introduced</h3>
-                            <p>New legislation aims to increase transparency in political campaign funding.</p>
-                            <span class="news-date">May 18, 2025</span>
-                        </div>
-                    </div>
-                    <div class="news-card">
-                        <div class="news-image">
-                            <img src="https://source.unsplash.com/random/300x200/?government" alt="Government News">
-                        </div>
-                        <div class="news-content">
-                            <span class="news-category">Government</span>
-                            <h3>Cabinet Reshuffle Announced Following Minister's Resignation</h3>
-                            <p>Prime Minister appoints new ministers in key positions after unexpected departure.</p>
-                            <span class="news-date">May 18, 2025</span>
-                        </div>
-                    </div>
-                    <div class="news-card">
-                        <div class="news-image">
-                            <img src="https://source.unsplash.com/random/300x200/?diplomacy" alt="Diplomacy News">
-                        </div>
-                        <div class="news-content">
-                            <span class="news-category">International</span>
-                            <h3>Diplomatic Breakthrough in Regional Peace Talks</h3>
-                            <p>Nations reach preliminary agreement after months of negotiations.</p>
-                            <span class="news-date">May 17, 2025</span>
-                        </div>
-                    </div>
-                    <div class="news-card">
-                        <div class="news-image">
-                            <img src="https://source.unsplash.com/random/300x200/?policy" alt="Policy News">
-                        </div>
-                        <div class="news-content">
-                            <span class="news-category">Policy</span>
-                            <h3>Environmental Policy Overhaul Announced</h3>
-                            <p>Government unveils ambitious climate action plan with new emissions targets.</p>
-                            <span class="news-date">May 17, 2025</span>
-                        </div>
-                    </div>
-                    <div class="news-card">
-                        <div class="news-image">
-                            <img src="https://source.unsplash.com/random/300x200/?politics" alt="Politics News">
-                        </div>
-                        <div class="news-content">
-                            <span class="news-category">Politics</span>
-                            <h3>Opposition Parties Form Coalition Ahead of Elections</h3>
-                            <p>Strategic alliance aims to present unified challenge to incumbent government.</p>
-                            <span class="news-date">May 16, 2025</span>
-                        </div>
-                    </div>
+                    <!-- News articles will be loaded here by JavaScript -->
+                    <div class="loading">Loading politics news...</div>
+                </div>
+
+                <div class="pagination">
+                    <button id="prevPage" disabled>Previous</button>
+                    <span id="currentPage">Page 1</span>
+                    <button id="nextPage">Next</button>
                 </div>
             </section>
         </div>
@@ -207,6 +149,17 @@
         </div>
     </div>
 
+    <!-- News Detail Modal -->
+    <div id="newsDetailModal" class="modal">
+        <div class="modal-content news-detail">
+            <span class="close">&times;</span>
+            <div id="newsDetailContent">
+                <!-- News detail content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="toast.js"></script>
     <script src="components.js"></script>
     <script src="slider.js"></script>
     <script src="category.js"></script>

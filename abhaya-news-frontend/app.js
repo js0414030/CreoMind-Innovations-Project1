@@ -29,6 +29,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (token) {
         loginBtn.textContent = 'Logout';
     }
+    
+    // Check for URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+    
+    // Show toast messages based on status parameter
+    if (status) {
+        switch (status) {
+            case 'loggedout':
+                showSuccessToast('Logged out successfully');
+                break;
+            case 'needlogin':
+                showInfoToast('Please log in to access the admin panel');
+                break;
+        }
+        
+        // Clean up the URL to remove the parameter (without reloading the page)
+        const newUrl = window.location.pathname + window.location.hash;
+        window.history.replaceState({}, document.title, newUrl);
+    }
 });
 
 // We're now using direct links to category pages, so we don't need this event listener
@@ -165,11 +185,11 @@ async function fetchNewsDetail(id) {
         if (response.ok) {
             displayNewsDetail(article);
         } else {
-            alert(article.message || 'Failed to fetch news detail');
+            showErrorToast(article.message || 'Failed to fetch news detail');
         }
     } catch (error) {
         console.error('Fetch detail error:', error);
-        alert('An error occurred while fetching news detail');
+        showErrorToast('An error occurred while fetching news detail');
     }
 }
 

@@ -99,72 +99,14 @@
             <section class="latest-news-section">
                 <h2 class="section-title"><i class="fas fa-running"></i> Latest Sports News</h2>
                 <div class="news-grid">
-                    <div class="news-card">
-                        <div class="news-image">
-                            <img src="https://source.unsplash.com/random/300x200/?basketball" alt="Basketball News">
-                        </div>
-                        <div class="news-content">
-                            <span class="news-category">Basketball</span>
-                            <h3>League Announces Expansion with Two New Franchises</h3>
-                            <p>Professional basketball set to grow with addition of teams in major markets.</p>
-                            <span class="news-date">May 19, 2025</span>
-                        </div>
-                    </div>
-                    <div class="news-card">
-                        <div class="news-image">
-                            <img src="https://source.unsplash.com/random/300x200/?formula1" alt="Formula 1 News">
-                        </div>
-                        <div class="news-content">
-                            <span class="news-category">Motorsport</span>
-                            <h3>Formula 1 Introduces New Sustainability Regulations</h3>
-                            <p>Racing series commits to carbon neutrality with sweeping technical changes.</p>
-                            <span class="news-date">May 18, 2025</span>
-                        </div>
-                    </div>
-                    <div class="news-card">
-                        <div class="news-image">
-                            <img src="https://source.unsplash.com/random/300x200/?golf" alt="Golf News">
-                        </div>
-                        <div class="news-content">
-                            <span class="news-category">Golf</span>
-                            <h3>Major Championship Returns to Historic Venue</h3>
-                            <p>Prestigious tournament set to revisit legendary course after two-decade absence.</p>
-                            <span class="news-date">May 18, 2025</span>
-                        </div>
-                    </div>
-                    <div class="news-card">
-                        <div class="news-image">
-                            <img src="https://source.unsplash.com/random/300x200/?swimming" alt="Swimming News">
-                        </div>
-                        <div class="news-content">
-                            <span class="news-category">Swimming</span>
-                            <h3>World Record Shattered at International Championship</h3>
-                            <p>Young swimmer breaks decade-old record with stunning performance.</p>
-                            <span class="news-date">May 17, 2025</span>
-                        </div>
-                    </div>
-                    <div class="news-card">
-                        <div class="news-image">
-                            <img src="https://source.unsplash.com/random/300x200/?athletics" alt="Athletics News">
-                        </div>
-                        <div class="news-content">
-                            <span class="news-category">Athletics</span>
-                            <h3>Sprinter Makes Comeback After Career-Threatening Injury</h3>
-                            <p>Inspirational return to competition following two years of rehabilitation.</p>
-                            <span class="news-date">May 17, 2025</span>
-                        </div>
-                    </div>
-                    <div class="news-card">
-                        <div class="news-image">
-                            <img src="https://source.unsplash.com/random/300x200/?rugby" alt="Rugby News">
-                        </div>
-                        <div class="news-content">
-                            <span class="news-category">Rugby</span>
-                            <h3>International Tournament Expands with New Participating Nations</h3>
-                            <p>Growing global interest leads to inclusion of emerging rugby nations.</p>
-                            <span class="news-date">May 16, 2025</span>
-                        </div>
-                    </div>
+                    <!-- News articles will be loaded here by JavaScript -->
+                    <div class="loading">Loading sports news...</div>
+                </div>
+
+                <div class="pagination">
+                    <button id="prevPage" disabled>Previous</button>
+                    <span id="currentPage">Page 1</span>
+                    <button id="nextPage">Next</button>
                 </div>
             </section>
 
@@ -230,6 +172,17 @@
         </div>
     </div>
 
+    <!-- News Detail Modal -->
+    <div id="newsDetailModal" class="modal">
+        <div class="modal-content news-detail">
+            <span class="close">&times;</span>
+            <div id="newsDetailContent">
+                <!-- News detail content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="toast.js"></script>
     <script src="components.js"></script>
     <script src="slider.js"></script>
     <script src="category.js"></script>
