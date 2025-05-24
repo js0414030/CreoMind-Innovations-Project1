@@ -29,11 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (token) {
         loginBtn.textContent = 'Logout';
     }
-    
+
     // Check for URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const status = urlParams.get('status');
-    
+
     // Show toast messages based on status parameter
     if (status) {
         switch (status) {
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 showInfoToast('Please log in to access the admin panel');
                 break;
         }
-        
+
         // Clean up the URL to remove the parameter (without reloading the page)
         const newUrl = window.location.pathname + window.location.hash;
         window.history.replaceState({}, document.title, newUrl);
@@ -131,12 +131,13 @@ function displayNews(news) {
         return;
     }
 
-    // If we have featured news, start from the second article
-    const startIndex = currentPage === 1 ? 1 : 0;
+    // // If we have featured news, start from the second article
+    // const startIndex = currentPage === 1 ? 1 : 0;
 
     let html = '';
 
-    for (let i = startIndex; i < news.length; i++) {
+    // for (let i = startIndex; i < news.length; i++) {
+    for (let i = 0; i < news.length; i++) {
         const article = news[i];
         const date = new Date(article.createdAt).toLocaleDateString();
         const truncatedBody = article.body.length > 100
