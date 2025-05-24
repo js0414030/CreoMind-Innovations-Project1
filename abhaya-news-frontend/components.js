@@ -23,6 +23,7 @@ async function loadComponent(elementId, componentPath) {
 // Function to set up the login button functionality
 function setupLoginButton() {
     const loginBtn = document.getElementById('loginBtn');
+    const adminPanelBtn = document.getElementById('adminPanelBtn');
     if (!loginBtn) return;
 
     const token = localStorage.getItem('token');
@@ -30,6 +31,16 @@ function setupLoginButton() {
     // Check if user is logged in
     if (token) {
         loginBtn.textContent = 'Logout';
+        if (adminPanelBtn) {
+            adminPanelBtn.style.display = 'inline-block';
+        }
+    }
+
+    // Admin Panel Button Functionality
+    if (adminPanelBtn) {
+        adminPanelBtn.addEventListener('click', () => {
+            window.location.href = 'admin.html';
+        });
     }
 
     // Login Button Functionality
@@ -38,9 +49,14 @@ function setupLoginButton() {
             // Logout
             localStorage.removeItem('token');
             loginBtn.textContent = 'Admin Login';
-            alert('Logged out successfully');
-            // Reload the page to update UI
-            window.location.reload();
+            if (adminPanelBtn) {
+                adminPanelBtn.style.display = 'none';
+            }
+            showSuccessToast('Logged out successfully');
+            // Reload the page to update UI after a short delay to show the toast
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         } else {
             // Check if we're on the index page and have a login modal
             const loginModal = document.getElementById('loginModal');
@@ -92,14 +108,19 @@ function setupLoginButton() {
                             // Store the real JWT token from the backend
                             localStorage.setItem('token', data.token);
                             loginBtn.textContent = 'Logout';
+                            if (adminPanelBtn) {
+                                adminPanelBtn.style.display = 'inline-block';
+                            }
                             loginModal.style.display = 'none';
-                            alert('Logged in successfully');
+                            showSuccessToast('Logged in successfully');
 
-                            // Redirect to admin page
-                            window.location.href = 'admin.html';
+                            // Redirect to admin page after a short delay to show the toast
+                            setTimeout(() => {
+                                window.location.href = 'admin.html';
+                            }, 1000);
                         } catch (error) {
                             console.error('Login error:', error);
-                            alert(`Login failed: ${error.message}`);
+                            showErrorToast(`Login failed: ${error.message}`);
                         }
                     });
                 }
@@ -123,6 +144,12 @@ function setActiveNavLink() {
         'technology.html': 'nav-technology',
         'sports.html': 'nav-sports',
         'entertainment.html': 'nav-entertainment',
+        'business.html': 'nav-business',
+        'health.html': 'nav-health',
+        'science.html': 'nav-science',
+        'world.html': 'nav-world',
+        'lifestyle.html': 'nav-lifestyle',
+        'education.html': 'nav-education',
         'admin.html': 'nav-home' // Admin page highlights home
     };
 
@@ -140,6 +167,27 @@ function setActiveNavLink() {
     }
 }
 
+// Function to set up dropdown navigation
+function setupDropdownNavigation() {
+    const dropdown = document.querySelector('.dropdown');
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+
+    if (dropdown && dropdownToggle) {
+        // Handle click on dropdown toggle for mobile
+        dropdownToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            dropdown.classList.toggle('dropdown-active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('dropdown-active');
+            }
+        });
+    }
+}
+
 // Load components when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Check if we're on the admin page
@@ -148,7 +196,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load navbar if it exists on the page
     const navbarElement = document.getElementById('navbar');
     if (navbarElement) {
-        loadComponent('navbar', 'components/navbar.html');
+        loadComponent('navbar', 'components/navbar.html').then(() => {
+            setupDropdownNavigation();
+        });
     }
 
     // Load the appropriate footer

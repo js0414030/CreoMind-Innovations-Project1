@@ -1,8 +1,8 @@
 <div class="container">
-    <div class="logo">
+    <a href="index.html" class="logo">
         <img src="assests/logo.jpg" alt="Abhaya News Logo">
         <h1>ABHAYA NEWS</h1>
-    </div>
+    </a>
     <nav>
         <ul>
             <li><a href="index.html" id="nav-home">Home</a></li>
@@ -10,9 +10,21 @@
             <li><a href="technology.html" id="nav-technology">Technology</a></li>
             <li><a href="sports.html" id="nav-sports">Sports</a></li>
             <li><a href="entertainment.html" id="nav-entertainment">Entertainment</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">More <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-menu">
+                    <a href="business.html" id="nav-business">Business</a>
+                    <a href="health.html" id="nav-health">Health</a>
+                    <a href="science.html" id="nav-science">Science</a>
+                    <a href="world.html" id="nav-world">World</a>
+                    <a href="lifestyle.html" id="nav-lifestyle">Lifestyle</a>
+                    <a href="education.html" id="nav-education">Education</a>
+                </div>
+            </li>
         </ul>
     </nav>
     <div class="auth-buttons">
+        <button id="adminPanelBtn" style="display: none;">Admin Panel</button>
         <button id="loginBtn">Admin Login</button>
     </div>
 </div>
