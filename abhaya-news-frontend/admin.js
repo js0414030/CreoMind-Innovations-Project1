@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!token) {
         // Redirect to login page if not authenticated
-        window.location.href = 'index.html';
+        window.location.href = 'index.html?status=needlogin';
         return;
     }
 
@@ -77,7 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // Logout
 logoutBtn.addEventListener('click', () => {
     localStorage.removeItem('token');
-    window.location.href = 'index.html';
+    // Redirect to homepage with a logout parameter
+    window.location.href = 'index.html?status=loggedout';
 });
 
 // Upload News
@@ -86,8 +87,10 @@ uploadForm.addEventListener('submit', async (e) => {
 
     const token = localStorage.getItem('token');
     if (!token) {
-        alert('You must be logged in to upload news');
-        window.location.href = 'index.html';
+        showErrorToast('You must be logged in to upload news');
+        setTimeout(() => {
+            window.location.href = 'index.html?status=needlogin';
+        }, 1000);
         return;
     }
 
@@ -128,36 +131,20 @@ uploadForm.addEventListener('submit', async (e) => {
 
         const data = await response.json();
 
-        // Show success message
-        const successMessage = document.getElementById('successMessage');
-        successMessage.textContent = 'News uploaded successfully!';
-        successMessage.style.display = 'block';
-
-        // Hide after 3 seconds
-        setTimeout(() => {
-            successMessage.style.display = 'none';
-        }, 3000);
+        // Show success message with toast
+        showSuccessToast('News uploaded successfully!');
 
         // Reset form
         uploadForm.reset();
     } catch (error) {
         console.error('Upload error:', error);
 
-        // Show error message
-        const errorMessage = document.getElementById('errorMessage');
-
+        // Show error message with toast
         if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
-            errorMessage.textContent = 'Cannot connect to the server. Please make sure the backend is running.';
+            showErrorToast('Cannot connect to the server. Please make sure the backend is running.');
         } else {
-            errorMessage.textContent = `Error: ${error.message}`;
+            showErrorToast(`Error: ${error.message}`);
         }
-
-        errorMessage.style.display = 'block';
-
-        // Hide after 5 seconds
-        setTimeout(() => {
-            errorMessage.style.display = 'none';
-        }, 5000);
     } finally {
         // Reset button state
         submitButton.textContent = originalButtonText;
@@ -172,7 +159,7 @@ uploadForm.addEventListener('submit', async (e) => {
 async function loadNewsTable(page) {
     const token = localStorage.getItem('token');
     if (!token) {
-        window.location.href = 'index.html';
+        window.location.href = 'index.html?status=needlogin';
         return;
     }
 
@@ -245,7 +232,7 @@ async function loadNewsTable(page) {
 async function openEditModal(newsId) {
     const token = localStorage.getItem('token');
     if (!token) {
-        window.location.href = 'index.html';
+        window.location.href = 'index.html?status=needlogin';
         return;
     }
 
@@ -282,7 +269,7 @@ async function handleEditNewsSubmit(e) {
 
     const token = localStorage.getItem('token');
     if (!token) {
-        window.location.href = 'index.html';
+        window.location.href = 'index.html?status=needlogin';
         return;
     }
 
@@ -342,13 +329,15 @@ async function handleEditNewsSubmit(e) {
 
 // Handle Delete News
 async function handleDeleteNews(newsId) {
+    // We'll keep the confirm dialog for now as implementing a custom modal would require more changes
+    // In a real-world scenario, we would replace this with a custom modal dialog
     if (!confirm('Are you sure you want to delete this news article?')) {
         return;
     }
 
     const token = localStorage.getItem('token');
     if (!token) {
-        window.location.href = 'index.html';
+        window.location.href = 'index.html?status=needlogin';
         return;
     }
 
@@ -378,24 +367,36 @@ async function handleDeleteNews(newsId) {
 
 // Show Success Message
 function showSuccess(message) {
+    // Use toast notification
+    showSuccessToast(message);
+    
+    // Also update the existing success message element for backward compatibility
     const successMessage = document.getElementById('successMessage');
-    successMessage.textContent = message;
-    successMessage.style.display = 'block';
+    if (successMessage) {
+        successMessage.textContent = message;
+        successMessage.style.display = 'block';
 
-    // Hide after 3 seconds
-    setTimeout(() => {
-        successMessage.style.display = 'none';
-    }, 3000);
+        // Hide after 3 seconds
+        setTimeout(() => {
+            successMessage.style.display = 'none';
+        }, 3000);
+    }
 }
 
 // Show Error Message
 function showError(message) {
+    // Use toast notification
+    showErrorToast(message);
+    
+    // Also update the existing error message element for backward compatibility
     const errorMessage = document.getElementById('errorMessage');
-    errorMessage.textContent = message;
-    errorMessage.style.display = 'block';
+    if (errorMessage) {
+        errorMessage.textContent = message;
+        errorMessage.style.display = 'block';
 
-    // Hide after 5 seconds
-    setTimeout(() => {
-        errorMessage.style.display = 'none';
-    }, 5000);
+        // Hide after 5 seconds
+        setTimeout(() => {
+            errorMessage.style.display = 'none';
+        }, 5000);
+    }
 }
