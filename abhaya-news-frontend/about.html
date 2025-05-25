@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Abhaya News</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .about-hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .about-hero p {
+            font-size: 1.3em;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .about-content {
+            padding: 80px 0;
+        }
+
+        .about-section {
+            margin-bottom: 60px;
+        }
+
+        .about-section h2 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .about-section p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #34495e;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            text-align: justify;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .value-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .value-card i {
+            font-size: 3em;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+
+        .value-card h3 {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .value-card p {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+
+
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 2.5em;
+            }
+
+            .about-hero p {
+                font-size: 1.1em;
+            }
+
+            .about-section h2 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header-placeholder"></header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="about-hero">
+            <div class="container">
+                <h1><i class="fas fa-newspaper"></i> About Abhaya News</h1>
+                <p>Your trusted source for accurate, timely, and unbiased news coverage from around the world</p>
+            </div>
+        </section>
+
+        <!-- About Content -->
+        <section class="about-content">
+            <div class="container">
+                <!-- Our Story -->
+                <div class="about-section">
+                    <h2>Our Story</h2>
+                    <p>
+                        Founded in 2024, Abhaya News emerged from a simple yet powerful vision: to provide fearless,
+                        independent journalism that serves the public interest. In an era of information overload and
+                        misinformation, we stand as a beacon of truth, committed to delivering accurate, timely, and
+                        unbiased news coverage.
+                    </p>
+                    <p>
+                        Our name "Abhaya" means "fearless" in Sanskrit, reflecting our commitment to bold journalism
+                        that doesn't shy away from difficult truths. We believe that informed citizens are the
+                        foundation of a healthy democracy, and we're dedicated to providing the information you need
+                        to make informed decisions about your world.
+                    </p>
+                </div>
+
+                <!-- Our Mission -->
+                <div class="about-section">
+                    <h2>Our Mission</h2>
+                    <p>
+                        To deliver fearless, independent journalism that informs, educates, and empowers our readers.
+                        We are committed to upholding the highest standards of journalistic integrity while making
+                        news accessible to everyone, regardless of their background or location.
+                    </p>
+                </div>
+
+                <!-- Our Values -->
+                <div class="about-section">
+                    <h2>Our Values</h2>
+                    <div class="values-grid">
+                        <div class="value-card">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>Integrity</h3>
+                            <p>We maintain the highest ethical standards in all our reporting, ensuring accuracy and fairness in every story.</p>
+                        </div>
+                        <div class="value-card">
+                            <i class="fas fa-balance-scale"></i>
+                            <h3>Impartiality</h3>
+                            <p>We present all sides of a story, allowing our readers to form their own informed opinions.</p>
+                        </div>
+                        <div class="value-card">
+                            <i class="fas fa-clock"></i>
+                            <h3>Timeliness</h3>
+                            <p>We deliver breaking news as it happens, keeping you informed about the latest developments.</p>
+                        </div>
+                        <div class="value-card">
+                            <i class="fas fa-users"></i>
+                            <h3>Community</h3>
+                            <p>We serve our readers and the broader community, focusing on stories that matter to real people.</p>
+                        </div>
+                        <div class="value-card">
+                            <i class="fas fa-globe"></i>
+                            <h3>Global Perspective</h3>
+                            <p>We provide comprehensive coverage of local, national, and international news with global context.</p>
+                        </div>
+                        <div class="value-card">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Innovation</h3>
+                            <p>We embrace new technologies and storytelling methods to enhance our journalism and reader experience.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer-placeholder"></footer>
+
+    <!-- Scripts -->
+    <script src="toast.js"></script>
+    <script src="components.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

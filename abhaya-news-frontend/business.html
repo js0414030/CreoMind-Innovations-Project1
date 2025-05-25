@@ -17,12 +17,17 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <main>
-        <!-- Banner Section -->
-        <section class="category-banner">
-            <div class="container">
-                <div class="banner-content">
-                    <h1><i class="fas fa-chart-line"></i> Business News</h1>
-                    <p>Stay updated with the latest business news, market trends, financial insights, and economic developments from around the world.</p>
+        <!-- Business Banner Slider -->
+        <section class="banner-slider">
+            <div class="slider-container">
+                <div class="slider">
+                    <!-- Slider content will be loaded dynamically -->
+                    <div class="loading">Loading latest business news...</div>
+                </div>
+                <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                <div class="slider-dots">
+                    <!-- Dots will be generated dynamically -->
                 </div>
             </div>
         </section>
@@ -32,39 +37,8 @@
             <section class="trending-section">
                 <h2 class="section-title"><i class="fas fa-fire"></i> Trending in Business</h2>
                 <div class="trending-grid">
-                    <div class="trending-card">
-                        <div class="trending-image">
-                            <span class="trending-badge">1</span>
-                            <img src="https://source.unsplash.com/random/300x200/?stock-market" alt="Stock Market News">
-                        </div>
-                        <div class="trending-content">
-                            <span class="news-category">Markets</span>
-                            <h3>Stock Markets Reach New Heights Amid Economic Recovery</h3>
-                            <p>Major indices continue their upward trajectory as investors show confidence in economic recovery plans.</p>
-                        </div>
-                    </div>
-                    <div class="trending-card">
-                        <div class="trending-image">
-                            <span class="trending-badge">2</span>
-                            <img src="https://source.unsplash.com/random/300x200/?cryptocurrency" alt="Crypto News">
-                        </div>
-                        <div class="trending-content">
-                            <span class="news-category">Cryptocurrency</span>
-                            <h3>Digital Currency Adoption Accelerates in Financial Sector</h3>
-                            <p>Major banks and financial institutions embrace blockchain technology and digital currencies.</p>
-                        </div>
-                    </div>
-                    <div class="trending-card">
-                        <div class="trending-image">
-                            <span class="trending-badge">3</span>
-                            <img src="https://source.unsplash.com/random/300x200/?startup" alt="Startup News">
-                        </div>
-                        <div class="trending-content">
-                            <span class="news-category">Startups</span>
-                            <h3>Tech Startup Raises Record-Breaking Series A Funding</h3>
-                            <p>Innovative fintech company secures massive investment to expand operations globally.</p>
-                        </div>
-                    </div>
+                    <!-- Trending content will be loaded dynamically -->
+                    <div class="loading">Loading trending business news...</div>
                 </div>
             </section>
 
@@ -157,7 +131,7 @@
 
     <script src="toast.js"></script>
     <script src="components.js"></script>
-    <script src="slider.js"></script>
+    <script src="app.js"></script>
     <script src="category.js"></script>
 </body>
 </html>
