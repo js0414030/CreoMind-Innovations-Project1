@@ -40,20 +40,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log('Loading category page:', currentCategoryName);
 
+    // Wait for fetchNewsDetail to be available
+    await waitForFetchNewsDetail();
+
     // Initialize the category page
     initializeCategoryPage();
 
     // Set up pagination
     setupCategoryPagination();
-
-    // Newsletter form submission
-    setupNewsletterForm();
 });
+
+// Wait for fetchNewsDetail to be available
+function waitForFetchNewsDetail() {
+    return new Promise((resolve) => {
+        if (window.fetchNewsDetail) {
+            resolve();
+        } else {
+            const checkInterval = setInterval(() => {
+                if (window.fetchNewsDetail) {
+                    clearInterval(checkInterval);
+                    resolve();
+                }
+            }, 100);
+        }
+    });
+}
 
 // Initialize category page with real data
 async function initializeCategoryPage() {
     await fetchCategoryNews();
-    await fetchTrendingNews();
+    // Only show main category news - no trending, no sliders
 }
 
 // Fetch news for the current category
@@ -119,7 +135,13 @@ function displayCategoryNews(news) {
     document.querySelectorAll('.news-card').forEach(card => {
         card.addEventListener('click', () => {
             const newsId = card.dataset.id;
-            fetchNewsDetail(newsId);
+
+            if (window.fetchNewsDetail && newsId) {
+                window.fetchNewsDetail(newsId);
+            } else {
+                console.error('fetchNewsDetail not available or no newsId');
+                alert('Unable to open news article. Please try again.');
+            }
         });
     });
 }
