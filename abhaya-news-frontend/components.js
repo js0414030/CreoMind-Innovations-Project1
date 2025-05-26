@@ -87,6 +87,19 @@ function setupLoginButton() {
 
                         const email = document.getElementById('email').value;
                         const password = document.getElementById('password').value;
+                        const submitButton = loginForm.querySelector('button[type="submit"]');
+                        const originalButtonText = submitButton.textContent;
+
+                        // Validate inputs
+                        if (!email || !password) {
+                            showErrorToast('Please fill in all fields');
+                            return;
+                        }
+
+                        // Show loading state
+                        submitButton.disabled = true;
+                        submitButton.classList.add('loading');
+                        submitButton.textContent = 'Signing In...';
 
                         try {
                             // Call the actual backend API for login
@@ -111,16 +124,34 @@ function setupLoginButton() {
                             if (adminPanelBtn) {
                                 adminPanelBtn.style.display = 'inline-block';
                             }
+
+                            // Clear form
+                            loginForm.reset();
                             loginModal.style.display = 'none';
-                            showSuccessToast('Logged in successfully');
+                            showSuccessToast('Welcome back! Redirecting to admin panel...');
 
                             // Redirect to admin page after a short delay to show the toast
                             setTimeout(() => {
                                 window.location.href = 'admin.html';
-                            }, 1000);
+                            }, 1500);
                         } catch (error) {
                             console.error('Login error:', error);
-                            showErrorToast(`Login failed: ${error.message}`);
+                            let errorMessage = 'Login failed. Please try again.';
+
+                            if (error.message.includes('Invalid credentials')) {
+                                errorMessage = 'Invalid email or password. Please check your credentials.';
+                            } else if (error.message.includes('Failed to fetch')) {
+                                errorMessage = 'Unable to connect to server. Please check your connection.';
+                            } else if (error.message) {
+                                errorMessage = error.message;
+                            }
+
+                            showErrorToast(errorMessage);
+                        } finally {
+                            // Reset button state
+                            submitButton.disabled = false;
+                            submitButton.classList.remove('loading');
+                            submitButton.textContent = originalButtonText;
                         }
                     });
                 }

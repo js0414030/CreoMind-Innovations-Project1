@@ -307,7 +307,7 @@ main {
     font-weight: 600;
 }
 
-/* Modal Styles */
+/* Enhanced Modal Styles */
 .modal {
     display: none;
     position: fixed;
@@ -317,78 +317,251 @@ main {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .modal-content {
-    background-color: var(--neutral-light); /* Off-White */
-    margin: 10% auto;
-    padding: 30px;
+    background-color: var(--white);
+    margin: 15% auto;
+    padding: 0;
     border-radius: 8px;
     width: 80%;
-    max-width: 500px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-width: 320px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
     position: relative;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: none;
+    overflow: hidden;
+    animation: modalSlideIn 0.4s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .modal-content.news-detail {
     max-width: 800px;
 }
 
+/* Enhanced Close Button */
 .close {
     position: absolute;
-    right: 20px;
+    right: 15px;
     top: 15px;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: bold;
     cursor: pointer;
+    color: #999;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1001;
 }
 
 .close:hover {
-    color: var(--secondary-color);
+    color: var(--white);
+    background: var(--secondary-color);
+    transform: scale(1.1);
+}
+
+/* Login Modal Specific Styles */
+.modal-content h2 {
+    background: var(--gradient-primary);
+    color: var(--white);
+    margin: 0;
+    padding: 16px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-content h2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.modal-content form {
+    padding: 20px;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    position: relative;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 5px;
     font-weight: 600;
+    color: var(--neutral-dark);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.form-group label i {
+    color: var(--primary-color);
+    font-size: 13px;
 }
 
 .form-group input {
     width: 100%;
-    padding: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
+    padding: 10px;
+    border: 1px solid #e1e5e9;
+    border-radius: 5px;
     background-color: var(--white);
     transition: all 0.3s ease;
+    font-size: 14px;
+    box-sizing: border-box;
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: var(--accent-teal);
-    box-shadow: 0 0 0 2px rgba(42, 157, 143, 0.2);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(29, 53, 87, 0.1);
+    transform: translateY(-1px);
 }
 
-form button {
+.form-group input:hover {
+    border-color: var(--primary-light);
+}
+
+/* Input validation states */
+.form-group input:valid {
+    border-color: var(--success);
+}
+
+.form-group input:invalid:not(:placeholder-shown) {
+    border-color: var(--danger);
+}
+
+/* Enhanced Login Button */
+form button[type="submit"] {
     background: var(--gradient-primary);
     color: var(--white);
     border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
+    padding: 10px 16px;
+    border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
     width: 100%;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
-form button:hover {
+form button[type="submit"] i {
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+
+form button[type="submit"]:hover {
     background: var(--secondary-color);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(230, 57, 70, 0.3);
+}
+
+form button[type="submit"]:hover i {
+    transform: translateX(3px);
+}
+
+form button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* Loading state for login button */
+form button[type="submit"]:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+form button[type="submit"].loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: var(--white);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Login Footer */
+.login-footer {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e1e5e9;
+    text-align: center;
+}
+
+.login-footer p {
+    color: #666;
+    font-size: 11px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.login-footer i {
+    color: var(--success);
+    font-size: 12px;
 }
 
 /* News Detail Styles */
@@ -646,8 +819,46 @@ form button:hover {
     }
 
     .modal-content {
-        width: 95%;
-        margin: 20% auto;
+        width: 85%;
+        margin: 25% auto;
+        max-width: 280px;
+    }
+
+    .modal-content h2 {
+        padding: 14px 16px;
+        font-size: 16px;
+    }
+
+    .modal-content form {
+        padding: 16px;
+    }
+
+    .form-group {
+        margin-bottom: 14px;
+    }
+
+    .form-group label {
+        font-size: 11px;
+        margin-bottom: 4px;
+    }
+
+    .form-group input {
+        padding: 8px;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    form button[type="submit"] {
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+
+    .login-footer {
+        margin-top: 10px;
+        padding-top: 10px;
+    }
+
+    .login-footer p {
+        font-size: 10px;
     }
 
     .toast-container {
