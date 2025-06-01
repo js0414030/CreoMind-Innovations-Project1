@@ -1,7 +1,7 @@
 // API Base URL - Use relative path for proxy to work
 const API_BASE_URL = '/api';
 
-// DOM Elements
+// DOM Elements - News
 const uploadForm = document.getElementById('uploadForm');
 const logoutBtn = document.getElementById('logoutBtn');
 const newsTableBody = document.getElementById('newsTableBody');
@@ -12,10 +12,25 @@ const editNewsModal = document.getElementById('editNewsModal');
 const editNewsForm = document.getElementById('editNewsForm');
 const closeEditModal = document.getElementById('closeEditModal');
 
-// Pagination state
+// DOM Elements - YouTube Videos
+const uploadVideoForm = document.getElementById('uploadVideoForm');
+const videoTableBody = document.getElementById('videoTableBody');
+const prevVideoPageBtn = document.getElementById('prevVideoPageBtn');
+const nextVideoPageBtn = document.getElementById('nextVideoPageBtn');
+const videoPageInfo = document.getElementById('videoPageInfo');
+const editVideoModal = document.getElementById('editVideoModal');
+const editVideoForm = document.getElementById('editVideoForm');
+const closeEditVideoModal = document.getElementById('closeEditVideoModal');
+
+// Pagination state - News
 let currentPage = 1;
 let totalPages = 1;
 const limit = 10;
+
+// Pagination state - YouTube Videos
+let currentVideoPage = 1;
+let totalVideoPages = 1;
+const videoLimit = 10;
 
 // Check Authentication
 document.addEventListener('DOMContentLoaded', () => {
@@ -44,8 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Load news table
     loadNewsTable(currentPage);
+    
+    // Load YouTube videos table
+    if (videoTableBody) {
+        loadVideosTable(currentVideoPage);
+    }
 
-    // Set up pagination event listeners
+    // Set up pagination event listeners for news
     prevPageBtn.addEventListener('click', () => {
         if (currentPage > 1) {
             loadNewsTable(currentPage - 1);
@@ -57,21 +77,52 @@ document.addEventListener('DOMContentLoaded', () => {
             loadNewsTable(currentPage + 1);
         }
     });
+    
+    // Set up pagination event listeners for videos
+    prevVideoPageBtn.addEventListener('click', () => {
+        if (currentVideoPage > 1) {
+            loadVideosTable(currentVideoPage - 1);
+        }
+    });
 
-    // Set up modal close event
+    nextVideoPageBtn.addEventListener('click', () => {
+        if (currentVideoPage < totalVideoPages) {
+            loadVideosTable(currentVideoPage + 1);
+        }
+    });
+
+    // Set up modal close events
     closeEditModal.addEventListener('click', () => {
         editNewsModal.style.display = 'none';
     });
+    
+    if (closeEditVideoModal) {
+        closeEditVideoModal.addEventListener('click', () => {
+            editVideoModal.style.display = 'none';
+        });
+    }
 
-    // Close modal when clicking outside
+    // Close modals when clicking outside
     window.addEventListener('click', (e) => {
         if (e.target === editNewsModal) {
             editNewsModal.style.display = 'none';
         }
+        if (e.target === editVideoModal) {
+            editVideoModal.style.display = 'none';
+        }
     });
 
-    // Set up edit form submission
+    // Set up form submissions
     editNewsForm.addEventListener('submit', handleEditNewsSubmit);
+    
+    // Set up video form submissions
+    if (uploadVideoForm) {
+        uploadVideoForm.addEventListener('submit', handleUploadVideo);
+    }
+    
+    if (editVideoForm) {
+        editVideoForm.addEventListener('submit', handleEditVideoSubmit);
+    }
 });
 
 // Logout
@@ -399,4 +450,427 @@ function showError(message) {
             errorMessage.style.display = 'none';
         }, 5000);
     }
+}
+
+// YouTube Video Management Functions
+
+// Handle Upload Video
+async function handleUploadVideo(e) {
+    e.preventDefault();
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+        showErrorToast('You must be logged in to upload videos');
+        setTimeout(() => {
+            window.location.href = 'index.html?status=needlogin';
+        }, 1000);
+        return;
+    }
+
+    const title = document.getElementById('videoTitle').value;
+    const videoUrl = document.getElementById('videoUrl').value;
+    const category = document.getElementById('videoCategory').value;
+    const description = document.getElementById('videoDescription').value || '';
+
+    // Validate YouTube URL
+    if (!isValidYoutubeUrl(videoUrl)) {
+        showErrorToast('Please enter a valid YouTube video URL');
+        return;
+    }
+
+    // Show loading state
+    const submitButton = uploadVideoForm.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.textContent;
+    submitButton.textContent = 'Uploading...';
+    submitButton.disabled = true;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/youtube`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                title,
+                videoUrl,
+                category,
+                description
+            })
+        });
+
+        if (!response.ok) {
+            const data = await response.json();
+            throw new Error(data.message || `HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Show success message with toast
+        showSuccessToast('YouTube video added successfully!');
+
+        // Reset form
+        uploadVideoForm.reset();
+        
+        // Reload videos table to show the new entry
+        if (videoTableBody) {
+            loadVideosTable(1); // Reset to first page to show the new video
+        }
+    } catch (error) {
+        console.error('Upload error:', error);
+
+        // Show error message with toast
+        if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+            showErrorToast('Cannot connect to the server. Please make sure the backend is running.');
+        } else {
+            showErrorToast(`Error: ${error.message}`);
+        }
+    } finally {
+        // Reset button state
+        submitButton.textContent = originalButtonText;
+        submitButton.disabled = false;
+    }
+}
+
+// Load Videos Table
+async function loadVideosTable(page) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'index.html?status=needlogin';
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/youtube?page=${page}&limit=${videoLimit}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Update pagination state
+        currentVideoPage = data.currentPage || 1;
+        totalVideoPages = data.totalPages || 1;
+
+        // Update pagination UI
+        videoPageInfo.textContent = `Page ${currentVideoPage} of ${totalVideoPages}`;
+        prevVideoPageBtn.disabled = currentVideoPage <= 1;
+        nextVideoPageBtn.disabled = currentVideoPage >= totalVideoPages;
+
+        // Clear table
+        videoTableBody.innerHTML = '';
+
+        // Add video items to table
+        if (data.videos && data.videos.length > 0) {
+            data.videos.forEach(video => {
+                const row = document.createElement('tr');
+
+                // Format date
+                const date = new Date(video.createdAt).toLocaleDateString();
+
+                row.innerHTML = `
+                    <td>
+                        <img src="${video.thumbnailUrl || 'https://via.placeholder.com/120x68?text=No+Thumbnail'}" 
+                             alt="${video.title}" 
+                             style="width: 120px; height: 68px; object-fit: cover;">
+                    </td>
+                    <td>${video.title}</td>
+                    <td>${video.category}</td>
+                    <td>${date}</td>
+                    <td class="action-buttons">
+                        <button class="edit-video-btn" data-id="${video._id}">Edit</button>
+                        <button class="delete-video-btn" data-id="${video._id}">Delete</button>
+                    </td>
+                `;
+
+                videoTableBody.appendChild(row);
+            });
+
+            // Add event listeners to buttons
+            document.querySelectorAll('.edit-video-btn').forEach(btn => {
+                btn.addEventListener('click', () => openEditVideoModal(btn.dataset.id));
+            });
+
+            document.querySelectorAll('.delete-video-btn').forEach(btn => {
+                btn.addEventListener('click', () => handleDeleteVideo(btn.dataset.id));
+            });
+        } else {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td colspan="5">No videos found</td>';
+            videoTableBody.appendChild(row);
+        }
+    } catch (error) {
+        console.error('Error loading videos:', error);
+        showError('Failed to load videos. Please try again.');
+    }
+}
+
+// Open Edit Video Modal
+async function openEditVideoModal(videoId) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'index.html?status=needlogin';
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/youtube/${videoId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const video = await response.json();
+
+        // Populate form fields
+        document.getElementById('editVideoId').value = video._id;
+        document.getElementById('editVideoTitle').value = video.title;
+        document.getElementById('editVideoUrl').value = video.videoUrl;
+        document.getElementById('editVideoCategory').value = video.category || 'general';
+        document.getElementById('editVideoDescription').value = video.description || '';
+        
+        // Show thumbnail preview
+        const thumbnailPreview = document.getElementById('videoThumbnailPreview');
+        if (thumbnailPreview) {
+            const videoId = extractYoutubeVideoId(video.videoUrl);
+            const thumbnailUrl = video.thumbnailUrl || 
+                               (videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : 
+                               'https://via.placeholder.com/320x180?text=No+Thumbnail');
+            
+            thumbnailPreview.src = thumbnailUrl;
+            thumbnailPreview.alt = video.title;
+        }
+
+        // Show modal
+        editVideoModal.style.display = 'block';
+    } catch (error) {
+        console.error('Error fetching video details:', error);
+        showErrorToast('Failed to load video details. Please try again.');
+    }
+}
+
+// Handle Edit Video Submit
+async function handleEditVideoSubmit(e) {
+    e.preventDefault();
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'index.html?status=needlogin';
+        return;
+    }
+
+    const videoId = document.getElementById('editVideoId').value;
+    const title = document.getElementById('editVideoTitle').value;
+    const videoUrl = document.getElementById('editVideoUrl').value;
+    const category = document.getElementById('editVideoCategory').value;
+    const description = document.getElementById('editVideoDescription').value || '';
+
+    // Validate YouTube URL
+    if (!isValidYoutubeUrl(videoUrl)) {
+        showErrorToast('Please enter a valid YouTube video URL');
+        return;
+    }
+
+    // Show loading state
+    const submitButton = editVideoForm.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.textContent;
+    submitButton.textContent = 'Updating...';
+    submitButton.disabled = true;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/youtube/${videoId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                title,
+                videoUrl,
+                category,
+                description
+            })
+        });
+
+        if (!response.ok) {
+            const data = await response.json();
+            throw new Error(data.message || `HTTP error! Status: ${response.status}`);
+        }
+
+        // Close modal
+        editVideoModal.style.display = 'none';
+
+        // Show success message
+        showSuccessToast('YouTube video updated successfully!');
+
+        // Reload videos table
+        if (videoTableBody) {
+            loadVideosTable(currentVideoPage);
+        }
+    } catch (error) {
+        console.error('Update error:', error);
+        showErrorToast(`Error: ${error.message}`);
+    } finally {
+        // Reset button state
+        submitButton.textContent = originalButtonText;
+        submitButton.disabled = false;
+    }
+}
+
+// Handle Delete Video
+async function handleDeleteVideo(videoId) {
+    if (!confirm('Are you sure you want to delete this YouTube video?')) {
+        return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'index.html?status=needlogin';
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/youtube/${videoId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            const data = await response.json();
+            throw new Error(data.message || `HTTP error! Status: ${response.status}`);
+        }
+
+        // Show success message
+        showSuccessToast('YouTube video deleted successfully!');
+
+        // Reload videos table
+        if (videoTableBody) {
+            // If we're on the last page and there's only one video, go to previous page
+            if (currentVideoPage > 1 && document.querySelectorAll('#videoTableBody tr').length === 1) {
+                currentVideoPage--;
+            }
+            loadVideosTable(currentVideoPage);
+        }
+    } catch (error) {
+        console.error('Delete error:', error);
+        showErrorToast(`Error: ${error.message}`);
+    }
+}
+
+// Helper function to validate YouTube URL
+function isValidYoutubeUrl(url) {
+    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
+    return youtubeRegex.test(url);
+}
+
+// Load Videos Table
+async function loadVideosTable(page) {
+    if (!videoTableBody) return;
+    
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'index.html?status=needlogin';
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/youtube?page=${page}&limit=${videoLimit}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Update pagination state
+        currentVideoPage = data.currentPage || 1;
+        totalVideoPages = data.totalPages || 1;
+
+        // Update pagination UI
+        if (videoPageInfo) {
+            videoPageInfo.textContent = `Page ${currentVideoPage} of ${totalVideoPages}`;
+        }
+        if (prevVideoPageBtn) {
+            prevVideoPageBtn.disabled = currentVideoPage <= 1;
+        }
+        if (nextVideoPageBtn) {
+            nextVideoPageBtn.disabled = currentVideoPage >= totalVideoPages;
+        }
+
+        // Clear table
+        videoTableBody.innerHTML = '';
+
+        // Add video items to table
+        if (data.videos && data.videos.length > 0) {
+            data.videos.forEach(video => {
+                const row = document.createElement('tr');
+
+                // Format date
+                const date = new Date(video.createdAt).toLocaleDateString();
+                
+                // Extract video ID for thumbnail
+                const videoId = extractYoutubeVideoId(video.videoUrl);
+                const thumbnailUrl = video.thumbnailUrl || (videoId ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg` : 'https://via.placeholder.com/120x68?text=No+Thumbnail');
+
+                row.innerHTML = `
+                    <td>
+                        <img src="${thumbnailUrl}" 
+                             alt="${video.title}" 
+                             style="width: 120px; height: 68px; object-fit: cover;">
+                    </td>
+                    <td>${video.title}</td>
+                    <td>${video.category}</td>
+                    <td>${date}</td>
+                    <td class="action-buttons">
+                        <button class="edit-video-btn" data-id="${video._id}">Edit</button>
+                        <button class="delete-video-btn" data-id="${video._id}">Delete</button>
+                    </td>
+                `;
+
+                videoTableBody.appendChild(row);
+            });
+
+            // Add event listeners to buttons
+            document.querySelectorAll('.edit-video-btn').forEach(btn => {
+                btn.addEventListener('click', () => openEditVideoModal(btn.dataset.id));
+            });
+
+            document.querySelectorAll('.delete-video-btn').forEach(btn => {
+                btn.addEventListener('click', () => handleDeleteVideo(btn.dataset.id));
+            });
+        } else {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td colspan="5">No videos found</td>';
+            videoTableBody.appendChild(row);
+        }
+    } catch (error) {
+        console.error('Error loading videos:', error);
+        videoTableBody.innerHTML = '<tr><td colspan="5">Failed to load videos. Please try again.</td></tr>';
+    }
+}
+
+// Helper function to extract YouTube video ID
+function extractYoutubeVideoId(url) {
+    if (!url) return null;
+    
+    // Regular expressions to match different YouTube URL formats
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    
+    return (match && match[2].length === 11) ? match[2] : null;
 }

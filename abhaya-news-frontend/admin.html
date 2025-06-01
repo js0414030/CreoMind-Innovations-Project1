@@ -89,6 +89,68 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- YouTube Video Management Section -->
+            <div class="admin-panel">
+                <h2>Upload YouTube Video</h2>
+                <form id="uploadVideoForm">
+                    <div class="form-group">
+                        <label for="videoTitle">Video Title</label>
+                        <input type="text" id="videoTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoUrl">YouTube Video URL</label>
+                        <input type="url" id="videoUrl" required placeholder="https://www.youtube.com/watch?v=...">
+                        <small>Paste the full YouTube video URL</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoCategory">Category</label>
+                        <select id="videoCategory" required>
+                            <option value="general">General</option>
+                            <option value="politics">Politics</option>
+                            <option value="technology">Technology</option>
+                            <option value="sports">Sports</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="business">Business</option>
+                            <option value="health">Health</option>
+                            <option value="science">Science</option>
+                            <option value="world">World</option>
+                            <option value="lifestyle">Lifestyle</option>
+                            <option value="education">Education</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoDescription">Description (Optional)</label>
+                        <textarea id="videoDescription" rows="4"></textarea>
+                    </div>
+                    <button type="submit">Upload Video</button>
+                </form>
+            </div>
+            
+            <div class="admin-panel">
+                <h2>Manage YouTube Videos</h2>
+                <div class="news-table-container">
+                    <table id="videoTable" class="news-table">
+                        <thead>
+                            <tr>
+                                <th>Thumbnail</th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="videoTableBody">
+                            <!-- Video items will be loaded here -->
+                        </tbody>
+                    </table>
+                    <div id="videoPagination" class="pagination">
+                        <button id="prevVideoPageBtn" disabled>Previous</button>
+                        <span id="videoPageInfo">Page 1 of 1</span>
+                        <button id="nextVideoPageBtn" disabled>Next</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -131,6 +193,53 @@
             </form>
         </div>
     </div>
+    
+    <!-- Edit YouTube Video Modal -->
+    <div id="editVideoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeEditVideoModal">&times;</span>
+            <h2>Edit YouTube Video</h2>
+            <form id="editVideoForm">
+                <input type="hidden" id="editVideoId">
+                <div class="form-group">
+                    <label for="editVideoTitle">Title</label>
+                    <input type="text" id="editVideoTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="editVideoUrl">YouTube Video URL</label>
+                    <input type="url" id="editVideoUrl" required>
+                    <small>Changing the URL will update the thumbnail automatically</small>
+                </div>
+                <div class="form-group">
+                    <label for="editVideoCategory">Category</label>
+                    <select id="editVideoCategory" required>
+                        <option value="general">General</option>
+                        <option value="politics">Politics</option>
+                        <option value="technology">Technology</option>
+                        <option value="sports">Sports</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="business">Business</option>
+                        <option value="health">Health</option>
+                        <option value="science">Science</option>
+                        <option value="world">World</option>
+                        <option value="lifestyle">Lifestyle</option>
+                        <option value="education">Education</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editVideoDescription">Description</label>
+                    <textarea id="editVideoDescription" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="video-preview">
+                        <h4>Current Thumbnail:</h4>
+                        <img id="videoThumbnailPreview" src="" alt="Video Thumbnail">
+                    </div>
+                </div>
+                <button type="submit">Update Video</button>
+            </form>
+        </div>
+    </div>
 
     <footer id="footer">
         <!-- Footer will be loaded here by JavaScript -->
@@ -139,5 +248,6 @@
     <script src="toast.js"></script>
     <script src="components.js"></script>
     <script src="admin.js"></script>
+    <script src="youtube-videos.js"></script>
 </body>
 </html>
