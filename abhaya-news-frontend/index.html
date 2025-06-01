@@ -113,6 +113,18 @@
                 <!-- Category highlights will be loaded dynamically -->
                 <div class="loading">Loading category highlights...</div>
             </section>
+            
+            <!-- YouTube Videos Section -->
+            <section class="youtube-videos-section">
+                <h2 class="section-title"><i class="fab fa-youtube"></i> Featured Videos</h2>
+                <div class="youtube-videos-grid" id="youtubeVideosGrid">
+                    <!-- YouTube videos will be loaded here -->
+                    <div class="loading">Loading videos...</div>
+                </div>
+                <div class="view-more-container">
+                    <button id="loadMoreVideos" class="view-more-btn">Load More Videos</button>
+                </div>
+            </section>
         </div>
     </main>
 
@@ -149,6 +161,16 @@
             </div>
         </div>
     </div>
+    
+    <!-- YouTube Video Modal -->
+    <div id="youtubeVideoModal" class="youtube-video-modal">
+        <div class="youtube-video-modal-content">
+            <span class="close" id="closeYoutubeModal">&times;</span>
+            <div class="youtube-video-iframe-container" id="youtubeVideoContainer">
+                <!-- YouTube iframe will be loaded here -->
+            </div>
+        </div>
+    </div>
 
     <!-- Newsletter Subscription -->
     <section class="newsletter">
@@ -176,6 +198,7 @@
     <script src="breaking-news.js"></script>
     <script src="app.js"></script>
     <script src="category.js"></script>
+    <script src="youtube-videos.js"></script>
     <script>
         // Make category cards in the home page clickable and navigate to category pages
         document.addEventListener('DOMContentLoaded', function() {
