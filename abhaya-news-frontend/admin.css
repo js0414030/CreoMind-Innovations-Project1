@@ -227,6 +227,82 @@ form button:hover {
     cursor: not-allowed;
 }
 
-#pageInfo {
+#pageInfo, #videoPageInfo {
     font-weight: 600;
+}
+
+/* YouTube Video Management Styles */
+.video-preview {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.video-preview h4 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: var(--neutral-dark);
+}
+
+.video-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Video Table Styles */
+.news-table .edit-video-btn,
+.news-table .delete-video-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.news-table .edit-video-btn {
+    background-color: var(--accent-teal);
+    color: var(--white);
+}
+
+.news-table .delete-video-btn {
+    background-color: var(--danger);
+    color: var(--white);
+}
+
+.news-table .edit-video-btn:hover,
+.news-table .delete-video-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Pagination for Video Table */
+#videoPagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+#videoPagination button {
+    background: var(--gradient-primary);
+    color: var(--white);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#videoPagination button:hover:not([disabled]) {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#videoPagination button[disabled] {
+    background: #ccc;
+    cursor: not-allowed;
 }
