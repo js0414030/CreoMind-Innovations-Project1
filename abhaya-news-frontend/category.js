@@ -1,14 +1,14 @@
 // This file handles functionality specific to category pages
 
 // API Base URL
-const API_BASE_URL = '/api';
+// const API_BASE_URL = '/api';
 
 // State variables for category pages
 let categoryCurrentPage = 1;
 let categoryTotalPages = 1;
 let currentCategoryName = '';
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function () {
     // Get the current category from the page URL
     const currentPage = window.location.pathname.split('/').pop().replace('.html', '');
 

@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchNews();
 
     // Check if user is logged in
-    if (token) {
+    if (token && loginBtn) { // fix null check for loginBtn
         loginBtn.textContent = 'Logout';
     }
 
@@ -178,7 +178,7 @@ function displayFeaturedNews(article) {
 }
 
 // Fetch News Detail - Make it globally available
-window.fetchNewsDetail = async function(id) {
+window.fetchNewsDetail = async function (id) {
     if (!id) {
         console.error('No news ID provided');
         showErrorToast('Invalid news ID');
@@ -361,14 +361,14 @@ async function loadRelatedNews(category, currentArticleId) {
 }
 
 // Share Article Function
-window.shareArticle = function(platform, articleId) {
+window.shareArticle = function (platform, articleId) {
     const currentUrl = window.location.origin;
     const articleUrl = `${currentUrl}?article=${articleId}`;
     const title = document.querySelector('.news-detail-title')?.textContent || 'Check out this news article';
 
     let shareUrl = '';
 
-    switch(platform) {
+    switch (platform) {
         case 'facebook':
             shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(articleUrl)}`;
             break;
