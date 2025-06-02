@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Load news table
     loadNewsTable(currentPage);
-    
+
     // Load YouTube videos table
     if (videoTableBody) {
         loadVideosTable(currentVideoPage);
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loadNewsTable(currentPage + 1);
         }
     });
-    
+
     // Set up pagination event listeners for videos
     prevVideoPageBtn.addEventListener('click', () => {
         if (currentVideoPage > 1) {
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeEditModal.addEventListener('click', () => {
         editNewsModal.style.display = 'none';
     });
-    
+
     if (closeEditVideoModal) {
         closeEditVideoModal.addEventListener('click', () => {
             editVideoModal.style.display = 'none';
@@ -114,12 +114,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Set up form submissions
     editNewsForm.addEventListener('submit', handleEditNewsSubmit);
-    
+
     // Set up video form submissions
     if (uploadVideoForm) {
         uploadVideoForm.addEventListener('submit', handleUploadVideo);
     }
-    
+
     if (editVideoForm) {
         editVideoForm.addEventListener('submit', handleEditVideoSubmit);
     }
@@ -420,7 +420,7 @@ async function handleDeleteNews(newsId) {
 function showSuccess(message) {
     // Use toast notification
     showSuccessToast(message);
-    
+
     // Also update the existing success message element for backward compatibility
     const successMessage = document.getElementById('successMessage');
     if (successMessage) {
@@ -438,7 +438,7 @@ function showSuccess(message) {
 function showError(message) {
     // Use toast notification
     showErrorToast(message);
-    
+
     // Also update the existing error message element for backward compatibility
     const errorMessage = document.getElementById('errorMessage');
     if (errorMessage) {
@@ -511,7 +511,7 @@ async function handleUploadVideo(e) {
 
         // Reset form
         uploadVideoForm.reset();
-        
+
         // Reload videos table to show the new entry
         if (videoTableBody) {
             loadVideosTable(1); // Reset to first page to show the new video
@@ -532,8 +532,12 @@ async function handleUploadVideo(e) {
     }
 }
 
-// Load Videos Table
+
+// Load Videos Table (Optimized Single Version)
 async function loadVideosTable(page) {
+    // Early return if no table body exists
+    if (!videoTableBody) return;
+
     const token = localStorage.getItem('token');
     if (!token) {
         window.location.href = 'index.html?status=needlogin';
@@ -557,25 +561,29 @@ async function loadVideosTable(page) {
         currentVideoPage = data.currentPage || 1;
         totalVideoPages = data.totalPages || 1;
 
-        // Update pagination UI
-        videoPageInfo.textContent = `Page ${currentVideoPage} of ${totalVideoPages}`;
-        prevVideoPageBtn.disabled = currentVideoPage <= 1;
-        nextVideoPageBtn.disabled = currentVideoPage >= totalVideoPages;
+        // Safely update pagination UI (with null checks)
+        if (videoPageInfo) videoPageInfo.textContent = `Page ${currentVideoPage} of ${totalVideoPages}`;
+        if (prevVideoPageBtn) prevVideoPageBtn.disabled = currentVideoPage <= 1;
+        if (nextVideoPageBtn) nextVideoPageBtn.disabled = currentVideoPage >= totalVideoPages;
 
         // Clear table
         videoTableBody.innerHTML = '';
 
         // Add video items to table
-        if (data.videos && data.videos.length > 0) {
+        if (data.videos?.length > 0) {
             data.videos.forEach(video => {
                 const row = document.createElement('tr');
-
-                // Format date
                 const date = new Date(video.createdAt).toLocaleDateString();
+
+                // Improved thumbnail handling
+                const videoId = extractYoutubeVideoId(video.link);
+                const thumbnailUrl = video.thumbnailUrl ||
+                    (videoId ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg` :
+                        'https://via.placeholder.com/120x68?text=No+Thumbnail');
 
                 row.innerHTML = `
                     <td>
-                        <img src="${video.thumbnailUrl || 'https://via.placeholder.com/120x68?text=No+Thumbnail'}" 
+                        <img src="${thumbnailUrl}" 
                              alt="${video.title}" 
                              style="width: 120px; height: 68px; object-fit: cover;">
                     </td>
@@ -591,7 +599,7 @@ async function loadVideosTable(page) {
                 videoTableBody.appendChild(row);
             });
 
-            // Add event listeners to buttons
+            // Add event listeners
             document.querySelectorAll('.edit-video-btn').forEach(btn => {
                 btn.addEventListener('click', () => openEditVideoModal(btn.dataset.id));
             });
@@ -600,15 +608,92 @@ async function loadVideosTable(page) {
                 btn.addEventListener('click', () => handleDeleteVideo(btn.dataset.id));
             });
         } else {
-            const row = document.createElement('tr');
-            row.innerHTML = '<td colspan="5">No videos found</td>';
-            videoTableBody.appendChild(row);
+            videoTableBody.innerHTML = '<tr><td colspan="5">No videos found</td></tr>';
         }
     } catch (error) {
         console.error('Error loading videos:', error);
-        showError('Failed to load videos. Please try again.');
+        videoTableBody.innerHTML = '<tr><td colspan="5">Failed to load videos. Please try again.</td></tr>';
     }
 }
+
+
+// // Load Videos Table
+// async function loadVideosTable(page) {
+//     const token = localStorage.getItem('token');
+//     if (!token) {
+//         window.location.href = 'index.html?status=needlogin';
+//         return;
+//     }
+
+//     try {
+//         const response = await fetch(`${API_BASE_URL}/youtube?page=${page}&limit=${videoLimit}`, {
+//             headers: {
+//                 'Authorization': `Bearer ${token}`
+//             }
+//         });
+
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+
+//         const data = await response.json();
+
+//         // Update pagination state
+//         currentVideoPage = data.currentPage || 1;
+//         totalVideoPages = data.totalPages || 1;
+
+//         // Update pagination UI
+//         videoPageInfo.textContent = `Page ${currentVideoPage} of ${totalVideoPages}`;
+//         prevVideoPageBtn.disabled = currentVideoPage <= 1;
+//         nextVideoPageBtn.disabled = currentVideoPage >= totalVideoPages;
+
+//         // Clear table
+//         videoTableBody.innerHTML = '';
+
+//         // Add video items to table
+//         if (data.videos && data.videos.length > 0) {
+//             data.videos.forEach(video => {
+//                 const row = document.createElement('tr');
+
+//                 // Format date
+//                 const date = new Date(video.createdAt).toLocaleDateString();
+
+//                 row.innerHTML = `
+//                     <td>
+//                         <img src="${video.thumbnailUrl || 'https://via.placeholder.com/120x68?text=No+Thumbnail'}" 
+//                              alt="${video.title}" 
+//                              style="width: 120px; height: 68px; object-fit: cover;">
+//                     </td>
+//                     <td>${video.title}</td>
+//                     <td>${video.category}</td>
+//                     <td>${date}</td>
+//                     <td class="action-buttons">
+//                         <button class="edit-video-btn" data-id="${video._id}">Edit</button>
+//                         <button class="delete-video-btn" data-id="${video._id}">Delete</button>
+//                     </td>
+//                 `;
+
+//                 videoTableBody.appendChild(row);
+//             });
+
+//             // Add event listeners to buttons
+//             document.querySelectorAll('.edit-video-btn').forEach(btn => {
+//                 btn.addEventListener('click', () => openEditVideoModal(btn.dataset.id));
+//             });
+
+//             document.querySelectorAll('.delete-video-btn').forEach(btn => {
+//                 btn.addEventListener('click', () => handleDeleteVideo(btn.dataset.id));
+//             });
+//         } else {
+//             const row = document.createElement('tr');
+//             row.innerHTML = '<td colspan="5">No videos found</td>';
+//             videoTableBody.appendChild(row);
+//         }
+//     } catch (error) {
+//         console.error('Error loading videos:', error);
+//         showError('Failed to load videos. Please try again.');
+//     }
+// }
 
 // Open Edit Video Modal
 async function openEditVideoModal(videoId) {
@@ -634,18 +719,19 @@ async function openEditVideoModal(videoId) {
         // Populate form fields
         document.getElementById('editVideoId').value = video._id;
         document.getElementById('editVideoTitle').value = video.title;
-        document.getElementById('editVideoUrl').value = video.videoUrl;
+        // document.getElementById('editVideoUrl').value = video.videoUrl;
+        document.getElementById('editVideoUrl').value = video.link;
         document.getElementById('editVideoCategory').value = video.category || 'general';
         document.getElementById('editVideoDescription').value = video.description || '';
-        
+
         // Show thumbnail preview
         const thumbnailPreview = document.getElementById('videoThumbnailPreview');
         if (thumbnailPreview) {
-            const videoId = extractYoutubeVideoId(video.videoUrl);
-            const thumbnailUrl = video.thumbnailUrl || 
-                               (videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : 
-                               'https://via.placeholder.com/320x180?text=No+Thumbnail');
-            
+            const videoId = extractYoutubeVideoId(video.link);
+            const thumbnailUrl = video.thumbnailUrl ||
+                (videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` :
+                    'https://via.placeholder.com/320x180?text=No+Thumbnail');
+
             thumbnailPreview.src = thumbnailUrl;
             thumbnailPreview.alt = video.title;
         }
@@ -774,103 +860,103 @@ function isValidYoutubeUrl(url) {
     return youtubeRegex.test(url);
 }
 
-// Load Videos Table
-async function loadVideosTable(page) {
-    if (!videoTableBody) return;
-    
-    const token = localStorage.getItem('token');
-    if (!token) {
-        window.location.href = 'index.html?status=needlogin';
-        return;
-    }
+// // Load Videos Table
+// async function loadVideosTable(page) {
+//     if (!videoTableBody) return;
 
-    try {
-        const response = await fetch(`${API_BASE_URL}/youtube?page=${page}&limit=${videoLimit}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
+//     const token = localStorage.getItem('token');
+//     if (!token) {
+//         window.location.href = 'index.html?status=needlogin';
+//         return;
+//     }
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+//     try {
+//         const response = await fetch(`${API_BASE_URL}/youtube?page=${page}&limit=${videoLimit}`, {
+//             headers: {
+//                 'Authorization': `Bearer ${token}`
+//             }
+//         });
 
-        const data = await response.json();
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
 
-        // Update pagination state
-        currentVideoPage = data.currentPage || 1;
-        totalVideoPages = data.totalPages || 1;
+//         const data = await response.json();
 
-        // Update pagination UI
-        if (videoPageInfo) {
-            videoPageInfo.textContent = `Page ${currentVideoPage} of ${totalVideoPages}`;
-        }
-        if (prevVideoPageBtn) {
-            prevVideoPageBtn.disabled = currentVideoPage <= 1;
-        }
-        if (nextVideoPageBtn) {
-            nextVideoPageBtn.disabled = currentVideoPage >= totalVideoPages;
-        }
+//         // Update pagination state
+//         currentVideoPage = data.currentPage || 1;
+//         totalVideoPages = data.totalPages || 1;
 
-        // Clear table
-        videoTableBody.innerHTML = '';
+//         // Update pagination UI
+//         if (videoPageInfo) {
+//             videoPageInfo.textContent = `Page ${currentVideoPage} of ${totalVideoPages}`;
+//         }
+//         if (prevVideoPageBtn) {
+//             prevVideoPageBtn.disabled = currentVideoPage <= 1;
+//         }
+//         if (nextVideoPageBtn) {
+//             nextVideoPageBtn.disabled = currentVideoPage >= totalVideoPages;
+//         }
 
-        // Add video items to table
-        if (data.videos && data.videos.length > 0) {
-            data.videos.forEach(video => {
-                const row = document.createElement('tr');
+//         // Clear table
+//         videoTableBody.innerHTML = '';
 
-                // Format date
-                const date = new Date(video.createdAt).toLocaleDateString();
-                
-                // Extract video ID for thumbnail
-                const videoId = extractYoutubeVideoId(video.videoUrl);
-                const thumbnailUrl = video.thumbnailUrl || (videoId ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg` : 'https://via.placeholder.com/120x68?text=No+Thumbnail');
+//         // Add video items to table
+//         if (data.videos && data.videos.length > 0) {
+//             data.videos.forEach(video => {
+//                 const row = document.createElement('tr');
 
-                row.innerHTML = `
-                    <td>
-                        <img src="${thumbnailUrl}" 
-                             alt="${video.title}" 
-                             style="width: 120px; height: 68px; object-fit: cover;">
-                    </td>
-                    <td>${video.title}</td>
-                    <td>${video.category}</td>
-                    <td>${date}</td>
-                    <td class="action-buttons">
-                        <button class="edit-video-btn" data-id="${video._id}">Edit</button>
-                        <button class="delete-video-btn" data-id="${video._id}">Delete</button>
-                    </td>
-                `;
+//                 // Format date
+//                 const date = new Date(video.createdAt).toLocaleDateString();
 
-                videoTableBody.appendChild(row);
-            });
+//                 // Extract video ID for thumbnail
+//                 const videoId = extractYoutubeVideoId(video.link);
+//                 const thumbnailUrl = video.thumbnailUrl || (videoId ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg` : 'https://via.placeholder.com/120x68?text=No+Thumbnail');
 
-            // Add event listeners to buttons
-            document.querySelectorAll('.edit-video-btn').forEach(btn => {
-                btn.addEventListener('click', () => openEditVideoModal(btn.dataset.id));
-            });
+//                 row.innerHTML = `
+//                     <td>
+//                         <img src="${thumbnailUrl}" 
+//                              alt="${video.title}" 
+//                              style="width: 120px; height: 68px; object-fit: cover;">
+//                     </td>
+//                     <td>${video.title}</td>
+//                     <td>${video.category}</td>
+//                     <td>${date}</td>
+//                     <td class="action-buttons">
+//                         <button class="edit-video-btn" data-id="${video._id}">Edit</button>
+//                         <button class="delete-video-btn" data-id="${video._id}">Delete</button>
+//                     </td>
+//                 `;
 
-            document.querySelectorAll('.delete-video-btn').forEach(btn => {
-                btn.addEventListener('click', () => handleDeleteVideo(btn.dataset.id));
-            });
-        } else {
-            const row = document.createElement('tr');
-            row.innerHTML = '<td colspan="5">No videos found</td>';
-            videoTableBody.appendChild(row);
-        }
-    } catch (error) {
-        console.error('Error loading videos:', error);
-        videoTableBody.innerHTML = '<tr><td colspan="5">Failed to load videos. Please try again.</td></tr>';
-    }
-}
+//                 videoTableBody.appendChild(row);
+//             });
+
+//             // Add event listeners to buttons
+//             document.querySelectorAll('.edit-video-btn').forEach(btn => {
+//                 btn.addEventListener('click', () => openEditVideoModal(btn.dataset.id));
+//             });
+
+//             document.querySelectorAll('.delete-video-btn').forEach(btn => {
+//                 btn.addEventListener('click', () => handleDeleteVideo(btn.dataset.id));
+//             });
+//         } else {
+//             const row = document.createElement('tr');
+//             row.innerHTML = '<td colspan="5">No videos found</td>';
+//             videoTableBody.appendChild(row);
+//         }
+//     } catch (error) {
+//         console.error('Error loading videos:', error);
+//         videoTableBody.innerHTML = '<tr><td colspan="5">Failed to load videos. Please try again.</td></tr>';
+//     }
+// }
 
 // Helper function to extract YouTube video ID
 function extractYoutubeVideoId(url) {
     if (!url) return null;
-    
+
     // Regular expressions to match different YouTube URL formats
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
-    
+
     return (match && match[2].length === 11) ? match[2] : null;
 }
