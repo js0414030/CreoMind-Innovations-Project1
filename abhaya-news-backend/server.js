@@ -39,8 +39,11 @@ connectDB();
 // Routes
 const adminRoutes = require('./routes/adminRoutes');
 const newsRoutes = require('./routes/newsRoutes');
+const videoRoutes = require('./routes/videoRoutes');
 app.use('/api/admin', adminRoutes);
 app.use('/api/news', newsRoutes);
+app.use('/api/youtube', videoRoutes);
+
 
 // // Basic route
 // app.get('/', (req, res) => {
