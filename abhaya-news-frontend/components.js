@@ -1,3 +1,5 @@
+import API_BASE_URL from './config.js';
+import { showSuccessToast, showErrorToast } from './toast.js';
 // Function to load HTML components
 async function loadComponent(elementId, componentPath) {
     try {
@@ -103,7 +105,7 @@ function setupLoginButton() {
 
                         try {
                             // Call the actual backend API for login
-                            const response = await fetch('/api/admin/login', {
+                            const response = await fetch(`${API_BASE_URL}/admin/login`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -220,7 +222,7 @@ function setupDropdownNavigation() {
 }
 
 // Load components when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Check if we're on the admin page
     const isAdminPage = window.location.pathname.includes('admin.html');
 

@@ -1,5 +1,7 @@
 // API Base URL - Use relative path for proxy to work
-const API_BASE_URL = '/api';
+// const API_BASE_URL = '/api';
+import API_BASE_URL from './config.js';
+import { showSuccessToast, showErrorToast } from './toast.js';
 
 // DOM Elements - News
 const uploadForm = document.getElementById('uploadForm');

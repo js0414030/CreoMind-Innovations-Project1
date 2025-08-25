@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,9 +10,15 @@
     <link rel="stylesheet" href="slider.css">
     <style>
         @keyframes scroll-left {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+            0% {
+                transform: translateX(100%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
         }
+
         .breaking-news-item {
             margin-right: 150px;
             font-size: 15px;
@@ -23,12 +30,14 @@
             padding: 0 20px;
             transition: all 0.3s ease;
         }
+
         .breaking-news-item::before {
             content: '🔴';
             margin-right: 15px;
             font-size: 10px;
             animation: pulse 2s infinite;
         }
+
         .breaking-news-item::after {
             content: '|';
             position: absolute;
@@ -38,26 +47,40 @@
             font-size: 18px;
             opacity: 0.7;
         }
+
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
         }
     </style>
 </head>
+
 <body>
     <header id="navbar">
         <!-- Navbar will be loaded here by JavaScript -->
     </header>
 
     <!-- Breaking News Ticker -->
-    <section class="breaking-news" id="breakingNews" style="background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; overflow: hidden; position: relative; box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3); border-bottom: 3px solid #991b1b;">
-        <div class="breaking-news-container" style="display: flex; align-items: center; height: 50px; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <div class="breaking-news-label" style="background: #991b1b; color: white; padding: 12px 20px; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; border-radius: 0 25px 25px 0; margin-right: 20px; white-space: nowrap; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+    <section class="breaking-news" id="breakingNews"
+        style="background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; overflow: hidden; position: relative; box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3); border-bottom: 3px solid #991b1b;">
+        <div class="breaking-news-container"
+            style="display: flex; align-items: center; height: 50px; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div class="breaking-news-label"
+                style="background: #991b1b; color: white; padding: 12px 20px; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; border-radius: 0 25px 25px 0; margin-right: 20px; white-space: nowrap; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
                 <i class="fas fa-bolt" style="margin-right: 8px;"></i>
                 Breaking News
             </div>
-            <div class="breaking-news-content" style="flex: 1; overflow: hidden; position: relative; height: 100%; display: flex; align-items: center;">
-                <div class="breaking-news-ticker" id="breakingNewsTicker" style="display: flex; animation: scroll-left 60s linear infinite; white-space: nowrap;">
+            <div class="breaking-news-content"
+                style="flex: 1; overflow: hidden; position: relative; height: 100%; display: flex; align-items: center;">
+                <div class="breaking-news-ticker" id="breakingNewsTicker"
+                    style="display: flex; animation: scroll-left 60s linear infinite; white-space: nowrap;">
                     <!-- Breaking news items will be loaded here -->
                 </div>
             </div>
@@ -84,7 +107,20 @@
         </section>
 
         <div class="container">
+
+            <!-- YouTube Videos Section -->
+            <section class="youtube-videos-section">
+                <h2 class="section-title"><i class="fab fa-youtube"></i> Featured Videos</h2>
+                <div class="youtube-videos-grid" id="youtubeVideosGrid">
+                    <!-- YouTube videos will be loaded here -->
+                    <div class="loading">Loading videos...</div>
+                </div>
+                <div class="view-more-container">
+                    <button id="loadMoreVideos" class="view-more-btn">Load More Videos</button>
+                </div>
+            </section>
             <!-- Trending Section -->
+
             <section class="trending-section">
                 <h2 class="section-title"><i class="fas fa-fire"></i> Trending Now</h2>
                 <div class="trending-grid">
@@ -109,22 +145,12 @@
             </section>
 
             <!-- Category Highlights -->
-            <section class="category-highlights">
-                <!-- Category highlights will be loaded dynamically -->
-                <div class="loading">Loading category highlights...</div>
-            </section>
-            
-            <!-- YouTube Videos Section -->
-            <section class="youtube-videos-section">
-                <h2 class="section-title"><i class="fab fa-youtube"></i> Featured Videos</h2>
-                <div class="youtube-videos-grid" id="youtubeVideosGrid">
-                    <!-- YouTube videos will be loaded here -->
-                    <div class="loading">Loading videos...</div>
-                </div>
-                <div class="view-more-container">
-                    <button id="loadMoreVideos" class="view-more-btn">Load More Videos</button>
-                </div>
-            </section>
+            <!-- <section class="category-highlights"> -->
+            <!-- Category highlights will be loaded dynamically -->
+            <!-- <div class="loading">Loading category highlights...</div> -->
+            <!-- </section> -->
+
+
         </div>
     </main>
 
@@ -140,7 +166,8 @@
                 </div>
                 <div class="form-group">
                     <label for="password"><i class="fas fa-lock"></i> Password</label>
-                    <input type="password" id="password" placeholder="Enter your password" required autocomplete="current-password">
+                    <input type="password" id="password" placeholder="Enter your password" required
+                        autocomplete="current-password">
                 </div>
                 <button type="submit">
                     <i class="fas fa-sign-in-alt"></i> Sign In
@@ -161,7 +188,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- YouTube Video Modal -->
     <div id="youtubeVideoModal" class="youtube-video-modal">
         <div class="youtube-video-modal-content">
@@ -192,16 +219,16 @@
 
 
 
-    <script src="toast.js"></script>
-    <script src="components.js"></script>
-    <script src="slider.js"></script>
-    <script src="breaking-news.js"></script>
-    <script src="app.js"></script>
-    <script src="category.js"></script>
-    <script src="youtube-videos.js"></script>
+    <script src="toast.js" type="module"></script>
+    <script src="components.js" type="module"></script>
+    <script src="slider.js" type="module"></script>
+    <script src="breaking-news.js" type="module"></script>
+    <script src="app.js" type="module"></script>
+    <script src="category.js" type="module"></script>
+    <script src="youtube-videos.js" type="module"></script>
     <script>
         // Make category cards in the home page clickable and navigate to category pages
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const categoryCards = document.querySelectorAll('.category-card');
             categoryCards.forEach(card => {
                 card.addEventListener('click', () => {
@@ -219,4 +246,5 @@
         });
     </script>
 </body>
+
 </html>

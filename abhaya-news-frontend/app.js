@@ -1,5 +1,9 @@
 // API Base URL - Use relative path for proxy to work
-const API_BASE_URL = '/api';
+// const API_BASE_URL = '/api';
+import API_BASE_URL from './config.js';
+
+// API Base URL - Use relative path for proxy to work
+// const API_BASE_URL = '/api';
 
 // State variables
 let currentPage = 1;
@@ -55,19 +59,22 @@ document.addEventListener('DOMContentLoaded', () => {
 // This comment is kept to explain the change
 
 // Pagination
-prevPageBtn.addEventListener('click', () => {
-    if (currentPage > 1) {
-        currentPage--;
-        fetchNews();
-    }
-});
-
-nextPageBtn.addEventListener('click', () => {
-    if (currentPage < totalPages) {
-        currentPage++;
-        fetchNews();
-    }
-});
+if (prevPageBtn) {
+    prevPageBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            fetchNews();
+        }
+    });
+}
+if (nextPageBtn) {
+    nextPageBtn.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            fetchNews();
+        }
+    });
+}
 
 // Login button is now handled by components.js
 
@@ -87,6 +94,7 @@ window.addEventListener('click', (e) => {
 
 // Fetch News from API
 async function fetchNews() {
+    if (!newsGrid) return;
     showLoading();
 
     try {
@@ -126,6 +134,7 @@ async function fetchNews() {
 
 // Display News in Grid
 function displayNews(news) {
+    if (!newsGrid) return;
     if (news.length === 0) {
         newsGrid.innerHTML = '<div class="loading">No news found</div>';
         return;
@@ -387,6 +396,7 @@ window.shareArticle = function (platform, articleId) {
 
 // Update Pagination
 function updatePagination(current, total) {
+    if (!newsGrid) return;
     currentPage = current;
     totalPages = total;
 
@@ -403,5 +413,10 @@ function showLoading() {
 
 // Show Error Message
 function showError(message) {
+    if (!newsGrid) return;
     newsGrid.innerHTML = `<div class="loading">${message}</div>`;
 }
+
+
+
+

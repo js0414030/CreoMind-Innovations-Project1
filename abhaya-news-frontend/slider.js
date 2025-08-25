@@ -1,6 +1,8 @@
-document.addEventListener('DOMContentLoaded', function() {
+import API_BASE_URL from './config.js';
+document.addEventListener('DOMContentLoaded', function () {
     // API Base URL
-    const API_BASE_URL = '/api';
+    // const API_BASE_URL = '/api';
+
 
     // Banner Slider Functionality
     let slides = [];

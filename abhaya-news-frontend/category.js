@@ -2,6 +2,7 @@
 
 // API Base URL
 // const API_BASE_URL = '/api';
+import API_BASE_URL from './config.js';
 
 // State variables for category pages
 let categoryCurrentPage = 1;
@@ -41,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     console.log('Loading category page:', currentCategoryName);
 
     // Wait for fetchNewsDetail to be available
-    await waitForFetchNewsDetail();
+    // await waitForFetchNewsDetail();
 
     // Initialize the category page
     initializeCategoryPage();
@@ -168,6 +169,7 @@ async function fetchTrendingNews() {
 // Update trending section with real data
 function updateTrendingSection(trendingNews) {
     const trendingCards = document.querySelectorAll('.trending-card');
+    if (!trendingCards || trendingCards.length === 0) return;
 
     trendingCards.forEach((card, index) => {
         if (trendingNews[index]) {
@@ -191,8 +193,18 @@ function updateTrendingSection(trendingNews) {
             if (categoryElement) categoryElement.textContent = article.category;
 
             // Add click event
+            // card.addEventListener('click', () => {
+            //     fetchNewsDetail(article._id);
+            // });
+            card.dataset.id = article._id; // Store ID inside the card
+
             card.addEventListener('click', () => {
-                fetchNewsDetail(article._id);
+                const newsId = card.dataset.id;
+                if (newsId) {
+                    fetchNewsDetail(newsId);
+                } else {
+                    console.error("No newsId found for this card");
+                }
             });
         }
     });
@@ -321,3 +333,7 @@ function showCategoryError(message) {
         newsGrid.innerHTML = `<div class="loading">${message}</div>`;
     }
 }
+
+
+
+
