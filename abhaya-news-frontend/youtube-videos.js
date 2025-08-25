@@ -1,5 +1,6 @@
 // API Base URL - Use relative path for proxy to work
 // const API_BASE_URL = '/api';
+import API_BASE_URL from './config.js';
 
 // DOM Elements
 const youtubeVideosGrid = document.getElementById('youtubeVideosGrid');
