@@ -4,15 +4,16 @@
         <h1>ABHAYA NEWS</h1>
     </a>
     <nav>
-        <ul>
+        <ul class="sidebar">
+            <li><a href="#" id="sidebar-Cancel-btn"><svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="#1f1f1f"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>Close</a></li>
             <li><a href="index.html" id="nav-home">Home</a></li>
             <li><a href="politics.html" id="nav-politics">Politics</a></li>
             <li><a href="technology.html" id="nav-technology">Technology</a></li>
             <li><a href="sports.html" id="nav-sports">Sports</a></li>
             <li><a href="entertainment.html" id="nav-entertainment">Entertainment</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle">More <i class="fas fa-chevron-down"></i></a>
-                <div class="dropdown-menu">
+            <li class="sidebar-dropdown">
+                <a href="#" class="sidebar-dropdown-toggle">More <i class="fas fa-chevron-down"></i></a>
+                <div class="sidebar-dropdown-menu">
                     <a href="business.html" id="nav-business">Business</a>
                     <a href="health.html" id="nav-health">Health</a>
                     <a href="science.html" id="nav-science">Science</a>
@@ -23,10 +24,37 @@
                     <a href="contact.html" id="nav-contact">Contact</a>
                 </div>
             </li>
+            <li><div class="auth-buttons">
+                <button id="adminPanelBtn" style="display: none; font-size: 20px;">Admin Panel</button>
+                <button id="loginBtn" style="font-size: 20px; color: white;">Admin Login</button>
+                </div>
+            </li>
+        </ul>
+        <ul>
+            <li class="hideOnMobile"><a href="index.html" id="nav-home">Home</a></li>
+            <li class="hideOnMobile"><a href="politics.html" id="nav-politics">Politics</a></li>
+            <li class="hideOnMobile"><a href="technology.html" id="nav-technology">Technology</a></li>
+            <li class="hideOnMobile"><a href="sports.html" id="nav-sports">Sports</a></li>
+            <li class="hideOnMobile"><a href="entertainment.html" id="nav-entertainment">Entertainment</a></li>
+            <li class="hideOnMobile dropdown" >
+                <a href="#" class="dropdown-toggle">More <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-menu">
+                    <a href="business.html" id="nav-business">Business</a>
+                    <a href="health.html" id="nav-health">Health</a>
+                    <a href="science.html" id="nav-science">Science</a>
+                    <a href="world.html" id="nav-world">World</a>
+                    <a href="lifestyle.html" id="nav-lifestyle">Lifestyle</a>
+                    <a href="education.html" id="nav-education">Education</a>
+                    <a href="about.html" id="nav-about">About Us</a>
+                    <a href="contact.html" id="nav-contact">Contact</a>
+                    </div>
+            </li>
+            <li class="hideOnMobile"><div class="auth-buttons">
+                <button id="adminPanelBtn" style="display: none;">Admin Panel</button>
+                <button id="loginBtn">Admin Login</button>
+                </div>
+            </li>
+            <li><a href="#" id="sidebar-menu-btn" class="sb-menu-btn"><svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="#1f1f1f"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a></li>
         </ul>
     </nav>
-    <div class="auth-buttons">
-        <button id="adminPanelBtn" style="display: none;">Admin Panel</button>
-        <button id="loginBtn">Admin Login</button>
-    </div>
 </div>

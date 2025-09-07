@@ -77,7 +77,6 @@ header .container {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-fill-color: transparent;
 }
 
 nav ul {
@@ -94,7 +93,7 @@ nav ul li a {
     padding: 8px 12px;
     border-radius: 4px;
     transition: all 0.3s ease;
-    color: var(--primary-color);
+    color: black;
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -109,12 +108,42 @@ nav ul li a.active {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/*  */
+.sidebar {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 230px;
+    height: 100%;
+    background-color: rgba(205, 40, 40, 0.696);
+    backdrop-filter: blur(10px);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    padding-top: 60px; /* Adjust based on header height */
+    z-index: 999;
+
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.sb-menu-btn {  /*firstly hinding it, and responsive media query will display it*/
+    display: none;
+    cursor: pointer;
+    padding: 8px; /* Add padding to make it bigger */
+    border-radius: 4px; /* Slightly rounded corners */
+    transition: all 0.3s ease;
+}
+.sb-menu-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
 /* Simple Dropdown */
-.dropdown {
+.dropdown , .sidebar-dropdown {
     position: relative;
 }
 
-.dropdown-menu {
+.dropdown-menu, .sidebar-dropdown-menu {
     position: absolute;
     top: 100%;
     right: 0;
@@ -131,31 +160,31 @@ nav ul li a.active {
     border: 1px solid #e0e0e0;
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown:hover .dropdown-menu , .sidebar-dropdown:hover .sidebar-dropdown-menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-.dropdown-menu a {
+.dropdown-menu a , .sidebar-dropdown-menu a {
     display: block;
     padding: 8px 16px;
-    color: var(--primary-color);
+    color: var(--primary-);
     transition: background-color 0.2s ease;
     border-radius: 0;
 }
 
-.dropdown-menu a:hover {
+.dropdown-menu a:hover, .sidebar-dropdown-menu a:hover {
     background: var(--gradient-primary);
     color: var(--white);
 }
 
-.dropdown-toggle i {
+.dropdown-toggle i , .sidebar-dropdown-toggle i {
     font-size: 10px;
     transition: transform 0.2s ease;
 }
 
-.dropdown:hover .dropdown-toggle i {
+.dropdown:hover .dropdown-toggle i , .sidebar-dropdown:hover .sidebar-dropdown-toggle i {
     transform: rotate(180deg);
 }
 
@@ -943,8 +972,21 @@ form button[type="submit"].loading::after {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
+     .hideOnMobile {
+        display: none;
+    }  
+
+    .sb-menu-btn{
+        display: flex;
+        border: 2px solid #1f1f1f; /* Add square border */
+        padding: 10px; /* Increase padding to make it bigger */
+        border-radius: 4px; /* Keep it square with slight rounding */
+    }
+
     header .container {
-        flex-direction: column;
+        flex-direction: row; /* Change from 'right' to 'row' */
+        justify-content: space-between; /* Ensure proper spacing */
+
     }
 
     .logo img {
@@ -956,22 +998,24 @@ form button[type="submit"].loading::after {
     }
 
     nav ul {
-        margin-top: 15px;
-        flex-wrap: wrap;
-        justify-content: center;
+        /* margin-top: 15px; */
+        align-items: center;
+        /* flex-wrap: wrap;
+        justify-content: center; */
     }
 
     nav ul li {
-        margin: 5px;
+        margin-left: 10px;
     }
 
     nav ul li a {
-        padding: 6px 10px;
-        font-size: 14px;
+        /* padding: 6px 10px; */
+        font-size: 20px;
+        color: white;
     }
 
     /* Mobile dropdown */
-    .dropdown-menu {
+    /* .dropdown-menu {
         position: static;
         opacity: 1;
         visibility: visible;
@@ -982,7 +1026,7 @@ form button[type="submit"].loading::after {
         padding: 0;
         min-width: auto;
         display: none;
-    }
+    } */
 
     .dropdown:hover .dropdown-menu {
         display: block;
@@ -1604,6 +1648,10 @@ form button[type="submit"].loading::after {
     .youtube-video-modal-content {
         margin: 10px;
     }
+    .sidebar {
+        width: 230px;
+        backdrop-filter: blur(15px);
+    }
 }
 
 /* Loading Text */
@@ -1613,3 +1661,4 @@ form button[type="submit"].loading::after {
     font-size: 16px;
     padding: 20px;
 }
+

@@ -204,6 +204,8 @@ function setActiveNavLink() {
 function setupDropdownNavigation() {
     const dropdown = document.querySelector('.dropdown');
     const dropdownToggle = document.querySelector('.dropdown-toggle');
+    const sidebar_Menu_Btn = document.getElementById('sidebar-menu-btn');
+    const sidebar_Cancel_Btn = document.getElementById('sidebar-Cancel-btn');
 
     if (dropdown && dropdownToggle) {
         // Handle click on dropdown toggle for mobile
@@ -217,6 +219,20 @@ function setupDropdownNavigation() {
             if (!dropdown.contains(e.target)) {
                 dropdown.classList.remove('dropdown-active');
             }
+        });
+    }    
+
+    if (sidebar_Menu_Btn || sidebar_Cancel_Btn) {
+        sidebar_Menu_Btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'flex';
+        });
+
+        sidebar_Cancel_Btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'none';
         });
     }
 }
@@ -232,6 +248,7 @@ document.addEventListener('DOMContentLoaded', function () {
         loadComponent('navbar', 'components/navbar.html').then(() => {
             setupDropdownNavigation();
         });
+
     }
 
     // Load the appropriate footer
