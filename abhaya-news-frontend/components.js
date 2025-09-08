@@ -22,21 +22,31 @@ async function loadComponent(elementId, componentPath) {
     }
 }
 
-// Function to set up the login button functionality
-function setupLoginButton() {
-    const loginBtn = document.getElementById('loginBtn');
-    const adminPanelBtn = document.getElementById('adminPanelBtn');
-    if (!loginBtn) return;
+// Function to set up the login button functionality of SIDEBAR
+function setup_sidebar_LoginButton() {
+    const loginBtn = document.getElementById('loginBtn_sidebar');
+    const adminPanelBtn = document.getElementById('adminPanelBtn_sidebar');
+    console.log(`loginBtn: ${loginBtn}, adminPanelBtn: ${adminPanelBtn}`);
+    
+    if (!loginBtn){
+        console.log("no loginBtn");        
+        return;
+    }
 
     const token = localStorage.getItem('token');
+    console.log(`Token found: ${token}`);
+    
 
     // Check if user is logged in
     if (token) {
         loginBtn.textContent = 'Logout';
         if (adminPanelBtn) {
             adminPanelBtn.style.display = 'inline-block';
+            console.log("admin is loged in panel btn is visible");
         }
     }
+    console.log(`after token check, admin is not logged in.`);
+    
 
     // Admin Panel Button Functionality
     if (adminPanelBtn) {
@@ -45,8 +55,11 @@ function setupLoginButton() {
         });
     }
 
+    console.log(`login btn is about to be clicked`);    
     // Login Button Functionality
     loginBtn.addEventListener('click', () => {
+        console.log("admin loginBtn clicked");
+        
         if (token) {
             // Logout
             localStorage.removeItem('token');
@@ -62,8 +75,170 @@ function setupLoginButton() {
         } else {
             // Check if we're on the index page and have a login modal
             const loginModal = document.getElementById('loginModal');
+            console.log(`loginModal: ${loginModal}`);
+            
             if (loginModal) {
                 // Show login modal
+                console.log("showing login modal");
+                loginModal.style.display = 'block';
+
+                // Set up modal close button
+                const closeBtn = loginModal.querySelector('.close');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
+                        loginModal.style.display = 'none';
+                    });
+                }
+
+                // Close modal when clicking outside
+                window.addEventListener('click', (e) => {
+                    if (e.target === loginModal) {
+                        loginModal.style.display = 'none';
+                    }
+                });
+
+                // Set up login form
+                const loginForm = document.getElementById('loginForm');
+                if (loginForm) {
+                    loginForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+
+                        const email = document.getElementById('email').value;
+                        const password = document.getElementById('password').value;
+                        const submitButton = loginForm.querySelector('button[type="submit"]');
+                        const originalButtonText = submitButton.textContent;
+
+                        // Validate inputs
+                        if (!email || !password) {
+                            showErrorToast('Please fill in all fields');
+                            return;
+                        }
+
+                        // Show loading state
+                        submitButton.disabled = true;
+                        submitButton.classList.add('loading');
+                        submitButton.textContent = 'Signing In...';
+
+                        try {
+                            // Call the actual backend API for login
+                            const response = await fetch(`${API_BASE_URL}/admin/login`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ email, password })
+                            });
+
+                            if (!response.ok) {
+                                const data = await response.json();
+                                throw new Error(data.message || `HTTP error! Status: ${response.status}`);
+                            }
+
+                            const data = await response.json();
+
+                            // Store the real JWT token from the backend
+                            localStorage.setItem('token', data.token);
+                            loginBtn.textContent = 'Logout';
+                            if (adminPanelBtn) {
+                                adminPanelBtn.style.display = 'inline-block';
+                            }
+
+                            // Clear form
+                            loginForm.reset();
+                            loginModal.style.display = 'none';
+                            showSuccessToast('Welcome back! Redirecting to admin panel...');
+
+                            // Redirect to admin page after a short delay to show the toast
+                            setTimeout(() => {
+                                window.location.href = 'admin.html';
+                            }, 1500);
+                        } catch (error) {
+                            console.error('Login error:', error);
+                            let errorMessage = 'Login failed. Please try again.';
+
+                            if (error.message.includes('Invalid credentials')) {
+                                errorMessage = 'Invalid email or password. Please check your credentials.';
+                            } else if (error.message.includes('Failed to fetch')) {
+                                errorMessage = 'Unable to connect to server. Please check your connection.';
+                            } else if (error.message) {
+                                errorMessage = error.message;
+                            }
+
+                            showErrorToast(errorMessage);
+                        } finally {
+                            // Reset button state
+                            submitButton.disabled = false;
+                            submitButton.classList.remove('loading');
+                            submitButton.textContent = originalButtonText;
+                        }
+                    });
+                }
+            } else {
+                // Redirect to admin page if no modal is available
+                window.location.href = 'admin.html';
+            }
+        }
+    });
+}
+
+// Function to set up the login button functionality of NAVBAR
+function setupLoginButton() {
+    const loginBtn = document.getElementById('loginBtn');
+    const adminPanelBtn = document.getElementById('adminPanelBtn');
+    console.log(`loginBtn: ${loginBtn}, adminPanelBtn: ${adminPanelBtn}`);
+    
+    if (!loginBtn){
+        console.log("no loginBtn");        
+        return;
+    }
+
+    const token = localStorage.getItem('token');
+    console.log(`Token found: ${token}`);
+    
+
+    // Check if user is logged in
+    if (token) {
+        loginBtn.textContent = 'Logout';
+        if (adminPanelBtn) {
+            adminPanelBtn.style.display = 'inline-block';
+            console.log("admin is loged in panel btn is visible");
+        }
+    }
+    console.log(`after token check, admin is not logged in.`);
+    
+
+    // Admin Panel Button Functionality
+    if (adminPanelBtn) {
+        adminPanelBtn.addEventListener('click', () => {
+            window.location.href = 'admin.html';
+        });
+    }
+
+    console.log(`login btn is about to be clicked`);    
+    // Login Button Functionality
+    loginBtn.addEventListener('click', () => {
+        console.log("admin loginBtn clicked");
+        
+        if (token) {
+            // Logout
+            localStorage.removeItem('token');
+            loginBtn.textContent = 'Admin Login';
+            if (adminPanelBtn) {
+                adminPanelBtn.style.display = 'none';
+            }
+            showSuccessToast('Logged out successfully');
+            // Reload the page to update UI after a short delay to show the toast
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        } else {
+            // Check if we're on the index page and have a login modal
+            const loginModal = document.getElementById('loginModal');
+            console.log(`loginModal: ${loginModal}`);
+            
+            if (loginModal) {
+                // Show login modal
+                console.log("showing login modal");
                 loginModal.style.display = 'block';
 
                 // Set up modal close button
@@ -234,6 +409,14 @@ function setupDropdownNavigation() {
             const sidebar = document.querySelector('.sidebar');
             sidebar.style.display = 'none';
         });
+
+        //closing sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            if(!e.target.closest('.sidebar') && !e.target.closest('#sidebar-menu-btn')) {
+                const sidebar = document.querySelector('.sidebar');
+                sidebar.style.display = 'none';
+            }
+        });
     }
 }
 
@@ -247,6 +430,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (navbarElement) {
         loadComponent('navbar', 'components/navbar.html').then(() => {
             setupDropdownNavigation();
+            setupLoginButton();
+            setup_sidebar_LoginButton();
         });
 
     }

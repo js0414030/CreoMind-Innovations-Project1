@@ -120,7 +120,7 @@ async function fetchNews() {
         // We're not displaying featured news anymore since we have a static banner slider
         // But we can still log it for reference
         if (data.news && data.news.length > 0 && currentPage === 1) {
-            console.log("First article available for featured section:", data.news[0]);
+            // console.log("First article available for featured section:", data.news[0]);
         }
     } catch (error) {
         console.error('Fetch error:', error);

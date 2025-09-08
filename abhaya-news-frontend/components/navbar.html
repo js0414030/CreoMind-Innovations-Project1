@@ -4,8 +4,9 @@
         <h1>ABHAYA NEWS</h1>
     </a>
     <nav>
+        <!-- sidebar : for opening in mobile/small screen -->
         <ul class="sidebar">
-            <li><a href="#" id="sidebar-Cancel-btn"><svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="#1f1f1f"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>Close</a></li>
+            <li><a href="#" id="sidebar-Cancel-btn"><svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="white"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>Close</a></li>
             <li><a href="index.html" id="nav-home">Home</a></li>
             <li><a href="politics.html" id="nav-politics">Politics</a></li>
             <li><a href="technology.html" id="nav-technology">Technology</a></li>
@@ -25,11 +26,12 @@
                 </div>
             </li>
             <li><div class="auth-buttons">
-                <button id="adminPanelBtn" style="display: none; font-size: 20px;">Admin Panel</button>
-                <button id="loginBtn" style="font-size: 20px; color: white;">Admin Login</button>
+                    <button id="adminPanelBtn_sidebar" style="display: none; font-size: 20px;">Admin Panel</button>
+                    <button id="loginBtn_sidebar" style="font-size: 20px; color: white;">Admin Login</button>
                 </div>
             </li>
         </ul>
+        <!-- desktop : for opening in larger screens -->
         <ul>
             <li class="hideOnMobile"><a href="index.html" id="nav-home">Home</a></li>
             <li class="hideOnMobile"><a href="politics.html" id="nav-politics">Politics</a></li>
@@ -49,9 +51,10 @@
                     <a href="contact.html" id="nav-contact">Contact</a>
                     </div>
             </li>
-            <li class="hideOnMobile"><div class="auth-buttons">
-                <button id="adminPanelBtn" style="display: none;">Admin Panel</button>
-                <button id="loginBtn">Admin Login</button>
+            <li class="hideOnMobile">
+                <div class="auth-buttons">
+                    <button id="adminPanelBtn" style="display: none;">Admin Panel</button>
+                    <button id="loginBtn">Admin Login</button>
                 </div>
             </li>
             <li><a href="#" id="sidebar-menu-btn" class="sb-menu-btn"><svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="#1f1f1f"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a></li>

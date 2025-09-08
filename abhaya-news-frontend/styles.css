@@ -21,7 +21,7 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: auto;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -197,10 +197,6 @@ nav ul li a.active {
     cursor: pointer;
     transition: all 0.3s ease;
     margin-left: 8px;
-}
-
-.auth-buttons button:first-child {
-    margin-left: 0;
 }
 
 .auth-buttons button:hover {
@@ -460,6 +456,7 @@ main {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    line-clamp: 3;
 }
 
 .news-date {
@@ -1040,7 +1037,10 @@ form button[type="submit"].loading::after {
     }
 
     .auth-buttons {
-        margin-top: 15px;
+        display: flex;
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 8px; /* Space between buttons */
+        padding: 8px 0;
     }
 
     .news-grid {
@@ -1662,3 +1662,12 @@ form button[type="submit"].loading::after {
     padding: 20px;
 }
 
+.footer-links ul {
+  display: flex; /* Makes the list items arrange horizontally */
+  flex-wrap: wrap;
+  list-style-type: none; /* Removes the default bullet points */
+  margin: 0; /* Resets default margin */
+  padding: 0; /* Resets default padding */
+  gap: 15px; /* Adds space between each list item */
+  row-gap: 3px;
+}
