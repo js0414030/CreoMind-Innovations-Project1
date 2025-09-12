@@ -1,5 +1,6 @@
 import API_BASE_URL from './config.js';
 import { showSuccessToast, showErrorToast } from './toast.js';
+
 // Function to load HTML components
 async function loadComponent(elementId, componentPath) {
     try {
@@ -13,103 +14,114 @@ async function loadComponent(elementId, componentPath) {
         // Set active class for current page in navbar
         setActiveNavLink();
 
-        // If this is the navbar, set up the login button
+        // If this is the navbar, set up extra features
         if (elementId === 'navbar') {
+            setupDropdownNavigation();
+            setupDateTime();
             setupLoginButton();
+            setupMobileMenu();
         }
     } catch (error) {
         console.error('Error loading component:', error);
     }
 }
 
-// Function to set up the login button functionality
+// ✅ Setup login/logout/Admin injection
 function setupLoginButton() {
-    const loginBtn = document.getElementById('loginBtn');
-    const adminPanelBtn = document.getElementById('adminPanelBtn');
-    if (!loginBtn) return;
+    const desktopMore = document.getElementById("desktopMore");
+    const mobileAdmin = document.getElementById("mobileAdmin");
+    if (!desktopMore || !mobileAdmin) return;
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
-    // Check if user is logged in
+    // Reset existing entries
+    const existingAdminLinks = desktopMore.querySelectorAll(".admin-link");
+    existingAdminLinks.forEach(el => el.remove());
+    mobileAdmin.innerHTML = "";
+
     if (token) {
-        loginBtn.textContent = 'Logout';
-        if (adminPanelBtn) {
-            adminPanelBtn.style.display = 'inline-block';
-        }
+        // Logged in → Admin Panel + Logout
+        desktopMore.innerHTML += `
+            <a href="admin.html" id="adminPanelBtn" class="admin-link">Admin Panel</a>
+            <a href="#" id="logoutBtn" class="admin-link">Logout</a>
+        `;
+        mobileAdmin.innerHTML = `
+            <a href="admin.html" class="admin-link">Admin Panel</a>
+            <a href="#" id="logoutBtnMobile" class="admin-link">Logout</a>
+        `;
+    } else {
+        // Logged out → Admin Login
+        desktopMore.innerHTML += `<a href="#" id="loginBtn" class="admin-link">Admin Login</a>`;
+        mobileAdmin.innerHTML = `<a href="#" id="loginBtnMobile" class="admin-link">Admin Login</a>`;
     }
 
-    // Admin Panel Button Functionality
+    // Attach listeners to both desktop and mobile buttons
+    const loginBtnDesktop = document.getElementById("loginBtn");
+    const loginBtnMobile = document.getElementById("loginBtnMobile");
+    const logoutBtnDesktop = document.getElementById("logoutBtn");
+    const logoutBtnMobile = document.getElementById("logoutBtnMobile");
+    const adminPanelBtn = document.getElementById("adminPanelBtn");
+
     if (adminPanelBtn) {
-        adminPanelBtn.addEventListener('click', () => {
-            window.location.href = 'admin.html';
+        adminPanelBtn.addEventListener("click", () => {
+            window.location.href = "admin.html";
         });
     }
 
-    // Login Button Functionality
-    loginBtn.addEventListener('click', () => {
-        if (token) {
-            // Logout
-            localStorage.removeItem('token');
-            loginBtn.textContent = 'Admin Login';
-            if (adminPanelBtn) {
-                adminPanelBtn.style.display = 'none';
-            }
-            showSuccessToast('Logged out successfully');
-            // Reload the page to update UI after a short delay to show the toast
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
-        } else {
-            // Check if we're on the index page and have a login modal
-            const loginModal = document.getElementById('loginModal');
-            if (loginModal) {
-                // Show login modal
-                loginModal.style.display = 'block';
+    // Logout button handlers
+    [logoutBtnDesktop, logoutBtnMobile].forEach(btn => {
+        if (btn) {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                localStorage.removeItem("token");
+                showSuccessToast("Logged out successfully");
+                setTimeout(() => window.location.reload(), 1000);
+            });
+        }
+    });
 
-                // Set up modal close button
-                const closeBtn = loginModal.querySelector('.close');
+    // Login button handlers
+    [loginBtnDesktop, loginBtnMobile].forEach(btn => {
+        if (btn) {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                const loginModal = document.getElementById("loginModal");
+            if (loginModal) {
+                loginModal.style.display = "block";
+                const closeBtn = loginModal.querySelector(".close");
                 if (closeBtn) {
-                    closeBtn.addEventListener('click', () => {
-                        loginModal.style.display = 'none';
+                    closeBtn.addEventListener("click", () => {
+                        loginModal.style.display = "none";
                     });
                 }
-
-                // Close modal when clicking outside
-                window.addEventListener('click', (e) => {
+                window.addEventListener("click", (e) => {
                     if (e.target === loginModal) {
-                        loginModal.style.display = 'none';
+                        loginModal.style.display = "none";
                     }
                 });
 
-                // Set up login form
-                const loginForm = document.getElementById('loginForm');
+                const loginForm = document.getElementById("loginForm");
                 if (loginForm) {
-                    loginForm.addEventListener('submit', async (e) => {
+                    loginForm.addEventListener("submit", async (e) => {
                         e.preventDefault();
-
-                        const email = document.getElementById('email').value;
-                        const password = document.getElementById('password').value;
+                        const email = document.getElementById("email").value;
+                        const password = document.getElementById("password").value;
                         const submitButton = loginForm.querySelector('button[type="submit"]');
                         const originalButtonText = submitButton.textContent;
 
-                        // Validate inputs
                         if (!email || !password) {
-                            showErrorToast('Please fill in all fields');
+                            showErrorToast("Please fill in all fields");
                             return;
                         }
 
-                        // Show loading state
                         submitButton.disabled = true;
-                        submitButton.classList.add('loading');
-                        submitButton.textContent = 'Signing In...';
+                        submitButton.classList.add("loading");
+                        submitButton.textContent = "Signing In...";
 
                         try {
-                            // Call the actual backend API for login
                             const response = await fetch(`${API_BASE_URL}/admin/login`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify({ email, password })
                             });
 
@@ -119,58 +131,65 @@ function setupLoginButton() {
                             }
 
                             const data = await response.json();
+                            localStorage.setItem("token", data.token);
 
-                            // Store the real JWT token from the backend
-                            localStorage.setItem('token', data.token);
-                            loginBtn.textContent = 'Logout';
-                            if (adminPanelBtn) {
-                                adminPanelBtn.style.display = 'inline-block';
-                            }
-
-                            // Clear form
                             loginForm.reset();
-                            loginModal.style.display = 'none';
-                            showSuccessToast('Welcome back! Redirecting to admin panel...');
+                            loginModal.style.display = "none";
+                            showSuccessToast("Welcome back! Redirecting to admin panel...");
 
-                            // Redirect to admin page after a short delay to show the toast
                             setTimeout(() => {
-                                window.location.href = 'admin.html';
+                                window.location.href = "admin.html";
                             }, 1500);
                         } catch (error) {
-                            console.error('Login error:', error);
-                            let errorMessage = 'Login failed. Please try again.';
-
-                            if (error.message.includes('Invalid credentials')) {
-                                errorMessage = 'Invalid email or password. Please check your credentials.';
-                            } else if (error.message.includes('Failed to fetch')) {
-                                errorMessage = 'Unable to connect to server. Please check your connection.';
+                            console.error("Login error:", error);
+                            let errorMessage = "Login failed. Please try again.";
+                            if (error.message.includes("Invalid credentials")) {
+                                errorMessage = "Invalid email or password. Please check your credentials.";
+                            } else if (error.message.includes("Failed to fetch")) {
+                                errorMessage = "Unable to connect to server. Please check your connection.";
                             } else if (error.message) {
                                 errorMessage = error.message;
                             }
-
                             showErrorToast(errorMessage);
                         } finally {
-                            // Reset button state
                             submitButton.disabled = false;
-                            submitButton.classList.remove('loading');
+                            submitButton.classList.remove("loading");
                             submitButton.textContent = originalButtonText;
                         }
                     });
                 }
             } else {
-                // Redirect to admin page if no modal is available
-                window.location.href = 'admin.html';
+                window.location.href = "admin.html";
             }
+            });
         }
     });
 }
 
+// ✅ Date + time updater
+function setupDateTime() {
+    const dateTimeEl = document.getElementById("dateTime");
+    if (!dateTimeEl) return;
+
+    function update() {
+        const now = new Date();
+        dateTimeEl.textContent = now.toLocaleString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    }
+    update();
+    setInterval(update, 60000); // refresh every 1 min
+}
+
 // Function to set the active class on the current page's navigation link
 function setActiveNavLink() {
-    // Get the current page filename
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
-    // Map of page filenames to their corresponding nav IDs
     const pageToNavId = {
         'index.html': 'nav-home',
         'politics.html': 'nav-politics',
@@ -183,14 +202,12 @@ function setActiveNavLink() {
         'world.html': 'nav-world',
         'lifestyle.html': 'nav-lifestyle',
         'education.html': 'nav-education',
-        'admin.html': 'nav-home' // Admin page highlights home
+        'admin.html': 'nav-home'
     };
 
-    // Remove all active classes first
     const navLinks = document.querySelectorAll('nav ul li a');
     navLinks.forEach(link => link.classList.remove('active'));
 
-    // Add active class to the current page's nav link
     const activeNavId = pageToNavId[currentPage];
     if (activeNavId) {
         const activeLink = document.getElementById(activeNavId);
@@ -206,13 +223,11 @@ function setupDropdownNavigation() {
     const dropdownToggle = document.querySelector('.dropdown-toggle');
 
     if (dropdown && dropdownToggle) {
-        // Handle click on dropdown toggle for mobile
         dropdownToggle.addEventListener('click', (e) => {
             e.preventDefault();
             dropdown.classList.toggle('dropdown-active');
         });
 
-        // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
             if (!dropdown.contains(e.target)) {
                 dropdown.classList.remove('dropdown-active');
@@ -221,20 +236,36 @@ function setupDropdownNavigation() {
     }
 }
 
-// Load components when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', function () {
-    // Check if we're on the admin page
-    const isAdminPage = window.location.pathname.includes('admin.html');
+// ✅ Mobile menu setup
+function setupMobileMenu() {
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const closeMenu = document.getElementById("closeMenu");
 
-    // Load navbar if it exists on the page
-    const navbarElement = document.getElementById('navbar');
-    if (navbarElement) {
-        loadComponent('navbar', 'components/navbar.html').then(() => {
-            setupDropdownNavigation();
+    if (hamburger && mobileMenu && closeMenu) {
+        hamburger.addEventListener("click", () => {
+            mobileMenu.classList.add("active");
+        });
+        closeMenu.addEventListener("click", () => {
+            mobileMenu.classList.remove("active");
+        });
+        document.addEventListener("click", (e) => {
+            if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+                mobileMenu.classList.remove("active");
+            }
         });
     }
+}
 
-    // Load the appropriate footer
+// Load components when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function () {
+    const isAdminPage = window.location.pathname.includes('admin.html');
+    const navbarElement = document.getElementById('navbar');
+
+    if (navbarElement) {
+        loadComponent('navbar', 'components/navbar.html');
+    }
+
     if (isAdminPage) {
         loadComponent('footer', 'components/admin-footer.html');
     } else {

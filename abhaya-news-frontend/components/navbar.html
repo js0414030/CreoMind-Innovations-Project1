@@ -1,32 +1,65 @@
 <div class="container">
+    <!-- Logo -->
     <a href="index.html" class="logo">
-        <img src="assests/logo2.png" alt="Abhaya News Logo">
-        <h1>ABHAYA NEWS</h1>
+      <img src="assests/logo2.png" alt="Abhaya News Logo">
+      <h1>ABHAYA NEWS</h1>
     </a>
-    <nav>
-        <ul>
-            <li><a href="index.html" id="nav-home">Home</a></li>
-            <li><a href="politics.html" id="nav-politics">Politics</a></li>
-            <li><a href="technology.html" id="nav-technology">Technology</a></li>
-            <li><a href="sports.html" id="nav-sports">Sports</a></li>
-            <li><a href="entertainment.html" id="nav-entertainment">Entertainment</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle">More <i class="fas fa-chevron-down"></i></a>
-                <div class="dropdown-menu">
-                    <a href="business.html" id="nav-business">Business</a>
-                    <a href="health.html" id="nav-health">Health</a>
-                    <a href="science.html" id="nav-science">Science</a>
-                    <a href="world.html" id="nav-world">World</a>
-                    <a href="lifestyle.html" id="nav-lifestyle">Lifestyle</a>
-                    <a href="education.html" id="nav-education">Education</a>
-                    <a href="about.html" id="nav-about">About Us</a>
-                    <a href="contact.html" id="nav-contact">Contact</a>
-                </div>
-            </li>
-        </ul>
+
+    <!-- Desktop Nav -->
+    <nav class="desktop-nav">
+      <ul>
+        <li><a href="index.html" id="nav-home">Home</a></li>
+        <li><a href="politics.html" id="nav-politics">Politics</a></li>
+        <li><a href="technology.html" id="nav-technology">Technology</a></li>
+        <li><a href="sports.html" id="nav-sports">Sports</a></li>
+        <li><a href="entertainment.html" id="nav-entertainment">Entertainment</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle">More <i class="fas fa-chevron-down"></i></a>
+          <div class="dropdown-menu" id="desktopMore">
+            <a href="business.html" id="nav-business">Business</a>
+            <a href="health.html" id="nav-health">Health</a>
+            <a href="science.html" id="nav-science">Science</a>
+            <a href="world.html" id="nav-world">World</a>
+            <a href="lifestyle.html" id="nav-lifestyle">Lifestyle</a>
+            <a href="education.html" id="nav-education">Education</a>
+            <a href="about.html" id="nav-about">About Us</a>
+            <a href="contact.html" id="nav-contact">Contact</a>
+            <!-- Admin login/logout will be injected here -->
+          </div>
+        </li>
+      </ul>
     </nav>
-    <div class="auth-buttons">
-        <button id="adminPanelBtn" style="display: none;">Admin Panel</button>
-        <button id="loginBtn">Admin Login</button>
+
+    <!-- Date/Time - Top Right -->
+    <div class="datetime-display">
+      <span id="dateTime"></span>
     </div>
-</div>
+    
+    <!-- Hamburger (Mobile only) -->
+    <button class="hamburger" id="hamburger">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- Mobile Sidebar Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
+    <ul id="mobileNavLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="politics.html">Politics</a></li>
+      <li><a href="technology.html">Technology</a></li>
+      <li><a href="sports.html">Sports</a></li>
+      <li><a href="entertainment.html">Entertainment</a></li>
+      <li><a href="business.html">Business</a></li>
+      <li><a href="health.html">Health</a></li>
+      <li><a href="science.html">Science</a></li>
+      <li><a href="world.html">World</a></li>
+      <li><a href="lifestyle.html">Lifestyle</a></li>
+      <li><a href="education.html">Education</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <!-- Admin login/logout will be injected here -->
+      <li id="mobileAdmin"></li>
+    </ul>
+  </div>
+  
