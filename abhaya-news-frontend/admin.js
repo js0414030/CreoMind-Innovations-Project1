@@ -24,6 +24,138 @@ const editVideoModal = document.getElementById('editVideoModal');
 const editVideoForm = document.getElementById('editVideoForm');
 const closeEditVideoModal = document.getElementById('closeEditVideoModal');
 
+// DOM Elements - Popup News
+const popupNewsForm = document.getElementById('popupNewsForm');
+const popupIdInput = document.getElementById('popupId');
+const savePopupBtn = document.getElementById('savePopupBtn');
+const deletePopupBtn = document.getElementById('deletePopupBtn');
+const cancelEditBtn = document.getElementById('cancelEditBtn');
+const popupNewsTableBody = document.getElementById('popupNewsTableBody');
+
+// Popup News CRUD/Activation Logic
+async function fetchPopupNews() {
+    const res = await fetch('/api/popup-news');
+    return res.ok ? await res.json() : [];
+}
+
+function renderPopupNewsTable(newsList) {
+    popupNewsTableBody.innerHTML = '';
+    newsList.forEach(news => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${news.title}</td>
+            <td>${news.image ? `<img src="${news.image}" style="max-width:80px;max-height:40px;">` : ''}</td>
+            <td>${news.isActive ? '<span style="color:green;font-weight:bold;">Active</span>' : ''}</td>
+            <td>
+                <button class="edit-btn" data-id="${news._id}">Edit</button>
+                <button class="delete-btn" data-id="${news._id}">Delete</button>
+                ${!news.isActive ? `<button class="activate-btn" data-id="${news._id}">Activate</button>` : ''}
+            </td>
+        `;
+        popupNewsTableBody.appendChild(tr);
+    });
+
+    // Add event listeners
+    popupNewsTableBody.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.onclick = () => startEditPopupNews(btn.dataset.id);
+    });
+    popupNewsTableBody.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.onclick = () => deletePopupNews(btn.dataset.id);
+    });
+    popupNewsTableBody.querySelectorAll('.activate-btn').forEach(btn => {
+        btn.onclick = () => activatePopupNews(btn.dataset.id);
+    });
+}
+
+async function refreshPopupNewsTable() {
+    const newsList = await fetchPopupNews();
+    renderPopupNewsTable(newsList);
+    clearPopupForm();
+}
+
+function clearPopupForm() {
+    popupIdInput.value = '';
+    popupNewsForm.reset();
+    savePopupBtn.textContent = 'Save Popup News';
+    deletePopupBtn.style.display = 'none';
+    cancelEditBtn.style.display = 'none';
+}
+
+function startEditPopupNews(id) {
+    fetch(`/api/popup-news`).then(res => res.json()).then(newsList => {
+        const news = newsList.find(n => n._id === id);
+        if (!news) return;
+        popupIdInput.value = news._id;
+        document.getElementById('popupTitle').value = news.title;
+        document.getElementById('popupDescription').value = news.description;
+        document.getElementById('popupLink').value = news.link || '';
+        document.getElementById('popupVideoLink').value = news.videoLink || '';
+        document.getElementById('popupActive').checked = !!news.isActive;
+        savePopupBtn.textContent = 'Update Popup News';
+        deletePopupBtn.style.display = 'inline-block';
+        cancelEditBtn.style.display = 'inline-block';
+    });
+}
+
+async function deletePopupNews(id) {
+    if (!confirm('Delete this popup news?')) return;
+    await fetch(`/api/popup-news/${id}`, { method: 'DELETE' });
+    refreshPopupNewsTable();
+}
+
+async function activatePopupNews(id) {
+    await fetch(`/api/popup-news/${id}/activate`, { method: 'PATCH' });
+    refreshPopupNewsTable();
+}
+
+popupNewsForm.onsubmit = async (e) => {
+    e.preventDefault();
+    const id = popupIdInput.value;
+    const title = document.getElementById('popupTitle').value;
+    const description = document.getElementById('popupDescription').value;
+    const link = document.getElementById('popupLink').value;
+    const videoLink = document.getElementById('popupVideoLink').value;
+    const isActive = document.getElementById('popupActive').checked;
+    const imageInput = document.getElementById('popupImage');
+    let imageUrl = '';
+    if (imageInput.files && imageInput.files[0]) {
+        const formData = new FormData();
+        formData.append('image', imageInput.files[0]);
+        const res = await fetch('/api/upload-popup-image', { method: 'POST', body: formData });
+        const data = await res.json();
+        imageUrl = data.imageUrl;
+    }
+    const payload = { title, description, link, videoLink, isActive };
+    if (imageUrl) payload.image = imageUrl;
+    if (id) {
+        // Update
+        await fetch(`/api/popup-news/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+    } else {
+        // Create
+        await fetch('/api/popup-news', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+    }
+    refreshPopupNewsTable();
+};
+
+deletePopupBtn.onclick = () => {
+    const id = popupIdInput.value;
+    if (id) deletePopupNews(id);
+};
+
+cancelEditBtn.onclick = clearPopupForm;
+
+// Initial load
+refreshPopupNewsTable();
+
+
 // Pagination state - News
 let currentPage = 1;
 let totalPages = 1;
@@ -962,3 +1094,6 @@ function extractYoutubeVideoId(url) {
 
     return (match && match[2].length === 11) ? match[2] : null;
 }
+
+// Popup News Management Functions
+

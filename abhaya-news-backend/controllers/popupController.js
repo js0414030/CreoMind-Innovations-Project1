@@ -1,164 +1,143 @@
-const PopupImage = require('../models/PopupImage');
+const PopupNews = require('../models/PopupNews');
 const cloudinary = require('../config/cloudinary');
 
-// Upload popup image
-const uploadPopupImage = async (req, res) => {
+// -------------------------------
+// Get all popup news
+// -------------------------------
+const getAllPopupNews = async (req, res) => {
     try {
-        console.log('Upload popup image request received');
-        console.log('Admin user:', req.admin);
+        const news = await PopupNews.find().sort({ createdAt: -1 });
+        res.json(news);
+    } catch (error) {
+        console.error('Error fetching popup news:', error);
+        res.status(500).json({ message: 'Error fetching popup news' });
+    }
+};
 
+// -------------------------------
+// Get active popup news
+// -------------------------------
+const getActivePopupNews = async (req, res) => {
+    try {
+        const active = await PopupNews.findOne({ isActive: true });
+        res.json(active);
+    } catch (error) {
+        console.error('Error fetching active popup news:', error);
+        res.status(500).json({ message: 'Error fetching active popup news' });
+    }
+};
+
+// -------------------------------
+// Create popup news
+// -------------------------------
+const createPopupNews = async (req, res) => {
+    try {
+        if (req.body.isActive) {
+            await PopupNews.updateMany({}, { isActive: false });
+        }
+
+        const news = new PopupNews({
+            ...req.body,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        });
+
+        await news.save();
+        res.status(201).json(news);
+    } catch (error) {
+        console.error('Error creating popup news:', error);
+        res.status(500).json({ message: 'Error creating popup news' });
+    }
+};
+
+// -------------------------------
+// Update popup news
+// -------------------------------
+const updatePopupNews = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (req.body.isActive) {
+            await PopupNews.updateMany({}, { isActive: false });
+        }
+
+        const news = await PopupNews.findByIdAndUpdate(
+            id,
+            { ...req.body, updatedAt: new Date() },
+            { new: true }
+        );
+
+        res.json(news);
+    } catch (error) {
+        console.error('Error updating popup news:', error);
+        res.status(500).json({ message: 'Error updating popup news' });
+    }
+};
+
+// -------------------------------
+// Delete popup news
+// -------------------------------
+const deletePopupNews = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await PopupNews.findByIdAndDelete(id);
+        res.json({ message: 'Popup news deleted' });
+    } catch (error) {
+        console.error('Error deleting popup news:', error);
+        res.status(500).json({ message: 'Error deleting popup news' });
+    }
+};
+
+// -------------------------------
+// Activate popup news (set one active, deactivate others)
+// -------------------------------
+const activatePopupNews = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        await PopupNews.updateMany({}, { isActive: false });
+        const active = await PopupNews.findByIdAndUpdate(
+            id,
+            { isActive: true, updatedAt: new Date() },
+            { new: true }
+        );
+
+        res.json(active);
+    } catch (error) {
+        console.error('Error activating popup news:', error);
+        res.status(500).json({ message: 'Error activating popup news' });
+    }
+};
+
+// -------------------------------
+// Upload image for popup news
+// -------------------------------
+const uploadPopupNewsImage = async (req, res) => {
+    try {
         if (!req.file) {
             return res.status(400).json({ message: 'No image file provided' });
         }
 
-        // Upload to cloudinary
         const result = await cloudinary.uploader.upload(req.file.path, {
-            folder: 'popup-images',
+            folder: 'popup-news-images',
             width: 800,
-            height: 600,
+            height: 400,
             crop: 'fill'
         });
 
-        // Deactivate all existing popup images
-        await PopupImage.updateMany({}, { isActive: false });
-
-        // Create new popup image
-        const popupImage = new PopupImage({
-            imageUrl: result.secure_url,
-            title: req.body.title || '',
-            description: req.body.description || '',
-            isActive: true
-        });
-
-        await popupImage.save();
-
-        res.status(201).json({
-            message: 'Popup image uploaded successfully',
-            popupImage
-        });
+        res.status(200).json({ imageUrl: result.secure_url });
     } catch (error) {
-        console.error('Error uploading popup image:', error);
-        res.status(500).json({ message: 'Error uploading popup image' });
-    }
-};
-
-// Get active popup image
-const getActivePopupImage = async (req, res) => {
-    try {
-        const popupImage = await PopupImage.findOne({ isActive: true });
-        res.json({ popupImage });
-    } catch (error) {
-        console.error('Error getting popup image:', error);
-        res.status(500).json({ message: 'Error getting popup image' });
-    }
-};
-
-// Get all popup images (admin)
-const getAllPopupImages = async (req, res) => {
-    try {
-        console.log('Get all popup images request received');
-        console.log('Admin user:', req.admin);
-
-        const popupImages = await PopupImage.find().sort({ createdAt: -1 });
-        res.json({ popupImages });
-    } catch (error) {
-        console.error('Error getting popup images:', error);
-        res.status(500).json({ message: 'Error getting popup images' });
-    }
-};
-
-// Update popup image
-const updatePopupImage = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const updateData = {
-            title: req.body.title,
-            description: req.body.description,
-            updatedAt: Date.now()
-        };
-
-        if (req.file) {
-            // Upload new image to cloudinary
-            const result = await cloudinary.uploader.upload(req.file.path, {
-                folder: 'popup-images',
-                width: 800,
-                height: 600,
-                crop: 'fill'
-            });
-            updateData.imageUrl = result.secure_url;
-        }
-
-        const popupImage = await PopupImage.findByIdAndUpdate(
-            id,
-            updateData,
-            { new: true }
-        );
-
-        if (!popupImage) {
-            return res.status(404).json({ message: 'Popup image not found' });
-        }
-
-        res.json({
-            message: 'Popup image updated successfully',
-            popupImage
-        });
-    } catch (error) {
-        console.error('Error updating popup image:', error);
-        res.status(500).json({ message: 'Error updating popup image' });
-    }
-};
-
-// Delete popup image
-const deletePopupImage = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const popupImage = await PopupImage.findByIdAndDelete(id);
-
-        if (!popupImage) {
-            return res.status(404).json({ message: 'Popup image not found' });
-        }
-
-        res.json({ message: 'Popup image deleted successfully' });
-    } catch (error) {
-        console.error('Error deleting popup image:', error);
-        res.status(500).json({ message: 'Error deleting popup image' });
-    }
-};
-
-// Toggle popup image active status
-const togglePopupImageStatus = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const popupImage = await PopupImage.findById(id);
-
-        if (!popupImage) {
-            return res.status(404).json({ message: 'Popup image not found' });
-        }
-
-        // If activating this image, deactivate all others
-        if (!popupImage.isActive) {
-            await PopupImage.updateMany({}, { isActive: false });
-        }
-
-        popupImage.isActive = !popupImage.isActive;
-        popupImage.updatedAt = Date.now();
-        await popupImage.save();
-
-        res.json({
-            message: 'Popup image status updated successfully',
-            popupImage
-        });
-    } catch (error) {
-        console.error('Error toggling popup image status:', error);
-        res.status(500).json({ message: 'Error updating popup image status' });
+        console.error('Error uploading popup news image:', error);
+        res.status(500).json({ message: 'Error uploading image' });
     }
 };
 
 module.exports = {
-    uploadPopupImage,
-    getActivePopupImage,
-    getAllPopupImages,
-    updatePopupImage,
-    deletePopupImage,
-    togglePopupImageStatus
+    getAllPopupNews,
+    getActivePopupNews,
+    createPopupNews,
+    updatePopupNews,
+    deletePopupNews,
+    activatePopupNews,
+    uploadPopupNewsImage
 };

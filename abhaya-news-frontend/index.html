@@ -63,6 +63,43 @@
 </head>
 
 <body>
+    <!-- Popup News Modal -->
+    <div id="popupNewsModal" class="popup-news-modal">
+        <div class="popup-news-overlay"></div>
+        <div class="popup-news-content">
+            <button class="popup-close-btn" id="closePopupNews">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="popup-news-body">
+                <div class="popup-news-image">
+                    <img id="popupNewsImage" src="" alt="Breaking News">
+                    <div class="popup-news-badge">
+                        <i class="fas fa-bolt"></i>
+                        BREAKING NEWS
+                    </div>
+                </div>
+                <div class="popup-news-text">
+                    <h2 id="popupNewsTitle">Latest Breaking News</h2>
+                    <p id="popupNewsDescription">Stay updated with the most important news happening right now.</p>
+                    <div class="popup-news-actions">
+                        <a id="popupNewsLink" href="#" class="popup-read-more-btn">
+                            <i class="fas fa-external-link-alt"></i>
+                            Read Full Story
+                        </a>
+                        <a id="popupVideoLink" href="#" class="popup-video-btn" style="display: none;">
+                            <i class="fas fa-play"></i>
+                            Watch Video
+                        </a>
+                    </div>
+                    <div class="popup-news-meta">
+                        <span id="popupNewsDate"></span>
+                        <span class="popup-news-source">Abhaya News</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <header id="navbar">
         <!-- Navbar will be loaded here by JavaScript -->
     </header>
@@ -223,6 +260,7 @@
     <script src="components.js" type="module"></script>
     <script src="slider.js" type="module"></script>
     <script src="breaking-news.js" type="module"></script>
+    <script src="popup-news.js" type="module"></script>
     <script src="app.js" type="module"></script>
     <script src="category.js" type="module"></script>
     <script src="youtube-videos.js" type="module"></script>
