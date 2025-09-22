@@ -40,9 +40,11 @@ connectDB();
 const adminRoutes = require('./routes/adminRoutes');
 const newsRoutes = require('./routes/newsRoutes');
 const videoRoutes = require('./routes/videoRoutes');
+const popupRoutes = require('./routes/popupRoutes');
 app.use('/api/admin', adminRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/api/youtube', videoRoutes);
+app.use('/api', popupRoutes);
 
 
 // // Basic route
