@@ -92,6 +92,64 @@
                 </div>
             </div>
 
+            <!-- Popup News Management Section -->
+            <div class="admin-panel">
+                <h2>Manage Popup News</h2>
+                <form id="popupNewsForm">
+                    <input type="hidden" id="popupId">
+                    <div class="form-group">
+                        <label for="popupTitle">Popup Title</label>
+                        <input type="text" id="popupTitle" required placeholder="Enter breaking news title">
+                    </div>
+                    <div class="form-group">
+                        <label for="popupDescription">Description</label>
+                        <textarea id="popupDescription" rows="4" required placeholder="Enter news description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="popupImage">Popup Image</label>
+                        <input type="file" id="popupImage" accept="image/*">
+                        <small>Upload an image for the popup (recommended: 800x400px)</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="popupLink">Article Link (Optional)</label>
+                        <input type="url" id="popupLink" placeholder="https://example.com/article">
+                        <small>Link to full article or news page</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="popupVideoLink">Video Link (Optional)</label>
+                        <input type="url" id="popupVideoLink" placeholder="https://youtube.com/watch?v=...">
+                        <small>YouTube or other video link</small>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="popupActive"> 
+                            Activate Popup News
+                        </label>
+                        <small>Check to make this popup appear for new visitors</small>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" id="savePopupBtn">Save Popup News</button>
+                        <button type="button" id="deletePopupBtn" class="delete-btn">Delete Popup News</button>
+                        <button type="button" id="cancelEditBtn">Cancel</button>
+                    </div>
+                </form>
+                <div class="news-table-container" style="margin-top:30px;">
+                    <table id="popupNewsTable" class="news-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Image</th>
+                                <th>Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="popupNewsTableBody">
+                            <!-- Popup news items will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <!-- YouTube Video Management Section -->
             <div class="admin-panel">
                 <h2>Upload YouTube Video</h2>
