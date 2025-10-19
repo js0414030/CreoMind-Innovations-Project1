@@ -1628,8 +1628,13 @@ form button[type="submit"].loading::after {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 /* Header Layout Fix */
@@ -1776,36 +1781,37 @@ header .container {
     .desktop-nav {
         display: none;
     }
+
     .hamburger {
         display: block;
         position: absolute;
         top: 15px;
         right: 20px;
     }
-    
+
     header .container {
         flex-direction: column;
         align-items: flex-start;
         padding: 10px 20px;
         margin-top: 35px;
     }
-    
+
     .logo {
         order: 1;
         align-self: flex-start;
     }
-    
+
     .datetime-display {
         order: 2;
         position: absolute;
         top: -30px;
         right: 20px;
     }
-    
+
     .logo h1 {
         font-size: 24px;
     }
-    
+
     .logo img {
         height: 50px;
     }
@@ -1817,25 +1823,25 @@ header .container {
         max-width: none;
         right: -100%;
     }
-    
+
     .hamburger {
         top: 10px;
         right: 15px;
     }
-    
+
     header .container {
         padding: 8px 15px;
         margin-top: 30px;
     }
-    
+
     .logo h1 {
         font-size: 20px;
     }
-    
+
     .logo img {
         height: 40px;
     }
-    
+
     .datetime-display {
         font-size: 10px;
         top: -25px;
@@ -1846,17 +1852,21 @@ header .container {
 
 
 .footer-links ul {
-    list-style: none;     /* removes bullets */
+    list-style: none;
+    /* removes bullets */
     padding: 0;
     margin: 0;
-    display: flex;        /* makes list horizontal */
-    gap: 10px;     
-           /* space between items */
-}  
+    display: flex;
+    /* makes list horizontal */
+    gap: 10px;
+    /* space between items */
+}
+
 .footer-links li a {
-    white-space: nowrap;     /* keeps "About Us" in one line */
+    white-space: nowrap;
+    /* keeps "About Us" in one line */
     text-decoration: none;
-  }
+}
 
 /* Popup News Modal Styles */
 .popup-news-modal {
@@ -1931,9 +1941,11 @@ header .container {
         max-height: 95vh;
         border-radius: 15px;
     }
+
     .popup-news-image {
         height: 200px;
     }
+
     .popup-news-text {
         padding: 20px;
         max-height: 250px;
@@ -1945,9 +1957,11 @@ header .container {
         width: 98%;
         border-radius: 10px;
     }
+
     .popup-news-image {
         height: 180px;
     }
+
     .popup-news-text {
         padding: 15px;
         max-height: 180px;
@@ -2041,7 +2055,8 @@ header .container {
     flex-wrap: wrap;
 }
 
-.popup-read-more-btn, .popup-video-btn {
+.popup-read-more-btn,
+.popup-video-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -2096,33 +2111,34 @@ header .container {
         max-height: 95vh;
         border-radius: 15px;
     }
-    
+
     .popup-news-image {
         height: 200px;
     }
-    
+
     .popup-news-text {
         padding: 20px;
     }
-    
+
     .popup-news-text h2 {
         font-size: 22px;
     }
-    
+
     .popup-news-text p {
         font-size: 15px;
     }
-    
+
     .popup-news-actions {
         flex-direction: column;
         gap: 10px;
     }
-    
-    .popup-read-more-btn, .popup-video-btn {
+
+    .popup-read-more-btn,
+    .popup-video-btn {
         justify-content: center;
         width: 100%;
     }
-    
+
     .popup-news-meta {
         flex-direction: column;
         gap: 5px;
@@ -2135,19 +2151,19 @@ header .container {
         width: 98%;
         border-radius: 10px;
     }
-    
+
     .popup-news-image {
         height: 180px;
     }
-    
+
     .popup-news-text {
         padding: 15px;
     }
-    
+
     .popup-news-text h2 {
         font-size: 20px;
     }
-    
+
     .popup-close-btn {
         width: 35px;
         height: 35px;
@@ -2160,6 +2176,7 @@ header .container {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -2170,8 +2187,92 @@ header .container {
         transform: translateY(50px);
         opacity: 0;
     }
+
     to {
         transform: translateY(0);
         opacity: 1;
     }
+}
+
+/* Fallback Content Styles */
+.fallback-card {
+    border: 2px dashed var(--primary-color);
+    background: linear-gradient(135deg, rgba(241, 196, 15, 0.05), rgba(241, 196, 15, 0.1));
+    position: relative;
+    overflow: hidden;
+}
+
+.fallback-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(241, 196, 15, 0.1) 50%, transparent 70%);
+    animation: shimmer 2s infinite;
+    pointer-events: none;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.fallback-card .news-category {
+    background: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.fallback-card h3 {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.fallback-card .news-date {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* Trending fallback styles */
+.trending-card.fallback-card {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.05), rgba(52, 152, 219, 0.1));
+    border-color: var(--accent-blue);
+}
+
+.trending-card.fallback-card .news-category {
+    background: var(--accent-blue);
+}
+
+.trending-card.fallback-card h3 {
+    color: var(--accent-blue);
+}
+
+/* Slider fallback styles */
+.slide.fallback-slide {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.05), rgba(46, 204, 113, 0.1));
+    border: 2px dashed var(--accent-green);
+}
+
+.slide.fallback-slide .slide-content h2 {
+    color: var(--accent-green);
+}
+
+.slide.fallback-slide .read-more-btn {
+    background: var(--accent-green);
+    border-color: var(--accent-green);
+}
+
+.slide.fallback-slide .read-more-btn:hover {
+    background: var(--accent-green-dark);
+    border-color: var(--accent-green-dark);
 }

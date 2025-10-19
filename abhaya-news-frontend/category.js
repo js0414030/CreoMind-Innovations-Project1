@@ -3,6 +3,131 @@
 // API Base URL
 // const API_BASE_URL = '/api';
 import API_BASE_URL from './config.js';
+import { showSuccessToast, showErrorToast } from './toast.js';
+
+// Function to get category-specific trending fallback content
+function getCategoryTrendingFallback(category) {
+    const fallbackContent = {
+        'politics': {
+            title: 'Political Updates Coming Soon',
+            description: 'Stay informed about the latest political developments and government policies.',
+            image: 'https://source.unsplash.com/300x200/?politics,government'
+        },
+        'technology': {
+            title: 'Tech Trends on the Horizon',
+            description: 'Get ready for the latest technology innovations and digital breakthroughs.',
+            image: 'https://source.unsplash.com/300x200/?technology,innovation'
+        },
+        'sports': {
+            title: 'Sports Highlights Loading',
+            description: 'Prepare for exciting sports coverage and match analysis.',
+            image: 'https://source.unsplash.com/300x200/?sports,football'
+        },
+        'business': {
+            title: 'Business News Incoming',
+            description: 'Stay ahead with the latest business insights and market trends.',
+            image: 'https://source.unsplash.com/300x200/?business,finance'
+        },
+        'entertainment': {
+            title: 'Entertainment Buzz Building',
+            description: 'Get ready for the latest in movies, music, and celebrity news.',
+            image: 'https://source.unsplash.com/300x200/?entertainment,cinema'
+        },
+        'health': {
+            title: 'Health Updates Coming',
+            description: 'Stay informed about medical breakthroughs and wellness tips.',
+            image: 'https://source.unsplash.com/300x200/?health,medical'
+        },
+        'science': {
+            title: 'Scientific Discoveries Await',
+            description: 'Explore the latest in scientific research and innovations.',
+            image: 'https://source.unsplash.com/300x200/?science,research'
+        },
+        'world': {
+            title: 'Global News Coverage',
+            description: 'Stay connected with international affairs and world events.',
+            image: 'https://source.unsplash.com/300x200/?world,global'
+        },
+        'lifestyle': {
+            title: 'Lifestyle Trends Emerging',
+            description: 'Discover the latest in lifestyle and cultural movements.',
+            image: 'https://source.unsplash.com/300x200/?lifestyle,culture'
+        },
+        'education': {
+            title: 'Educational Insights Loading',
+            description: 'Stay informed about learning trends and academic achievements.',
+            image: 'https://source.unsplash.com/300x200/?education,school'
+        }
+    };
+
+    return fallbackContent[category] || {
+        title: 'News Updates Coming Soon',
+        description: 'Stay tuned for the latest news and developments.',
+        image: 'https://source.unsplash.com/300x200/?news,newspaper'
+    };
+}
+
+// Function to get category-specific news grid fallback content
+function getCategoryNewsFallback(category) {
+    const fallbackContent = {
+        'politics': {
+            title: 'Political News Section',
+            description: 'This section will feature the latest political news, government updates, and policy changes. Our political correspondents are working to bring you comprehensive coverage of all political developments.',
+            image: 'https://source.unsplash.com/300x200/?politics,government,congress'
+        },
+        'technology': {
+            title: 'Technology News Hub',
+            description: 'Stay ahead with the latest technology news, startup updates, and digital innovations. We cover everything from AI breakthroughs to the newest gadgets and software releases.',
+            image: 'https://source.unsplash.com/300x200/?technology,innovation,startup'
+        },
+        'sports': {
+            title: 'Sports News Center',
+            description: 'Get the latest sports news, match results, and athlete updates. From football to cricket, we bring you comprehensive coverage of all major sporting events and competitions.',
+            image: 'https://source.unsplash.com/300x200/?sports,football,cricket,stadium'
+        },
+        'business': {
+            title: 'Business & Finance News',
+            description: 'Stay informed about the latest business developments, market trends, and economic news. Our business section covers corporate updates, financial markets, and economic policies.',
+            image: 'https://source.unsplash.com/300x200/?business,finance,corporate,office'
+        },
+        'entertainment': {
+            title: 'Entertainment News',
+            description: 'Discover the latest in entertainment, including movie reviews, celebrity news, music updates, and cultural events. We bring you the glitz and glamour of the entertainment world.',
+            image: 'https://source.unsplash.com/300x200/?entertainment,cinema,music,celebrity'
+        },
+        'health': {
+            title: 'Health & Wellness News',
+            description: 'Stay informed about medical breakthroughs, health tips, and wellness trends. Our health section provides reliable information to help you make informed decisions about your well-being.',
+            image: 'https://source.unsplash.com/300x200/?health,medical,wellness,doctor'
+        },
+        'science': {
+            title: 'Science & Research News',
+            description: 'Explore the fascinating world of science with the latest discoveries, research findings, and technological innovations. We make complex scientific topics accessible and engaging.',
+            image: 'https://source.unsplash.com/300x200/?science,research,laboratory,discovery'
+        },
+        'world': {
+            title: 'World News Coverage',
+            description: 'Stay connected with international affairs, global events, and world news. Our world section brings you stories from every corner of the globe, keeping you informed about global developments.',
+            image: 'https://source.unsplash.com/300x200/?world,global,international,earth'
+        },
+        'lifestyle': {
+            title: 'Lifestyle & Culture News',
+            description: 'Discover the latest in lifestyle trends, cultural events, and social movements. We help you stay in touch with the pulse of modern living and cultural developments.',
+            image: 'https://source.unsplash.com/300x200/?lifestyle,culture,fashion,trends'
+        },
+        'education': {
+            title: 'Education News & Updates',
+            description: 'Stay informed about educational policies, learning trends, and academic achievements. Our education section supports your journey of lifelong learning and academic growth.',
+            image: 'https://source.unsplash.com/300x200/?education,school,university,learning'
+        }
+    };
+
+    return fallbackContent[category] || {
+        title: 'News Section Coming Soon',
+        description: 'This section will feature the latest news and updates. Our team is working to bring you comprehensive coverage of all the important stories.',
+        image: 'https://source.unsplash.com/300x200/?news,newspaper,media'
+    };
+}
 
 // State variables for category pages
 let categoryCurrentPage = 1;
@@ -70,7 +195,8 @@ function waitForFetchNewsDetail() {
 // Initialize category page with real data
 async function initializeCategoryPage() {
     await fetchCategoryNews();
-    // Only show main category news - no trending, no sliders
+    await fetchTrendingNews();
+    setupNewsletterForm();
 }
 
 // Fetch news for the current category
@@ -104,7 +230,21 @@ function displayCategoryNews(news) {
     if (!newsGrid) return;
 
     if (news.length === 0) {
-        newsGrid.innerHTML = `<div class="loading">No ${currentCategoryName} news found. Check back later for updates!</div>`;
+        // Show category-specific fallback content for main news grid
+        const fallbackContent = getCategoryNewsFallback(currentCategoryName);
+        newsGrid.innerHTML = `
+            <div class="news-card fallback-card">
+                <div class="news-image">
+                    <img src="${fallbackContent.image}" alt="${fallbackContent.title}">
+                </div>
+                <div class="news-content">
+                    <span class="news-category">${currentCategoryName}</span>
+                    <h3>${fallbackContent.title}</h3>
+                    <p>${fallbackContent.description}</p>
+                    <span class="news-date">Coming Soon</span>
+                </div>
+            </div>
+        `;
         return;
     }
 
@@ -149,66 +289,78 @@ function displayCategoryNews(news) {
 
 // Fetch trending news for the category
 async function fetchTrendingNews() {
+    const trendingGrid = document.querySelector('.trending-grid');
+    if (!trendingGrid) return;
+
     try {
         const url = `${API_BASE_URL}/news?limit=3&category=${currentCategoryName}&sort=createdAt&order=desc`;
         const response = await fetch(url);
 
         if (!response.ok) {
-            return; // Silently fail for trending news
+            trendingGrid.innerHTML = `<div class="loading">No trending ${currentCategoryName} news available</div>`;
+            return;
         }
 
         const data = await response.json();
-        updateTrendingSection(data.news || []);
+        const trendingNews = data.news || [];
+
+        if (trendingNews.length === 0) {
+            // Show category-specific fallback content for trending section
+            const fallbackContent = getCategoryTrendingFallback(currentCategoryName);
+            trendingGrid.innerHTML = `
+                <div class="trending-card fallback-card">
+                    <div class="trending-image">
+                        <img src="${fallbackContent.image}" alt="${fallbackContent.title}">
+                    </div>
+                    <div class="trending-content">
+                        <span class="news-category">${currentCategoryName}</span>
+                        <h3>${fallbackContent.title}</h3>
+                        <p>${fallbackContent.description}</p>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        // Generate trending cards HTML
+        let trendingHTML = '';
+        trendingNews.forEach(article => {
+            const truncatedBody = article.body.length > 100
+                ? article.body.substring(0, 100) + '...'
+                : article.body;
+
+            trendingHTML += `
+                <div class="trending-card" data-id="${article._id}">
+                    <div class="trending-image">
+                        <img src="${article.imageUrl || 'https://via.placeholder.com/300x200?text=No+Image'}" alt="${article.title}">
+                    </div>
+                    <div class="trending-content">
+                        <span class="news-category">${article.category}</span>
+                        <h3>${article.title}</h3>
+                        <p>${truncatedBody}</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        trendingGrid.innerHTML = trendingHTML;
+
+        // Add click event listeners to trending cards
+        document.querySelectorAll('.trending-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const newsId = card.dataset.id;
+                if (newsId && window.fetchNewsDetail) {
+                    window.fetchNewsDetail(newsId);
+                }
+            });
+        });
 
     } catch (error) {
         console.error('Fetch trending news error:', error);
-        // Silently fail for trending news
+        trendingGrid.innerHTML = `<div class="loading">Failed to load trending ${currentCategoryName} news</div>`;
     }
 }
 
-// Update trending section with real data
-function updateTrendingSection(trendingNews) {
-    const trendingCards = document.querySelectorAll('.trending-card');
-    if (!trendingCards || trendingCards.length === 0) return;
-
-    trendingCards.forEach((card, index) => {
-        if (trendingNews[index]) {
-            const article = trendingNews[index];
-            const titleElement = card.querySelector('h3');
-            const descElement = card.querySelector('p');
-            const imgElement = card.querySelector('img');
-            const categoryElement = card.querySelector('.news-category');
-
-            if (titleElement) titleElement.textContent = article.title;
-            if (descElement) {
-                const truncatedBody = article.body.length > 100
-                    ? article.body.substring(0, 100) + '...'
-                    : article.body;
-                descElement.textContent = truncatedBody;
-            }
-            if (imgElement && article.imageUrl) {
-                imgElement.src = article.imageUrl;
-                imgElement.alt = article.title;
-            }
-            if (categoryElement) categoryElement.textContent = article.category;
-
-            // Add click event
-            // card.addEventListener('click', () => {
-            //     fetchNewsDetail(article._id);
-            // });
-            card.dataset.id = article._id; // Store ID inside the card
-
-            card.addEventListener('click', () => {
-                const newsId = card.dataset.id;
-                if (newsId) {
-                    fetchNewsDetail(newsId);
-                } else {
-                    console.error("No newsId found for this card");
-                }
-            });
-        }
-    });
-}
 
 // Set up pagination for category pages
 function setupCategoryPagination() {
@@ -272,6 +424,9 @@ async function fetchNewsDetail(id) {
         showErrorToast('An error occurred while fetching news detail');
     }
 }
+
+// Make fetchNewsDetail globally available
+window.fetchNewsDetail = fetchNewsDetail;
 
 // Display news detail (reused from app.js)
 function displayNewsDetail(article) {

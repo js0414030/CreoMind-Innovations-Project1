@@ -5,14 +5,14 @@ class PopupNewsManager {
         this.closeBtn = document.getElementById('closePopupNews');
         this.overlay = document.querySelector('.popup-news-overlay');
         this.hasShownToday = false;
-        
+
         this.init();
     }
 
     init() {
         // Check if popup should be shown
         this.checkAndShowPopup();
-        
+
         // Event listeners
         this.setupEventListeners();
     }
@@ -45,11 +45,11 @@ class PopupNewsManager {
     }
 
     checkAndShowPopup() {
-        // Check if popup was already shown today
-        const lastShown = localStorage.getItem('popupNewsLastShown');
-        const today = new Date().toDateString();
-        
-        if (lastShown !== today) {
+        // Check if popup was already shown in this session
+        const sessionKey = 'popupNewsShownInSession';
+        const hasShownInSession = sessionStorage.getItem(sessionKey);
+
+        if (!hasShownInSession) {
             // Load popup content and show
             this.loadPopupContent();
         }
@@ -59,7 +59,7 @@ class PopupNewsManager {
         try {
             // Try to load from admin panel API first
             const adminContent = await this.loadFromAdmin();
-            
+
             if (adminContent) {
                 this.populateContent(adminContent);
                 this.showPopup();
@@ -75,10 +75,14 @@ class PopupNewsManager {
 
     async loadFromAdmin() {
         try {
-            // This would connect to your admin panel API
+            // Connect to the admin panel API
             const response = await fetch('/api/popup-news/active');
             if (response.ok) {
-                return await response.json();
+                const data = await response.json();
+                // Only return data if there's an active popup
+                if (data && data.isActive) {
+                    return data;
+                }
             }
         } catch (error) {
             console.log('Admin API not available, using default content');
@@ -149,12 +153,12 @@ class PopupNewsManager {
         if (this.modal) {
             // Prevent body scroll
             document.body.style.overflow = 'hidden';
-            
+
             // Show modal with animation
             this.modal.classList.add('show');
-            
-            // Mark as shown today
-            localStorage.setItem('popupNewsLastShown', new Date().toDateString());
+
+            // Mark as shown in this session
+            sessionStorage.setItem('popupNewsShownInSession', 'true');
             this.hasShownToday = true;
         }
     }
@@ -163,7 +167,7 @@ class PopupNewsManager {
         if (this.modal) {
             // Restore body scroll
             document.body.style.overflow = '';
-            
+
             // Hide modal
             this.modal.classList.remove('show');
         }
@@ -178,6 +182,12 @@ class PopupNewsManager {
     // Method to manually show popup (for testing or admin purposes)
     forceShow() {
         this.loadPopupContent();
+    }
+
+    // Method to reset session flag (for testing purposes)
+    resetSession() {
+        sessionStorage.removeItem('popupNewsShownInSession');
+        console.log('Popup session flag reset. Popup will show again on next visit to index page.');
     }
 }
 
@@ -289,6 +299,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname.endsWith('index.html')) {
         window.popupNewsManager = new PopupNewsManager();
         window.popupNewsAdmin = new PopupNewsAdmin();
+
+        // Make resetSession globally available for testing
+        window.resetPopupSession = () => window.popupNewsManager.resetSession();
     }
 });
 

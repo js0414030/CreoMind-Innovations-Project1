@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { uploadNews, getAllNews, getNewsById, updateNews, deleteNews} = require('../controllers/newsController');
+const { uploadNews, getAllNews, getNewsById, getCategories, updateNews, deleteNews } = require('../controllers/newsController');
 const protect = require('../middleware/auth');
 const upload = require('../middleware/upload');
 
@@ -23,6 +23,7 @@ router.put(
 
 // Public routes
 router.get('/', getAllNews);
+router.get('/categories', getCategories);
 router.get('/:id', getNewsById);
 
 // Protected route

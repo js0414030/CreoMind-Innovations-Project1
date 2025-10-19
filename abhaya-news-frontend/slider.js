@@ -1,4 +1,68 @@
 import API_BASE_URL from './config.js';
+
+// Function to get category-specific fallback content
+function getCategoryFallbackContent(category) {
+    const fallbackContent = {
+        'politics': {
+            title: 'Political News Coming Soon',
+            description: 'Stay tuned for the latest political developments, government policies, and election updates. Our political coverage will keep you informed about the decisions that shape our society.',
+            image: 'https://source.unsplash.com/1200x600/?politics,government,congress'
+        },
+        'technology': {
+            title: 'Tech Innovation Awaits',
+            description: 'Get ready for cutting-edge technology news, startup updates, and digital transformation stories. We\'ll bring you the latest in AI, blockchain, and emerging technologies.',
+            image: 'https://source.unsplash.com/1200x600/?technology,innovation,startup'
+        },
+        'sports': {
+            title: 'Sports Action Coming Up',
+            description: 'Prepare for thrilling sports coverage, match analysis, and athlete spotlights. From football to cricket, we\'ll bring you the excitement of the sporting world.',
+            image: 'https://source.unsplash.com/1200x600/?sports,football,cricket,stadium'
+        },
+        'business': {
+            title: 'Business Insights Loading',
+            description: 'Stay ahead with comprehensive business news, market analysis, and economic trends. We\'ll keep you informed about the corporate world and financial markets.',
+            image: 'https://source.unsplash.com/1200x600/?business,finance,corporate,office'
+        },
+        'entertainment': {
+            title: 'Entertainment Buzz Incoming',
+            description: 'Get ready for the latest in movies, music, celebrity news, and cultural events. We\'ll bring you the glitz and glamour of the entertainment industry.',
+            image: 'https://source.unsplash.com/1200x600/?entertainment,cinema,music,celebrity'
+        },
+        'health': {
+            title: 'Health & Wellness Updates',
+            description: 'Stay informed about medical breakthroughs, health tips, and wellness trends. We\'ll help you make informed decisions about your health and well-being.',
+            image: 'https://source.unsplash.com/1200x600/?health,medical,wellness,doctor'
+        },
+        'science': {
+            title: 'Scientific Discoveries Await',
+            description: 'Explore the fascinating world of science with breakthrough discoveries, research findings, and technological innovations. We\'ll make science accessible and exciting.',
+            image: 'https://source.unsplash.com/1200x600/?science,research,laboratory,discovery'
+        },
+        'world': {
+            title: 'Global News Coverage',
+            description: 'Stay connected with international affairs, global events, and world news. We\'ll bring you stories from every corner of the globe.',
+            image: 'https://source.unsplash.com/1200x600/?world,global,international,earth'
+        },
+        'lifestyle': {
+            title: 'Lifestyle & Culture',
+            description: 'Discover the latest in lifestyle trends, cultural events, and social movements. We\'ll help you stay in touch with the pulse of modern living.',
+            image: 'https://source.unsplash.com/1200x600/?lifestyle,culture,fashion,trends'
+        },
+        'education': {
+            title: 'Educational Insights',
+            description: 'Stay informed about educational policies, learning trends, and academic achievements. We\'ll support your journey of lifelong learning.',
+            image: 'https://source.unsplash.com/1200x600/?education,school,university,learning'
+        }
+    };
+
+    // Return category-specific content or default
+    return fallbackContent[category] || {
+        title: 'Welcome to Abhaya News',
+        description: 'Stay updated with the latest news and developments. Check back soon for new content!',
+        image: 'https://source.unsplash.com/1200x600/?news,newspaper,media'
+    };
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     // API Base URL
     // const API_BASE_URL = '/api';
@@ -102,14 +166,16 @@ document.addEventListener('DOMContentLoaded', function () {
             const news = data.news || [];
 
             if (news.length === 0) {
-                // If no news found, show a default message
+                // If no news found, show category-specific fallback content
+                const fallbackContent = getCategoryFallbackContent(category);
                 sliderElement.innerHTML = `
-                    <div class="slide active">
+                    <div class="slide active fallback-slide">
                         <div class="slide-content">
-                            <h2>Welcome to Abhaya News</h2>
-                            <p>Stay updated with the latest news and developments. Check back soon for new content!</p>
+                            <h2>${fallbackContent.title}</h2>
+                            <p>${fallbackContent.description}</p>
+                            <a href="index.html" class="read-more-btn">Explore All News</a>
                         </div>
-                        <img src="https://source.unsplash.com/random/1200x600/?news" alt="News">
+                        <img src="${fallbackContent.image}" alt="${fallbackContent.title}">
                     </div>
                 `;
                 dotsContainer.innerHTML = '<span class="dot active" data-index="0"></span>';
