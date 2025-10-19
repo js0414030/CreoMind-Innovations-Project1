@@ -1,3 +1,6 @@
+import { showSuccessToast, showErrorToast } from './toast.js';
+import API_BASE_URL from './config.js';
+
 // Popup News Modal Functionality
 class PopupNewsManager {
     constructor() {
@@ -75,19 +78,39 @@ class PopupNewsManager {
 
     async loadFromAdmin() {
         try {
-            // Connect to the admin panel API
-            const response = await fetch('/api/popup-news/active');
-            if (response.ok) {
-                const data = await response.json();
-                // Only return data if there's an active popup
-                if (data && data.isActive) {
-                    return data;
-                }
+            // Only attempt to fetch if we have a valid API_BASE_URL
+            if (!API_BASE_URL) {
+                console.log('API base URL not configured, using default content');
+                return null;
             }
+
+            const response = await fetch(`${API_BASE_URL}/popup-news/active`);
+            
+            if (!response.ok) {
+                // If the response is not ok, log the status and return null
+                console.log(`API returned status ${response.status}, using default content`);
+                return null;
+            }
+
+            const data = await response.json();
+            
+            // Only return data if there's an active popup
+            if (data && data.isActive) {
+                return data;
+            }
+            
+            console.log('No active popup found, using default content');
+            return null;
+            
         } catch (error) {
-            console.log('Admin API not available, using default content');
+            // Only log the full error in development
+            if (process.env.NODE_ENV === 'development') {
+                console.log('Error fetching popup content:', error);
+            } else {
+                console.log('Using default popup content');
+            }
+            return null;
         }
-        return null;
     }
 
     loadDefaultContent() {
@@ -194,7 +217,7 @@ class PopupNewsManager {
 // Admin Panel Integration Functions
 class PopupNewsAdmin {
     constructor() {
-        this.apiEndpoint = '/api/admin/popup-news';
+        this.apiEndpoint = `${API_BASE_URL}/admin/popup-news`;
     }
 
     // Save popup content from admin panel
@@ -267,7 +290,7 @@ class PopupNewsAdmin {
             const formData = new FormData();
             formData.append('image', file);
 
-            const response = await fetch('/api/admin/upload-popup-image', {
+            const response = await fetch(`${API_BASE_URL}/admin/upload-popup-image`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${this.getAuthToken()}`

@@ -34,7 +34,7 @@ const popupNewsTableBody = document.getElementById('popupNewsTableBody');
 
 // Popup News CRUD/Activation Logic
 async function fetchPopupNews() {
-    const res = await fetch('/api/popup-news');
+    const res = await fetch(`${API_BASE_URL}/popup-news`);
     return res.ok ? await res.json() : [];
 }
 
@@ -82,7 +82,7 @@ function clearPopupForm() {
 }
 
 function startEditPopupNews(id) {
-    fetch(`/api/popup-news`).then(res => res.json()).then(newsList => {
+    fetch(`${API_BASE_URL}/popup-news`).then(res => res.json()).then(newsList => {
         const news = newsList.find(n => n._id === id);
         if (!news) return;
         popupIdInput.value = news._id;
@@ -99,12 +99,12 @@ function startEditPopupNews(id) {
 
 async function deletePopupNews(id) {
     if (!confirm('Delete this popup news?')) return;
-    await fetch(`/api/popup-news/${id}`, { method: 'DELETE' });
+    await fetch(`${API_BASE_URL}/popup-news/${id}`, { method: 'DELETE' });
     refreshPopupNewsTable();
 }
 
 async function activatePopupNews(id) {
-    await fetch(`/api/popup-news/${id}/activate`, { method: 'PATCH' });
+    await fetch(`${API_BASE_URL}/popup-news/${id}/activate`, { method: 'PATCH' });
     refreshPopupNewsTable();
 }
 
@@ -121,7 +121,7 @@ popupNewsForm.onsubmit = async (e) => {
     if (imageInput.files && imageInput.files[0]) {
         const formData = new FormData();
         formData.append('image', imageInput.files[0]);
-        const res = await fetch('/api/upload-popup-image', { method: 'POST', body: formData });
+        const res = await fetch(`${API_BASE_URL}/upload-popup-image`, { method: 'POST', body: formData });
         const data = await res.json();
         imageUrl = data.imageUrl;
     }
@@ -129,14 +129,14 @@ popupNewsForm.onsubmit = async (e) => {
     if (imageUrl) payload.image = imageUrl;
     if (id) {
         // Update
-        await fetch(`/api/popup-news/${id}`, {
+        await fetch(`${API_BASE_URL}/popup-news/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
     } else {
         // Create
-        await fetch('/api/popup-news', {
+        await fetch(`${API_BASE_URL}/popup-news`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
