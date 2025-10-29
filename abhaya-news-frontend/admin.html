@@ -37,11 +37,11 @@
                 <h2>Upload News</h2>
                 <form id="uploadForm">
                     <div class="form-group">
-                        <label for="title">Title</label>
+                        <label for="title">Title <span class="required">*</span></label>
                         <input type="text" id="title" required>
                     </div>
                     <div class="form-group">
-                        <label for="category">Category</label>
+                        <label for="category">Category <span class="required">*</span></label>
                         <select id="category" required>
                             <option value="general">General</option>
                             <option value="politics">Politics</option>
@@ -61,7 +61,7 @@
                         <input type="file" id="image" accept="image/*">
                     </div>
                     <div class="form-group">
-                        <label for="body">Content</label>
+                        <label for="body">Content <span class="required">*</span></label>
                         <textarea id="body" rows="10" required></textarea>
                     </div>
                     <button type="submit">Upload News</button>
@@ -98,11 +98,11 @@
                 <form id="popupNewsForm">
                     <input type="hidden" id="popupId">
                     <div class="form-group">
-                        <label for="popupTitle">Popup Title</label>
+                        <label for="popupTitle">Popup Title <span class="required">*</span></label>
                         <input type="text" id="popupTitle" required placeholder="Enter breaking news title">
                     </div>
                     <div class="form-group">
-                        <label for="popupDescription">Description</label>
+                        <label for="popupDescription">Description <span class="required">*</span></label>
                         <textarea id="popupDescription" rows="4" required placeholder="Enter news description"></textarea>
                     </div>
                     <div class="form-group">
@@ -155,16 +155,16 @@
                 <h2>Upload YouTube Video</h2>
                 <form id="uploadVideoForm">
                     <div class="form-group">
-                        <label for="videoTitle">Video Title</label>
+                        <label for="videoTitle">Video Title <span class="required">*</span></label>
                         <input type="text" id="videoTitle" required>
                     </div>
                     <div class="form-group">
-                        <label for="videoUrl">YouTube Video URL</label>
+                        <label for="videoUrl">YouTube Video URL <span class="required">*</span></label>
                         <input type="url" id="videoUrl" required placeholder="https://www.youtube.com/watch?v=...">
                         <small>Paste the full YouTube video URL</small>
                     </div>
                     <div class="form-group">
-                        <label for="videoCategory">Category</label>
+                        <label for="videoCategory">Category <span class="required">*</span></label>
                         <select id="videoCategory" required>
                             <option value="general">General</option>
                             <option value="politics">Politics</option>
@@ -180,8 +180,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="videoDescription">Description (Optional)</label>
-                        <textarea id="videoDescription" rows="4"></textarea>
+                        <label for="videoDescription">Description <span class="required">*</span></label>
+                        <textarea id="videoDescription" rows="4" required></textarea>
                     </div>
                     <button type="submit">Upload Video</button>
                 </form>
@@ -222,11 +222,11 @@
             <form id="editNewsForm">
                 <input type="hidden" id="editNewsId">
                 <div class="form-group">
-                    <label for="editTitle">Title</label>
+                    <label for="editTitle">Title <span class="required">*</span></label>
                     <input type="text" id="editTitle" required>
                 </div>
                 <div class="form-group">
-                    <label for="editCategory">Category</label>
+                    <label for="editCategory">Category <span class="required">*</span></label>
                     <select id="editCategory" required>
                         <option value="general">General</option>
                         <option value="politics">Politics</option>
@@ -246,7 +246,7 @@
                     <input type="file" id="editImage" accept="image/*">
                 </div>
                 <div class="form-group">
-                    <label for="editBody">Content</label>
+                    <label for="editBody">Content <span class="required">*</span></label>
                     <textarea id="editBody" rows="10" required></textarea>
                 </div>
                 <button type="submit">Update News</button>
@@ -262,16 +262,16 @@
             <form id="editVideoForm">
                 <input type="hidden" id="editVideoId">
                 <div class="form-group">
-                    <label for="editVideoTitle">Title</label>
+                    <label for="editVideoTitle">Title <span class="required">*</span></label>
                     <input type="text" id="editVideoTitle" required>
                 </div>
                 <div class="form-group">
-                    <label for="editVideoUrl">YouTube Video URL</label>
+                    <label for="editVideoUrl">YouTube Video URL <span class="required">*</span></label>
                     <input type="url" id="editVideoUrl" required>
                     <small>Changing the URL will update the thumbnail automatically</small>
                 </div>
                 <div class="form-group">
-                    <label for="editVideoCategory">Category</label>
+                    <label for="editVideoCategory">Category <span class="required">*</span></label>
                     <select id="editVideoCategory" required>
                         <option value="general">General</option>
                         <option value="politics">Politics</option>
